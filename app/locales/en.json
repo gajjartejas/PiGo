@@ -1,0 +1,237 @@
+{
+  "general": {
+    "appname": "PiGo",
+    "close": "CLOSE",
+    "save": "SAVE",
+    "connecting": "Connecting..."
+  },
+  "about": {
+    "version": "Version: {{version}}",
+    "sendFeedback": "Send Feedback",
+    "rateApp": "Rate App",
+    "moreApps": "More Apps",
+    "github": "Contribute on GitHub",
+    "setting": "Settings",
+    "app": "About PiGo",
+    "sendFeedbackDetail": "You can send your valuable feedback to the Telegram channel or send mail directly."
+  },
+  "moreApps": {
+    "appsTitle": "More Apps",
+    "apps1Title": "PiGo - Explore Your Pi Servers On the Go",
+    "apps1Desc": "PiGo - the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go. PiGo: Your free and open gateway to seamless server navigation.",
+    "apps2Title": "OHM-Client",
+    "apps2Desc": "`OHM-Client` is an unofficial open hardware monitor client app for Android and iOS written in react-native. Using this app you can monitor open hardware monitor web server.",
+    "apps3Title": "MIUI - Ads helper",
+    "apps3Desc": "This application allows you to enable/disable ads or recommendations for various apps in Xiaomi (MIUI) devices.",
+    "apps4Title": "Kano",
+    "apps4Desc": " An interactive way to learn Gujarati kakko, barakhadi and numbers."
+  },
+  "settings": {
+    "title": "Settings",
+    "commonHeader": "Common Settings",
+    "appearanceTitle": "Appearance",
+    "appearanceSubTitle": "Customization of appearance",
+    "scanTitle": "Scan Settings",
+    "scanSubTitle": "Auto scan(nearby scan) settings",
+    "identitiesTitle": "Identities",
+    "identitiesSubTitle": "Username and passwords for basic access authentication",
+    "recentConnectionsTitle": "Devices",
+    "recentConnectionsSubTitle": "Manage added devices",
+    "infoHeader": "Information",
+    "changelogTitle": "Changelog",
+    "changelogSubTitle": "List of changes made in all updates",
+    "librariesTitle": "Libraries",
+    "librariesSubTitle": "List of open source libraries used in this project",
+    "faqTitle": "FAQ & help",
+    "faqSubTitle": "Answer to frequently asked questions",
+    "translateTitle": "Translate this app",
+    "translateSubTitle": "Translate this app in your language",
+    "translatorsTitle": "Translators",
+    "translatorsSubTitle": "People who helped localize this app",
+    "privacyTitle": "Privacy policy",
+    "privacySubTitle": "Information and permissions usage policy"
+  },
+  "appearanceSettings": {
+    "title": "Appearance",
+    "interfaceHeader": "Interface",
+    "themeTitle": "Theme",
+    "themeSubTitle": "Main theme of the app",
+    "accentColorTitle": "Accent color",
+    "accentColorSubTitle": "Color used to tint UI elements",
+    "otherHeader": "Other",
+    "otherTitle": "Restore default theme",
+    "otherSubTitle": "Restore default theme settings",
+    "themeOption": "Theme",
+    "themeOption1": "Light",
+    "themeOption2": "Dark",
+    "themeOption3": "System default"
+  },
+  "librariesScreen": {
+    "title": "Libraries"
+  },
+  "translatorsScreen": {
+    "title": "Translators",
+    "emptyList": "Be the pioneer - no contributors found yet!",
+    "emptyListAction": "Click here to contribute"
+  },
+  "aboutScreen": {
+    "title": "About PiGo",
+    "infoHeader": "Information",
+    "infoDescTitle": "PiGo - the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go. PiGo: Your free and open gateway to seamless server navigation.",
+    "infoAuthorNameTitle": "Tejas Gajjar",
+    "developerTitle": "Developer",
+    "portfolioTitle": "Portfolio",
+    "portfolioSubTitle": "All information about the developer",
+    "instagramTitle": "Instagram",
+    "instagramSubTitle": "My hobby and my gadgets",
+    "telegramTitle": "Join Telegram",
+    "telegramSubTitle": "Discussion about bugs, improvements, feature request, and development news",
+    "githubTitle": "GitHub",
+    "githubSubTitle": "Developer profile and list of open-sourced projects",
+    "twitterTitle": "Twitter",
+    "twitterSubTitle": "Personal micro-blog"
+  },
+  "scanSetting": {
+    "title": "Scan Settings",
+    "section1": {
+      "header": "Default Scan Config",
+      "row1": {
+        "title": "URL Path",
+        "subTitle": "{{path}}",
+        "dialogTitle": "Enter URL Path",
+        "dialogSubTitle": "URL Path of the Open Hardware Client"
+      },
+      "row2": {
+        "title": "Port",
+        "subTitle": "{{port}}",
+        "dialogTitle": "Enter Port",
+        "dialogSubTitle": "Port number of Open Hardware Monitor client"
+      }
+    },
+
+    "section3": {
+      "header": "Advanced",
+      "row1": {
+        "title": "Scan Timeout",
+        "subTitle": "{{scanTimeoutInMs}} ms",
+        "dialogTitle": "Enter Scan Timeout (1 - 10000)",
+        "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If device not found try to increase the timeout."
+      },
+      "row2": {
+        "title": "Scan Threads",
+        "subTitle": "{{scanThreads}}",
+        "dialogTitle": "Enter Scan Threads (1 - 999)",
+        "dialogSubTitle": "Scan threads per timeouts,  ex: 150 threads per 1500 ms, If device not found try to decrease threads."
+      }
+    },
+    "section4": {
+      "header": "Other",
+      "row1": {
+        "title": "Restore Default",
+        "subTitle": "Restore default settings"
+      }
+    }
+  },
+  "dashboard": {
+    "card": {
+      "min": "Min",
+      "current": "Current",
+      "max": "Max"
+    },
+    "emptyData": {
+      "item1": {
+        "title": "Disconnected!",
+        "message": "Device disconnected, Please try again!",
+        "button": "Update Settings"
+      },
+      "item2": {
+        "title": "Connection Timeout",
+        "message": "Device taking a long time to connect, Please try again!",
+        "button": "Update Settings"
+      },
+      "item3": {
+        "title": "Authorization Required!",
+        "message": "Authorization is required, please update it from settings.",
+        "button": "Update Settings"
+      },
+      "item4": {
+        "title": "Disconnected",
+        "button": "Update Settings"
+      }
+    }
+  },
+  "addDevice": {
+    "titleCreate": "CREATE",
+    "titleUpdate": "UPDATE",
+    "titleConnect": "CONNECT",
+    "addDevice": "Add Device",
+    "updateDevice": "Update Device",
+    "connectDevice": "Connect",
+    "invalidIpAddress": "Invalid IP address",
+    "invalidRefreshRate": "Invalid refresh rate",
+    "connectionOk": "Connection ok",
+    "authRequired": "Authorization required!",
+    "inputPlaceholder1": "Enter the connection name (Optional)",
+    "inputPlaceholder2": "Enter IP Address",
+    "inputPlaceholder3": "Enter Path (ex: /data.json)",
+    "inputPlaceholder4": "Enter Port",
+    "inputPlaceholder5": "Enter refresh rate in milliseconds",
+    "selectIdentity": "Select Identity (Optional)",
+    "testConnection": "Test Connection"
+  },
+  "addIdentity": {
+    "usernameRequired": "Username is required!",
+    "passwordRequired": "Password is required!",
+    "titleUpdate": "Update Identity",
+    "titleAddIdentity": "Add Identity",
+    "inputPlaceholder1": "Enter Name (Optional)",
+    "inputPlaceholder2": "Enter Username",
+    "inputPlaceholder3": "Enter Password",
+    "updateButton": "UPDATE",
+    "saveButton": "SAVE"
+  },
+  "devicesList": {
+    "title": "Devices",
+    "createNewDevice": "Create New Device",
+    "subTitle": "Devices",
+    "emptyName": "No Name",
+    "edit": "Edit",
+    "delete": "Delete",
+    "emptyDeviceTitle": "No Device found!",
+    "emptyDeviceSubtitle": "Please create a new device."
+  },
+  "identitiesList": {
+    "selectTitle": "Select Identity",
+    "listTitle": "Identities",
+    "createNewIdentity": "Create New Identity",
+    "subTitle": "Identities",
+    "edit": "Edit",
+    "delete": "Delete",
+    "emptyData": {
+      "title": "No identity found!",
+      "message": "Please create a new identity."
+    }
+  },
+  "scanDevices": {
+    "title": "Nearby Devices",
+    "subTitle": "Nearby Devices",
+    "emptyData": {
+      "title": "No nearby devices found!",
+      "subtitle": "Please try scanning again",
+      "help": "Help",
+      "or": "OR",
+      "rescan": "Scan Again"
+    }
+  },
+  "connectToDeviceList": {
+    "savedConnections": "Saved Devices",
+    "noDeviceFoundTryAddingItManually": "No device found!\nPlease try adding it manually.",
+    "addManually": "Add Device",
+    "devicesSettings": "Manage Devices",
+    "emptyData": {
+      "emptyDeviceTitle": "No Device found!",
+      "emptyDeviceSubtitle": "Please create a new device.",
+      "button": "Add Device"
+    }
+  }
+}
