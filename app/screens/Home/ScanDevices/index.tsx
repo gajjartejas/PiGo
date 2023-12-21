@@ -136,7 +136,7 @@ const ScanDevices = ({ navigation }: Props) => {
                     onPress={() => onPressDevice(device, idx)}
                     title={device.ip}
                     description={device.port}
-                    left={props => <List.Icon {...props} icon="microsoft-windows" />}
+                    left={props => <List.Icon {...props} icon="raspberry-pi" />}
                     right={props => <List.Icon {...props} icon={'antenna'} color={'green'} />}
                   />
                 );
@@ -148,7 +148,7 @@ const ScanDevices = ({ navigation }: Props) => {
         {scanningFinished && scannedDevices.length < 1 && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
-            iconName="box-open"
+            iconName="raspberry-pi"
             style={{}}
             header={t('scanDevices.emptyData.title')}
             subHeader={t('scanDevices.emptyData.subtitle')}

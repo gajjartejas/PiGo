@@ -174,7 +174,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       {(!selectedDevice || !selectedDevice.deviceInfo) && error && !connecting && (
         <Components.AppEmptyDataView
           iconType={'font-awesome5'}
-          iconName="box-open"
+          iconName="raspberry-pi"
           style={styles.emptyView}
           header={errorMessageTitle}
           subHeader={errorMessageDesc}

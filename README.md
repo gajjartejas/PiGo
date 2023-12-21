@@ -55,13 +55,6 @@ If you want to build from source, just do
 ## Todo
 
 1. List all remote web servers within the network. - Done
-   Share text or PDF via react-native-share, print system info, or HTML download.
-2. Real-time chart.
-3. Take a snapshot of data in the database at a particular time or manually.
-4. Display data over the internet.
-5. Widget support.
-6. Alert based on CPU usage, GPU usage, or device goes offline.
-7. Firebase real-time support with a separate electron app that syncs data with Firebase login and QR code support.
 
 ## Contributing
 

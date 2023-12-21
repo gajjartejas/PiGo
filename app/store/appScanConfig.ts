@@ -19,7 +19,7 @@ interface IAppScanConfigActions {
 
 const initialState: IAppScanConfigState = {
   path: '/data.json',
-  port: 8085,
+  port: 80,
   scanTimeoutInMs: 1000,
   scanThreads: 150,
 };

@@ -50,7 +50,7 @@ const MoreApps = ({ navigation }: Props) => {
     },
     {
       id: 1,
-      icon: Config.Images.icons.ic_more_app_miuiadshelper,
+      icon: Config.Images.icons.ic_more_app_ohmc,
       title: t('moreApps.apps2Title'),
       description: t('moreApps.apps2Desc'),
       showLinks: true,
@@ -59,7 +59,7 @@ const MoreApps = ({ navigation }: Props) => {
     },
     {
       id: 2,
-      icon: Config.Images.icons.ic_more_app_kano,
+      icon: Config.Images.icons.ic_more_app_miuiadshelper,
       title: t('moreApps.apps3Title'),
       description: t('moreApps.apps3Desc'),
       showLinks: true,
