@@ -147,7 +147,7 @@ const Identities = ({ navigation, route }: Props) => {
         {identities.length < 1 && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
-            iconName="box-open"
+            iconName="raspberry-pi"
             style={{}}
             header={t('identitiesList.emptyData.title')}
             subHeader={t('identitiesList.emptyData.message')}

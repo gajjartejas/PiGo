@@ -137,7 +137,7 @@ const Devices = ({ navigation }: Props) => {
         {devices.length < 1 && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
-            iconName="box-open"
+            iconName="raspberry-pi"
             style={{}}
             header={t('devicesList.emptyDeviceTitle')}
             subHeader={t('devicesList.emptyDeviceSubtitle')}

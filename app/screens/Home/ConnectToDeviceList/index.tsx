@@ -124,7 +124,7 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
         {recentDevices.length < 1 && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
-            iconName="box-open"
+            iconName="raspberry-pi"
             style={{}}
             header={t('connectToDeviceList.emptyData.emptyDeviceTitle')}
             subHeader={t('connectToDeviceList.emptyData.emptyDeviceSubtitle')}
