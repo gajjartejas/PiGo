@@ -95,7 +95,7 @@ const Devices = ({ navigation }: Props) => {
       />
       <View style={[styles.subView, largeScreenMode && styles.cardTablet]}>
         {devices && devices.length > 0 && (
-          <ScrollView style={styles.scrollView}>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
             <List.Section>
               <List.Subheader>{t('devicesList.subTitle')}</List.Subheader>
               {devices.map((item, idx) => {
@@ -104,7 +104,7 @@ const Devices = ({ navigation }: Props) => {
                     key={idx.toString()}
                     onPress={() => onPressDevice(item, idx)}
                     title={item.name ? item.name : t('devicesList.emptyName')}
-                    description={`${item.ip}:${item.port}`}
+                    description={`${item.name}-${item.ip}`}
                     left={props => <List.Icon {...props} icon="server-network" />}
                     right={props => (
                       <Menu
@@ -146,7 +146,12 @@ const Devices = ({ navigation }: Props) => {
         )}
       </View>
 
-      <FAB icon="plus" style={[styles.fab, { bottom: insets.bottom + 16 }]} onPress={onPressAddNewDevice} />
+      <FAB
+        label={t('devicesList.fabAddMore')!}
+        icon="plus"
+        style={[styles.fab, { bottom: insets.bottom + 16 }]}
+        onPress={onPressAddNewDevice}
+      />
     </View>
   );
 };

@@ -52,11 +52,11 @@ const Settings = ({ navigation }: Props) => {
         },
         {
           id: 2,
-          iconName: 'key',
+          iconName: 'web',
           iconType: 'material-community',
-          title: t('settings.identitiesTitle'),
-          description: t('settings.identitiesSubTitle'),
-          route: 'Identities',
+          title: t('settings.piAppServersTitle'),
+          description: t('settings.piAppServersSubTitle'),
+          route: 'PiAppServers',
         },
         {
           id: 3,

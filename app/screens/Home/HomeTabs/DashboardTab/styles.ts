@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollViewContainer: {
+    paddingBottom: 100,
+  },
   subView: {
     marginHorizontal: 8,
     flex: 1,
@@ -21,6 +24,17 @@ const styles = StyleSheet.create({
   },
   emptyView: {
     marginHorizontal: 20,
+  },
+  fab: {
+    position: 'absolute',
+    right: 32,
+  },
+  cardTablet: {
+    width: '70%',
+    alignSelf: 'center',
+  },
+  navigationButton: {
+    marginHorizontal: 16,
   },
 });
 

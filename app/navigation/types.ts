@@ -1,5 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import IConnectionIdentity from 'app/models/models/identity';
+import IPiAppServer from 'app/models/models/piAppServer';
 import IDevice from 'app/models/models/device';
 
 export interface LoadingParams {}
@@ -26,14 +26,18 @@ export interface AddDeviceParams {
   device?: IDevice;
   mode?: 'create' | 'edit' | 'connect';
 }
-export interface IdentitiesParams {
+export interface PiAppServersParams {
   mode?: 'view' | 'select';
 }
 export interface DevicesParams {
   mode?: 'view' | 'select';
 }
-export interface AddIdentityParams {
-  identity?: IConnectionIdentity;
+export interface PiAppWebViewParams {
+  piAppServer: IPiAppServer;
+}
+export interface AddPiAppServerParamParams {
+  piAppServer?: IPiAppServer;
+  mode?: 'create' | 'edit' | 'edit_device_piAppServer';
 }
 export interface ScanDevicesParams {}
 
@@ -49,10 +53,11 @@ export type LoggedInTabNavigatorParams = {
   Purchase: PurchaseScreen;
   ScanSetting: ScanSettingParams;
   AddDevice: AddDeviceParams;
-  Identities: IdentitiesParams;
+  PiAppServers: PiAppServersParams;
   Devices: DevicesParams;
-  AddIdentity: AddIdentityParams;
+  AddPiAppServer: AddPiAppServerParamParams;
   ScanDevices: ScanDevicesParams;
+  PiAppWebView: PiAppWebViewParams;
 };
 
 export type HomeTabsNavigatorParams = {

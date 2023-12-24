@@ -3,23 +3,20 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import zustandStorage from 'app/store/zustandStorage';
 
 interface IAppScanConfigState {
-  path: string;
-  port: number;
+  ports: number[];
   scanTimeoutInMs: number;
   scanThreads: number;
 }
 
 interface IAppScanConfigActions {
-  setPath: (path: string) => void;
-  setPort: (port: number) => void;
+  setPorts: (port: number[]) => void;
   setScanTimeoutInMs: (scanTimeoutInMs: number) => void;
   setScanThreads: (scanThreads: number) => void;
   reset: () => void;
 }
 
 const initialState: IAppScanConfigState = {
-  path: '/data.json',
-  port: 80,
+  ports: [80, 8080, 32400],
   scanTimeoutInMs: 1000,
   scanThreads: 150,
 };
@@ -29,8 +26,7 @@ const useAppScanConfigStore = create<IAppScanConfigState & IAppScanConfigActions
     persist(
       set => ({
         ...initialState,
-        setPath: (p: string) => set(_state => ({ path: p })),
-        setPort: (p: number) => set(_state => ({ port: p })),
+        setPorts: (p: number[]) => set(_state => ({ ports: p })),
         setScanTimeoutInMs: (st: number) => set(_state => ({ scanTimeoutInMs: st })),
         setScanThreads: (st: number) => set(_state => ({ scanThreads: st })),
         reset: () => set(_state => ({ ...initialState })),

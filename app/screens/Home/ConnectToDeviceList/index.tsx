@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Platform, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,6 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
   //Constants
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
   const navigation = useNavigation<ConnectToDeviceListTabNavigationProp>();
   const recentDevices = useAppConfigStore(store => store.devices);
   const selectDevice = useAppConfigStore(store => store.selectDevice);
@@ -83,8 +82,8 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
         title={t('general.appname')}
         style={{ backgroundColor: colors.background }}
         RightViewComponent={
-          <>
-            <Appbar.Action icon={MORE_ICON} onPress={onPressMore} />
+          <View style={styles.navigationButton}>
+            <Appbar.Action icon={'dots-vertical'} onPress={onPressMore} />
             <Menu
               visible={menuVisible}
               onDismiss={onDismissModal}
@@ -96,13 +95,13 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
               <Menu.Item onPress={onPressAddDevice} title={t('connectToDeviceList.addManually')} />
               <Menu.Item onPress={onPressAdvanceSetting} title={t('connectToDeviceList.devicesSettings')} />
             </Menu>
-          </>
+          </View>
         }
       />
 
       <View style={[styles.safeArea, largeScreenMode && styles.cardTablet, { backgroundColor: colors.background }]}>
         {recentDevices.length > 0 && (
-          <ScrollView style={styles.scrollView}>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
             <List.Section>
               <List.Subheader>{t(t('connectToDeviceList.savedConnections'))}</List.Subheader>
               {recentDevices.map((device, idx) => {
@@ -110,8 +109,8 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
                   <List.Item
                     key={device.id}
                     onPress={() => onPressDevice(device, idx)}
-                    title={device.ip}
-                    description={device.port}
+                    title={device.name}
+                    description={device.ip}
                     left={props => <List.Icon {...props} icon="microsoft-windows" />}
                     right={props => <List.Icon {...props} icon={'antenna'} color={'green'} />}
                   />
@@ -132,7 +131,12 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
           />
         )}
       </View>
-      <FAB icon="plus" style={[styles.fab, { bottom: insets.bottom }]} onPress={onPressAddDevice} />
+      <FAB
+        label={t('connectToDeviceList.fabAddMore')!}
+        icon="plus"
+        style={[styles.fab, { bottom: insets.bottom }]}
+        onPress={onPressAddDevice}
+      />
     </View>
   );
 };

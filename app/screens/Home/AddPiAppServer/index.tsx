@@ -18,79 +18,89 @@ import AppHeader from 'app/components/AppHeader';
 import Components from 'app/components';
 import useAppConfigStore from 'app/store/appConfig';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import validatePort from 'app/utils/validatePort';
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddIdentity'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddPiAppServer'>;
 
-const AddIdentity = ({ navigation, route }: Props) => {
+const AddPiAppServer = ({ navigation, route }: Props) => {
   //Refs
-  let nameRef = useRef<TextInput | null>(null);
-  let userNameRef = useRef<TextInput | null>(null);
-  let passwordRef = useRef<TextInput | null>(null);
+  const nameRef = useRef<TextInput | null>(null);
+  const portRef = useRef<TextInput | null>(null);
+  const pathRef = useRef<TextInput | null>(null);
 
   //Constants
   const { colors } = useTheme();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
-  const upsertIdentity = useAppConfigStore(store => store.upsertIdentity);
-  const identity = route.params.identity;
   const largeScreenMode = useLargeScreenMode();
+  const upsertPiAppServer = useAppConfigStore(store => store.upsertPiAppServer);
+  const updatePiAppServerToSelectedDevice = useAppConfigStore(store => store.updatePiAppServerToSelectedDevice);
+  const mode = route.params.mode;
+  const piAppServer = route.params.piAppServer;
 
   //States
   const [name, setName] = useState('');
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [port, setPort] = useState('');
+  const [path, setPath] = useState('');
 
   useEffect(() => {
-    //identity
-    setName(identity?.name ?? '');
-    setUserName(identity?.username ?? '');
-    setPassword(identity?.password ?? '');
-  }, [identity?.name, identity?.password, identity?.username]);
+    if (!piAppServer) {
+      return;
+    }
+    //piAppServer
+    setName(piAppServer.name);
+    setPath(piAppServer.path);
+    setPort(piAppServer.port.toString());
+  }, [piAppServer]);
 
   const onPressSave = useCallback(() => {
     Keyboard.dismiss();
 
-    let identityAddOrUpdate = {
-      id: identity ? identity.id : uuid.v4().toString(),
+    let piAppServerAddOrUpdate = {
+      id: piAppServer ? piAppServer.id : uuid.v4().toString(),
       name: name.trim(),
-      username: userName.trim(),
-      password: password,
+      path: path.trim(),
+      port: parseInt(port, 10),
     };
 
-    upsertIdentity(identityAddOrUpdate);
+    if (mode === 'edit_device_piAppServer') {
+      updatePiAppServerToSelectedDevice(piAppServerAddOrUpdate);
+    } else {
+      upsertPiAppServer(piAppServerAddOrUpdate);
+    }
     navigation.pop();
-  }, [identity, name, navigation, password, upsertIdentity, userName]);
+  }, [piAppServer, name, path, port, mode, navigation, updatePiAppServerToSelectedDevice, upsertPiAppServer]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
   }, [navigation]);
 
-  const validUserName = useCallback(
+  const validName = useCallback(
     (field: string): string | null => {
-      return !field || field.trim().length < 1 ? t('addIdentity.usernameRequired') : null;
+      return !field ? t('addPiAppServer.invalidName') : null;
     },
     [t],
   );
 
-  const validPassword = useCallback(
+  const validPort = useCallback(
     (field: string): string | null => {
-      return !field || field.trim().length < 1 ? t('addIdentity.passwordRequired') : null;
+      return !validatePort(field) ? t('addPiAppServer.invalidIpAddress') : null;
     },
     [t],
   );
 
   const validInputs = useMemo(() => {
-    return validUserName(userName) !== null || validPassword(password) !== null;
-  }, [password, userName, validPassword, validUserName]);
+    return validPort(port) !== null || validName(name) !== null;
+  }, [name, port, validName, validPort]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
-        title={identity ? t('addIdentity.titleUpdate') : t('addIdentity.titleAddIdentity')}
+        title={piAppServer ? t('addPiAppServer.titleUpdate') : t('addPiAppServer.titleAddPiAppServer')}
         style={{ backgroundColor: colors.background }}
       />
       <View style={styles.subView}>
@@ -107,40 +117,37 @@ const AddIdentity = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={name}
                 onChangeText={value => setName(value)}
-                placeholder={t('addIdentity.inputPlaceholder1')!}
+                placeholder={t('addPiAppServer.inputPlaceholder1')!}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => userNameRef.current?.focus()}
+                onSubmitEditing={() => pathRef.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
               />
 
               <Components.AppTextInput
-                ref={userNameRef}
+                ref={pathRef}
                 autoCapitalize="none"
-                value={userName}
-                onChangeText={value => setUserName(value)}
-                placeholder={t('addIdentity.inputPlaceholder2')!}
-                errorText={validUserName(userName)}
+                value={path}
+                onChangeText={setPath}
+                placeholder={t('addPiAppServer.inputPlaceholder2')!}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => passwordRef.current?.focus()}
+                onSubmitEditing={() => portRef.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
               />
 
               <Components.AppTextInput
-                ref={passwordRef}
+                ref={portRef}
                 autoCapitalize="none"
-                value={password}
-                onChangeText={value => setPassword(value)}
-                placeholder={t('addIdentity.inputPlaceholder3')!}
-                errorText={validPassword(password)}
+                value={port}
+                onChangeText={setPort}
+                placeholder={t('addPiAppServer.inputPlaceholder3')!}
+                errorText={validPort(port)}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={onPressSave}
-                keyboardType={'visible-password'}
-                spellCheck={false}
+                keyboardType={'numeric'}
                 returnKeyType={'done'}
               />
             </View>
@@ -152,11 +159,11 @@ const AddIdentity = ({ navigation, route }: Props) => {
           mode={'contained'}
           style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: insets.bottom + 8 }]}
           onPress={onPressSave}>
-          {identity ? t('addIdentity.updateButton') : t('addIdentity.saveButton')}
+          {piAppServer ? t('addPiAppServer.updateButton') : t('addPiAppServer.saveButton')}
         </Button>
       </View>
     </View>
   );
 };
 
-export default AddIdentity;
+export default AddPiAppServer;
