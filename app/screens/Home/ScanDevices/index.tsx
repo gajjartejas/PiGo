@@ -18,7 +18,6 @@ import Utils from 'app/utils';
 import IDevice from 'app/models/models/device';
 import useAppScanConfigStore from 'app/store/appScanConfig';
 import uuid from 'react-native-uuid';
-import useAppConfigStore from 'app/store/appConfig';
 import AppHeader from 'app/components/AppHeader';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
@@ -34,11 +33,9 @@ const ScanDevices = ({ navigation }: Props) => {
   //Constants
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const port = useAppScanConfigStore(store => store.port);
-  const path = useAppScanConfigStore(store => store.path);
+  const ports = useAppScanConfigStore(store => store.ports);
   const scanThreads = useAppScanConfigStore(store => store.scanThreads);
   const scanTimeoutInMs = useAppScanConfigStore(store => store.scanTimeoutInMs);
-  const refreshRateInMs = useAppConfigStore(store => store.refreshRateInMs);
   const onSelectScannedDeviceEmitter = useEventEmitter<IDevice>('on_select_scanned_device');
   const largeScreenMode = useLargeScreenMode();
 
@@ -56,7 +53,7 @@ const ScanDevices = ({ navigation }: Props) => {
     const networkInfo = await LanPortScanner.getNetworkInfo();
     const config: LSScanConfig = {
       networkInfo: networkInfo,
-      ports: [port],
+      ports: ports,
       timeout: scanTimeoutInMs,
       threads: scanThreads,
       logging: false,
@@ -67,7 +64,9 @@ const ScanDevices = ({ navigation }: Props) => {
       result => {
         if (result) {
           setScannedDevices(d => {
-            return [...d, { id: uuid.v4().toString(), refreshRateInMs: refreshRateInMs, path: path, ...result }];
+            return d.findIndex(c => c.ip === result.ip) === -1
+              ? [...d, { id: uuid.v4().toString(), name: '', scanPorts: [], piAppServers: [], ...result }]
+              : d;
           });
         }
       },
@@ -75,7 +74,7 @@ const ScanDevices = ({ navigation }: Props) => {
         setScanningFinished(true);
       },
     );
-  }, [path, port, refreshRateInMs, scanThreads, scanTimeoutInMs]);
+  }, [ports, scanThreads, scanTimeoutInMs]);
 
   useEffect(() => {
     (async () => {
@@ -120,7 +119,13 @@ const ScanDevices = ({ navigation }: Props) => {
         onPressBackButton={onGoBack}
         title={t('scanDevices.title')}
         RightViewComponent={
-          <IconButton icon="cog" iconColor={colors.onBackground} size={20} onPress={onPressSettings} />
+          <IconButton
+            style={styles.navigationButton}
+            icon="cog"
+            iconColor={colors.onBackground}
+            size={20}
+            onPress={onPressSettings}
+          />
         }
         style={{ backgroundColor: colors.background }}
       />

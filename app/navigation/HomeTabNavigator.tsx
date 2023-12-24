@@ -23,12 +23,13 @@ import { AppTheme } from 'app/models/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScanSetting from 'app/screens/Settings/ScanSetting';
 import AddDevice from 'app/screens/Home/AddDevice';
-import Identities from 'app/screens/Home/Identities';
-import AddIdentity from 'app/screens/Home/AddIdentity';
+import PiAppServers from 'app/screens/Home/PiAppServers';
+import AddPiAppServer from 'app/screens/Home/AddPiAppServer';
 import Devices from 'app/screens/Home/Devices';
 import useAppConfigStore from 'app/store/appConfig';
 import DashboardTab from 'app/screens/Home/HomeTabs/DashboardTab';
 import ScanDevices from 'app/screens/Home/ScanDevices';
+import PiAppWebView from 'app/screens/Home/PiAppWebView';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
 
@@ -102,10 +103,11 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="Translators" component={Translators} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanSetting" component={ScanSetting} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="AddDevice" component={AddDevice} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="Identities" component={Identities} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="AddIdentity" component={AddIdentity} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="PiAppServers" component={PiAppServers} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="AddPiAppServer" component={AddPiAppServer} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="Devices" component={Devices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="PiAppWebView" component={PiAppWebView} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };

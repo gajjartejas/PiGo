@@ -1,15 +1,11 @@
-import IDeviceInfo from 'app/models/models/deviceInfo';
-import IConnectionIdentity from 'app/models/models/identity';
+import IPiAppServer from 'app/models/models/piAppServer';
 
 interface IDevice {
   id: string;
-  name?: string | null;
-  port: number;
-  path: string;
-  refreshRateInMs: number;
+  name: string | null;
+  scanPorts: number[];
   ip: string;
-  deviceInfo?: IDeviceInfo | null;
-  identity?: IConnectionIdentity | null;
+  piAppServers: IPiAppServer[];
 }
 
 export default IDevice;

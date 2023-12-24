@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, TextInput } from 'react-native';
 
 //ThirdParty
@@ -23,15 +23,12 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ScanSetting'>;
 
 const ScanSetting = ({ navigation }: Props) => {
   //Refs
-  let modalVisibleUrlPathRef = useRef<TextInput | null>(null);
-  let modalVisibleUrlPortRef = useRef<TextInput | null>(null);
-
-  let modalVisibleScanTimeoutRef = useRef<TextInput | null>(null);
-  let modalVisibleScanThreadsRef = useRef<TextInput | null>(null);
+  const modalVisibleUrlPortsRef = useRef<TextInput | null>(null);
+  const modalVisibleScanTimeoutRef = useRef<TextInput | null>(null);
+  const modalVisibleScanThreadsRef = useRef<TextInput | null>(null);
 
   //Actions
-  const [path, setPath] = useAppScanConfigStore(store => [store.path, store.setPath]);
-  const [port, setPort] = useAppScanConfigStore(store => [store.port, store.setPort]);
+  const [ports, setPorts] = useAppScanConfigStore(store => [store.ports, store.setPorts]);
   const [scanTimeoutInMs, setScanTimeoutInMs] = useAppScanConfigStore(store => [
     store.scanTimeoutInMs,
     store.setScanTimeoutInMs,
@@ -52,18 +49,10 @@ const ScanSetting = ({ navigation }: Props) => {
       items: [
         {
           id: 0,
-          iconName: 'web',
-          iconType: 'material-community',
-          title: t('scanSetting.section1.row1.title'),
-          description: t('scanSetting.section1.row1.subTitle', { path }),
-          route: '',
-        },
-        {
-          id: 1,
           iconName: 'network',
           iconType: 'material-community',
-          title: t('scanSetting.section1.row2.title'),
-          description: t('scanSetting.section1.row2.subTitle', { port }),
+          title: t('scanSetting.section1.row1.title'),
+          description: t('scanSetting.section1.row1.subTitle', { ports: ports.join(', ') }),
           route: '',
         },
       ],
@@ -106,19 +95,17 @@ const ScanSetting = ({ navigation }: Props) => {
     },
   ];
 
-  const [modalVisibleUrlPath, setModalVisiblePath] = useState(false);
-  const [modalVisibleUrlPort, setModalVisiblePort] = useState(false);
-
+  const [modalVisibleUrlPorts, setModalVisiblePorts] = useState(false);
   const [modalVisibleScanTimeout, setModalVisibleScanTimeout] = useState(false);
   const [modalVisibleScanThreads, setModalVisibleScanThreads] = useState(false);
 
-  const [modalPath, setModalPath] = useState(path);
-  const [modalPort, setModalPort] = useState(`${port}`);
-
+  const [modalPorts, setModalPorts] = useState<string>(ports.join(', '));
   const [modalScanTimeout, setModalScanTimeout] = useState(`${scanTimeoutInMs}`);
   const [modalScanThreads, setModalScanThreads] = useState(`${scanThreads}`);
 
-  useCallback(() => {}, []);
+  useEffect(() => {
+    setModalPorts(ports.join(', '));
+  }, [ports]);
 
   const onGoBack = () => {
     navigation.pop();
@@ -132,10 +119,7 @@ const ScanSetting = ({ navigation }: Props) => {
     (item: ISettingSection, index: number, subItem: ISettingItem, subIndex: number) => {
       switch (true) {
         case index === 0 && subIndex === 0:
-          setModalVisiblePath(true);
-          break;
-        case index === 0 && subIndex === 1:
-          setModalVisiblePort(true);
+          setModalVisiblePorts(true);
           break;
         case index === 1 && subIndex === 0:
           setModalVisibleScanTimeout(true);
@@ -196,45 +180,29 @@ const ScanSetting = ({ navigation }: Props) => {
       </Components.AppBaseView>
 
       <Components.InputModal
-        ref={modalVisibleUrlPathRef}
-        modalVisible={modalVisibleUrlPath}
+        ref={modalVisibleUrlPortsRef}
+        modalVisible={modalVisibleUrlPorts}
         header={t('scanSetting.section1.row1.dialogTitle')}
         hint={t('scanSetting.section1.row1.dialogSubTitle')}
-        onPressClose={() => {
-          setModalVisiblePath(false);
-        }}
-        onPressSave={() => {
-          setModalVisiblePath(false);
-          setPath(modalPath.trim());
-        }}
-        placeholder={t('scanSetting.section1.row1.dialogTitle')!}
-        value={modalPath}
-        onChangeText={text => setModalPath(text)}
-        onBackButtonPress={() => {
-          setModalVisiblePath(false);
-        }}
-      />
-
-      <Components.InputModal
-        ref={modalVisibleUrlPortRef}
-        modalVisible={modalVisibleUrlPort}
-        header={t('scanSetting.section1.row2.dialogTitle')}
-        hint={t('scanSetting.section1.row2.dialogSubTitle')}
         onPressClose={async () => {
-          setModalVisiblePort(false);
+          setModalVisiblePorts(false);
         }}
         onPressSave={async () => {
-          setModalVisiblePort(false);
-          if (!isNaN(Number(modalPort))) {
-            setPort(parseInt(modalPort, 10));
-          }
+          setModalVisiblePorts(false);
+          const p = modalPorts.split(',').reduce((ac: number[], v: string) => {
+            if (!isNaN(Number(v))) {
+              ac.push(Number(v));
+            }
+            return ac;
+          }, []);
+          setPorts(p);
         }}
         placeholder={t('scanSetting.section1.row2.dialogTitle')!}
-        value={modalPort}
-        onChangeText={text => setModalPort(text)}
+        value={modalPorts}
+        onChangeText={text => setModalPorts(text)}
         keyboardType={'numeric'}
         onBackButtonPress={() => {
-          setModalVisiblePath(false);
+          setModalVisiblePorts(false);
         }}
       />
 
@@ -257,7 +225,7 @@ const ScanSetting = ({ navigation }: Props) => {
         onChangeText={text => setModalScanTimeout(text)}
         keyboardType={'numeric'}
         onBackButtonPress={() => {
-          setModalVisiblePath(false);
+          setModalVisibleScanTimeout(false);
         }}
       />
 
@@ -280,7 +248,7 @@ const ScanSetting = ({ navigation }: Props) => {
         onChangeText={text => setModalScanThreads(text)}
         keyboardType={'numeric'}
         onBackButtonPress={() => {
-          setModalVisiblePath(false);
+          setModalVisibleScanThreads(false);
         }}
       />
     </View>

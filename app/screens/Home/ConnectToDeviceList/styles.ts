@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollViewContainer: {
+    paddingBottom: 100,
+  },
   subView: {
     flex: 1,
   },
@@ -25,6 +28,9 @@ const styles = StyleSheet.create({
   cardTablet: {
     width: '70%',
     alignSelf: 'center',
+  },
+  navigationButton: {
+    marginHorizontal: 16,
   },
 });
 

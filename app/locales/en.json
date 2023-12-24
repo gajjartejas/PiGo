@@ -33,9 +33,9 @@
     "appearanceSubTitle": "Customization of appearance",
     "scanTitle": "Scan Settings",
     "scanSubTitle": "Auto scan(nearby scan) settings",
-    "identitiesTitle": "Identities",
-    "identitiesSubTitle": "Username and passwords for basic access authentication",
-    "recentConnectionsTitle": "RPi Servers",
+    "piAppServersTitle": "Default Pi App Servers",
+    "piAppServersSubTitle": "Manage list of default Pi app servers like Pi-hole, Plex etc",
+    "recentConnectionsTitle": "Pi Servers",
     "recentConnectionsSubTitle": "Manage added Pi servers",
     "infoHeader": "Information",
     "changelogTitle": "Changelog",
@@ -96,19 +96,12 @@
     "section1": {
       "header": "Default Scan Config",
       "row1": {
-        "title": "URL Path",
-        "subTitle": "{{path}}",
-        "dialogTitle": "Enter URL Path",
-        "dialogSubTitle": "URL Path of the Open Hardware Client"
-      },
-      "row2": {
-        "title": "Port",
-        "subTitle": "{{port}}",
-        "dialogTitle": "Enter Port",
-        "dialogSubTitle": "Port number of Open Hardware Monitor client"
+        "title": "Ports",
+        "subTitle": "{{ports}}",
+        "dialogTitle": "Enter Ports (Comma Seperated)",
+        "dialogSubTitle": "Add ports of possible Pi server's ports, this will help to identify your Pi on the local network. (eg: 80 default, 32400 for plex etc`)"
       }
     },
-
     "section3": {
       "header": "Advanced",
       "row1": {
@@ -142,7 +135,7 @@
       "item1": {
         "title": "Disconnected!",
         "message": "Pi server disconnected, Please try again!",
-        "button": "Update Settings"
+        "button": "Add New Pi App Server"
       },
       "item2": {
         "title": "Connection Timeout",
@@ -150,15 +143,16 @@
         "button": "Update Settings"
       },
       "item3": {
-        "title": "Authorization Required!",
-        "message": "Authorization is required, please update it from settings.",
-        "button": "Update Settings"
+        "title": "No apps added!",
+        "message": "Please add apps by clicking Add Apps button",
+        "button": "Add New Pi App Server"
       },
       "item4": {
         "title": "Disconnected",
         "button": "Update Settings"
       }
-    }
+    },
+    "fabAddMore": "Add"
   },
   "addDevice": {
     "titleCreate": "CREATE",
@@ -176,19 +170,8 @@
     "inputPlaceholder3": "Enter Path (ex: /data.json)",
     "inputPlaceholder4": "Enter Port",
     "inputPlaceholder5": "Enter refresh rate in milliseconds",
-    "selectIdentity": "Select Identity (Optional)",
+    "selectPiAppServer": "Select Pi App Server",
     "testConnection": "Test Connection"
-  },
-  "addIdentity": {
-    "usernameRequired": "Username is required!",
-    "passwordRequired": "Password is required!",
-    "titleUpdate": "Update Identity",
-    "titleAddIdentity": "Add Identity",
-    "inputPlaceholder1": "Enter Name (Optional)",
-    "inputPlaceholder2": "Enter Username",
-    "inputPlaceholder3": "Enter Password",
-    "updateButton": "UPDATE",
-    "saveButton": "SAVE"
   },
   "devicesList": {
     "title": "Pi Servers",
@@ -198,19 +181,32 @@
     "edit": "Edit",
     "delete": "Delete",
     "emptyDeviceTitle": "No Raspberry Pi found!",
-    "emptyDeviceSubtitle": "Please add a new Pi server."
+    "emptyDeviceSubtitle": "Please add a new Pi server.",
+    "fabAddMore": "Add More"
   },
-  "identitiesList": {
-    "selectTitle": "Select Identity",
-    "listTitle": "Identities",
-    "createNewIdentity": "Create New Identity",
-    "subTitle": "Identities",
+  "addPiAppServer": {
+    "invalidName": "Invalid name",
+    "invalidIpAddress": "Invalid IP address",
+    "titleUpdate": "Update Pi App Server",
+    "titleAddPiAppServer": "Add Pi App Server",
+    "inputPlaceholder1": "Enter Name",
+    "inputPlaceholder2": "Enter Path",
+    "inputPlaceholder3": "Enter Port",
+    "updateButton": "UPDATE",
+    "saveButton": "SAVE"
+  },
+  "piAppServersList": {
+    "selectTitle": "Select Pi App Server",
+    "listTitle": "Pi App Servers",
+    "createNewPiAppServer": "Add New Pi App Servers",
+    "subTitle": "Pi App Servers",
     "edit": "Edit",
     "delete": "Delete",
     "emptyData": {
-      "title": "No identity found!",
-      "message": "Please create a new identity."
-    }
+      "title": "No Pi app server found!",
+      "message": "Please create a new Pi App Server."
+    },
+    "fabAddMore": "Add More"
   },
   "scanDevices": {
     "title": "Nearby Pi Servers",
@@ -232,6 +228,14 @@
       "emptyDeviceTitle": "No Pi server found!",
       "emptyDeviceSubtitle": "Please add a new Pi server",
       "button": "Add Pi Server"
-    }
+    },
+    "fabAddMore": "New"
+  },
+  "piAppWebView": {
+    "refresh": "Refresh",
+    "back": "Back",
+    "forward": "Forward",
+    "copyURL": "Copy URL",
+    "info": "Info"
   }
 }

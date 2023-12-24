@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   spacing: {
     width: 8,
   },
-  selectIdentity: {
+  selectPiAppServer: {
     marginHorizontal: -16,
   },
   bottomMargin: {

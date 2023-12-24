@@ -1,48 +1,44 @@
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import zustandStorage from 'app/store/zustandStorage';
-import IConnectionIdentity from 'app/models/models/identity';
 import IDevice from 'app/models/models/device';
 import IDeviceInfo from 'app/models/models/deviceInfo';
-import inspectService from 'app/services/inspectService';
+import IPiAppServer from 'app/models/models/piAppServer';
+import PI_APP_SERVERS from 'app/config/pi-app-servers';
 
 interface IAppConfigState {
   scanning: boolean;
   connected: boolean;
-  requestAuth: boolean;
-  identities: IConnectionIdentity[];
+  piAppServers: IPiAppServer[];
   devices: IDevice[];
   selectedDevice: IDevice | null;
   error: any | null;
-  refreshRateInMs: number;
 }
 
 interface IAppConfigActions {
   setScanning: (scanning: boolean) => void;
   reset: () => void;
-  upsertIdentity: (identity: IConnectionIdentity) => void;
-  deleteIdentity: (id: string) => void;
+  upsertPiAppServer: (piAppServer: IPiAppServer) => void;
+  deletePiAppServer: (id: string) => void;
   upsertDevice: (device: IDevice) => void;
   deleteDevice: (deviceId: string) => void;
   selectDevice: (device: IDevice) => void;
   updateDeviceInfo: (device: IDeviceInfo | null) => void;
-  connect: (
-    device: IDevice,
-    skipStateUpdate: boolean,
-    abortController: AbortController | null,
-  ) => Promise<{ deviceInfo: IDeviceInfo | null; error: any | null }>;
+
+  addPiAppServerToSelectedDevice: (piAppServer: IPiAppServer) => void;
+  deletePiAppServerToSelectedDevice: (id: string) => void;
+  updatePiAppServerToSelectedDevice: (piAppServer: IPiAppServer) => void;
+
   disconnect: () => void;
 }
 
 const initialState: IAppConfigState = {
   scanning: false,
   connected: false,
-  identities: [],
+  piAppServers: PI_APP_SERVERS,
   devices: [],
   selectedDevice: null,
-  requestAuth: false,
   error: null,
-  refreshRateInMs: 1000,
 };
 
 const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
@@ -52,19 +48,19 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
         ...initialState,
         setScanning: (s: boolean) => set(_state => ({ scanning: s })),
         reset: () => set(_state => ({ ...initialState })),
-        upsertIdentity: (idnt: IConnectionIdentity) =>
+        upsertPiAppServer: (piAppServer: IPiAppServer) =>
           set(state => {
-            const newIdentifier = [...state.identities];
-            const i = newIdentifier.findIndex(_element => _element.id === idnt.id);
+            const newPiAppServer = [...state.piAppServers];
+            const i = newPiAppServer.findIndex(_element => _element.id === piAppServer.id);
             if (i > -1) {
-              newIdentifier[i] = idnt;
+              newPiAppServer[i] = piAppServer;
             } else {
-              newIdentifier.unshift(idnt);
+              newPiAppServer.unshift(piAppServer);
             }
-            return { ...state, identities: newIdentifier };
+            return { ...state, piAppServers: newPiAppServer };
           }),
-        deleteIdentity: (id: string) =>
-          set(state => ({ ...state, identities: [...state.identities.filter(v => v.id !== id)] })),
+        deletePiAppServer: (id: string) =>
+          set(state => ({ ...state, piAppServers: [...state.piAppServers.filter(v => v.id !== id)] })),
         upsertDevice: (dev: IDevice) =>
           set(state => {
             const newDevice = [...state.devices];
@@ -91,37 +87,54 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
             error: null,
             requestAuth: false,
           })),
-        connect: async (d: IDevice, skipStateUpdate: boolean, abortController: AbortController | null) => {
-          try {
-            let response = await inspectService({
-              ipAddress: d.ip,
-              port: d.port,
-              path: d.path,
-              username: d.identity ? d.identity.username : null,
-              password: d.identity ? d.identity.password : null,
-              abortController: abortController,
-            });
-            if (!skipStateUpdate) {
-              set({
-                selectedDevice: { ...d, deviceInfo: response },
-                connected: true,
-                requestAuth: false,
-                error: null,
-              });
-            }
+        addPiAppServerToSelectedDevice: (piAppServer: IPiAppServer) =>
+          set(state => {
+            const selectedDevice = state.selectedDevice
+              ? {
+                  ...state.selectedDevice,
+                  piAppServers: [...state.selectedDevice.piAppServers, piAppServer],
+                }
+              : state.selectedDevice;
 
-            return { deviceInfo: response, error: null };
-          } catch (e: any) {
-            if (!skipStateUpdate) {
-              if (e && e.code === 401) {
-                set({ requestAuth: true, connected: false, error: e });
-              } else {
-                set({ error: e, connected: false });
-              }
-            }
+            const devices = state.devices.map(device => (device.id === selectedDevice?.id ? selectedDevice : device));
+            return {
+              ...state,
+              selectedDevice: selectedDevice,
+              devices,
+            };
+          }),
+        updatePiAppServerToSelectedDevice: (piAppServer: IPiAppServer) =>
+          set(state => {
+            const selectedDevice = state.selectedDevice
+              ? {
+                  ...state.selectedDevice,
+                  piAppServers: state.selectedDevice.piAppServers.map(ps =>
+                    ps.id === piAppServer.id ? piAppServer : ps,
+                  ),
+                }
+              : state.selectedDevice;
 
-            return { deviceInfo: null, error: e };
-          }
+            const devices = state.devices.map(device => (device.id === selectedDevice?.id ? selectedDevice : device));
+            return {
+              ...state,
+              selectedDevice: selectedDevice,
+              devices,
+            };
+          }),
+        deletePiAppServerToSelectedDevice: (id: string) => {
+          set(state => {
+            const selectedDevice = state.selectedDevice
+              ? { ...state.selectedDevice, piAppServers: state.selectedDevice.piAppServers.filter(v => v.id !== id) }
+              : state.selectedDevice;
+
+            const devices = state.devices.map(device => (device.id === selectedDevice?.id ? selectedDevice : device));
+
+            return {
+              ...state,
+              devices: devices,
+              selectedDevice: selectedDevice,
+            };
+          });
         },
         disconnect: () =>
           set(_state => ({

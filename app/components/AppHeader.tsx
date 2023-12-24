@@ -20,6 +20,7 @@ interface AppHeaderProps {
   tintColor?: string | null;
   showNotificationBell?: boolean | null;
   RightViewComponent?: React.ReactElement | null;
+  LeftViewComponent?: React.ReactElement | null;
   statusBarHeight?: number | null;
   backArrowImage?: string;
   largeHeader?: boolean;
@@ -31,8 +32,9 @@ const AppHeader = (props: AppHeaderProps) => {
 
   let tintColor = props.tintColor === undefined ? colors.onBackground : props.tintColor;
   let textStyle = props.textStyle === undefined ? {} : props.textStyle;
-  let RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
+  let LeftViewComponent = props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
   let backArrowImage = props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
+  let RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
 
   //Const
   const insets = useSafeAreaInsets();
@@ -59,7 +61,7 @@ const AppHeader = (props: AppHeaderProps) => {
             {props.title}
           </Text>
         </View>
-
+        {LeftViewComponent}
         {props.showBackButton && (
           <TouchableOpacity activeOpacity={0.8} style={styles.menuButton} onPress={props.onPressBackButton!}>
             <Icon type="entypo" name={backArrowImage} color={tintColor!} size={26} />

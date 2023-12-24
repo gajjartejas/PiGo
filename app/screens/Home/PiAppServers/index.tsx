@@ -12,7 +12,7 @@ import styles from './styles';
 //Redux
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import AppHeader from 'app/components/AppHeader';
-import IConnectionIdentity from 'app/models/models/identity';
+import IPiAppServer from 'app/models/models/piAppServer';
 import useAppConfigStore from 'app/store/appConfig';
 import Components from 'app/components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,18 +21,18 @@ import { useTranslation } from 'react-i18next';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'Identities'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppServers'>;
 
-const Identities = ({ navigation, route }: Props) => {
+const PiAppServers = ({ navigation, route }: Props) => {
   //Refs
 
   //Constants
   const { colors } = useTheme();
-  const identities = useAppConfigStore(store => store.identities);
-  const deleteIdentity = useAppConfigStore(store => store.deleteIdentity);
+  const piAppServers = useAppConfigStore(store => store.piAppServers);
+  const deletePiAppServer = useAppConfigStore(store => store.deletePiAppServer);
   const insets = useSafeAreaInsets();
   const mode = route.params && route.params.mode ? route.params.mode : 'create';
-  const onSelectIdentityEmitter = useEventEmitter('on_select_identity');
+  const onSelectPiAppServerEmitter = useEventEmitter<IPiAppServer>('on_select_piAppServer');
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
 
@@ -51,71 +51,71 @@ const Identities = ({ navigation, route }: Props) => {
     navigation.pop();
   }, [navigation]);
 
-  const onPressIdentity = useCallback(
-    (item: IConnectionIdentity, _index: number) => {
+  const onPressPiAppServer = useCallback(
+    (item: IPiAppServer, _index: number) => {
       if (mode === 'select') {
-        onSelectIdentityEmitter(item);
+        onSelectPiAppServerEmitter(item);
         navigation.goBack();
       } else {
-        navigation.navigate('AddIdentity', { identity: item });
+        navigation.navigate('AddPiAppServer', { piAppServer: item });
       }
     },
-    [mode, navigation, onSelectIdentityEmitter],
+    [mode, navigation, onSelectPiAppServerEmitter],
   );
 
-  const onPressAddNewIdentity = useCallback(() => {
-    navigation.navigate('AddIdentity', {});
+  const onPressAddNewPiAppServer = useCallback(() => {
+    navigation.navigate('AddPiAppServer', {});
   }, [navigation]);
 
-  const onRedirectToCreateIdentity = useCallback(() => {
-    navigation.navigate('AddIdentity', {});
+  const onRedirectToCreatePiAppServer = useCallback(() => {
+    navigation.navigate('AddPiAppServer', {});
   }, [navigation]);
 
   const onPressEditMenu = useCallback(
-    (item: IConnectionIdentity, _index: number) => {
+    (item: IPiAppServer, _index: number) => {
       closeMenu();
-      navigation.navigate('AddIdentity', { identity: item });
+      navigation.navigate('AddPiAppServer', { piAppServer: item });
     },
     [closeMenu, navigation],
   );
 
   const onPressDeleteMenu = useCallback(
-    (item: IConnectionIdentity, _index: number) => {
-      deleteIdentity(item.id);
+    (item: IPiAppServer, _index: number) => {
+      deletePiAppServer(item.id);
       closeMenu();
     },
-    [closeMenu, deleteIdentity],
+    [closeMenu, deletePiAppServer],
   );
 
   const renderNoDataButtons = useCallback(() => {
     return (
       <View style={styles.noDataButtonsContainer}>
-        <Button onPress={onRedirectToCreateIdentity}>{t('identitiesList.createNewIdentity')}</Button>
+        <Button onPress={onRedirectToCreatePiAppServer}>{t('piAppServersList.createNewPiAppServer')}</Button>
       </View>
     );
-  }, [onRedirectToCreateIdentity, t]);
+  }, [onRedirectToCreatePiAppServer, t]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
-        title={mode === 'select' ? t('identitiesList.selectTitle') : t('identitiesList.listTitle')}
+        title={mode === 'select' ? t('piAppServersList.selectTitle') : t('piAppServersList.listTitle')}
         style={{ backgroundColor: colors.background }}
       />
       <View style={[styles.subView, largeScreenMode && styles.cardTablet]}>
-        {identities && identities.length > 0 && (
-          <ScrollView style={styles.scrollView}>
+        {piAppServers && piAppServers.length > 0 && (
+          <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
             <List.Section>
-              <List.Subheader>{t('identitiesList.subTitle')}</List.Subheader>
-              {identities.map((identity, idx) => {
+              <List.Subheader>{t('piAppServersList.subTitle')}</List.Subheader>
+              {piAppServers.map((piAppServer, idx) => {
                 return (
                   <List.Item
                     key={idx.toString()}
-                    onPress={() => onPressIdentity(identity, idx)}
-                    title={identity.name ? identity.name : identity.username}
-                    description={identity.username}
-                    left={props => <List.Icon {...props} icon="key" />}
+                    onPress={() => onPressPiAppServer(piAppServer, idx)}
+                    title={piAppServer.name}
+                    description={`${piAppServer.path}:${piAppServer.port}`}
+                    left={props => <List.Icon {...props} icon="web" />}
                     right={props => (
                       <Menu
                         visible={visibleIndex === idx}
@@ -124,16 +124,16 @@ const Identities = ({ navigation, route }: Props) => {
                         <Menu.Item
                           leadingIcon="pencil"
                           onPress={() => {
-                            onPressEditMenu(identity, idx);
+                            onPressEditMenu(piAppServer, idx);
                           }}
-                          title={t('identitiesList.edit')}
+                          title={t('piAppServersList.edit')}
                         />
                         <Menu.Item
                           leadingIcon="delete"
                           onPress={() => {
-                            onPressDeleteMenu(identity, idx);
+                            onPressDeleteMenu(piAppServer, idx);
                           }}
-                          title={t('identitiesList.delete')}
+                          title={t('piAppServersList.delete')}
                         />
                       </Menu>
                     )}
@@ -144,21 +144,26 @@ const Identities = ({ navigation, route }: Props) => {
           </ScrollView>
         )}
 
-        {identities.length < 1 && (
+        {piAppServers.length < 1 && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
             iconName="raspberry-pi"
             style={{}}
-            header={t('identitiesList.emptyData.title')}
-            subHeader={t('identitiesList.emptyData.message')}
+            header={t('piAppServersList.emptyData.title')}
+            subHeader={t('piAppServersList.emptyData.message')}
             renderContent={renderNoDataButtons}
           />
         )}
       </View>
 
-      <FAB icon="plus" style={[styles.fab, { bottom: insets.bottom + 16 }]} onPress={onPressAddNewIdentity} />
+      <FAB
+        label={t('piAppServersList.fabAddMore')!}
+        icon="plus"
+        style={[styles.fab, { bottom: insets.bottom + 16 }]}
+        onPress={onPressAddNewPiAppServer}
+      />
     </View>
   );
 };
 
-export default Identities;
+export default PiAppServers;
