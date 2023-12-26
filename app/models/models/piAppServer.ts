@@ -3,6 +3,8 @@ interface IPiAppServer {
   name: string;
   path: string;
   port: number;
+  github: string;
+  description: string;
 }
 
 export default IPiAppServer;
