@@ -39,7 +39,6 @@ const AddDevice = ({ navigation, route }: Props) => {
   const mode = route.params.mode;
   const ports = useAppScanConfigStore(store => store.ports);
   const upsertDevice = useAppConfigStore(store => store.upsertDevice);
-  const piAppServers = useAppConfigStore(store => store.piAppServers);
   const largeScreenMode = useLargeScreenMode();
 
   //States
@@ -93,13 +92,13 @@ const AddDevice = ({ navigation, route }: Props) => {
       name: connectionName.trim(),
       scanPorts: ports,
       ip: ipAddress.trim(),
-      piAppServers: piAppServers,
+      piAppServers: device?.piAppServers ?? [],
     };
 
     upsertDevice(deviceAddOrUpdate);
 
     navigation.pop();
-  }, [connectionName, device, ipAddress, navigation, piAppServers, ports, upsertDevice]);
+  }, [connectionName, device, ipAddress, navigation, ports, upsertDevice]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -112,13 +111,20 @@ const AddDevice = ({ navigation, route }: Props) => {
     [t],
   );
 
+  const validateName = useCallback(
+    (field: string): string | null => {
+      return field.trim().length < 1 ? t('addDevice.invalidName') : null;
+    },
+    [t],
+  );
+
   const onScanDevices = useCallback(() => {
     navigation.navigate('ScanDevices', {});
   }, [navigation]);
 
   const validInputs = useMemo(() => {
-    return validIPAddress(ipAddress) !== null;
-  }, [ipAddress, validIPAddress]);
+    return validIPAddress(ipAddress) !== null || validateName(connectionName) !== null;
+  }, [connectionName, ipAddress, validIPAddress, validateName]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -129,7 +135,7 @@ const AddDevice = ({ navigation, route }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
       <View style={styles.subView}>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView keyboardDismissMode={'interactive'} style={styles.scrollView}>
           <View style={[styles.centeredView]}>
             <View
               style={[
@@ -143,6 +149,7 @@ const AddDevice = ({ navigation, route }: Props) => {
                 value={connectionName}
                 onChangeText={setConnectionName}
                 placeholder={t('addDevice.inputPlaceholder1')!}
+                errorText={validateName(ipAddress)}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={() => ipAddressRef.current?.focus()}

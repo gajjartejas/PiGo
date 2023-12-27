@@ -19,6 +19,8 @@ import Components from 'app/components';
 import useAppConfigStore from 'app/store/appConfig';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import validatePort from 'app/utils/validatePort';
+import IPiAppServer from 'app/models/models/piAppServer';
+import isValidHttpUrl from 'app/utils/isValidURL';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddPiAppServer'>;
@@ -28,6 +30,8 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   const nameRef = useRef<TextInput | null>(null);
   const portRef = useRef<TextInput | null>(null);
   const pathRef = useRef<TextInput | null>(null);
+  const githubLinkRef = useRef<TextInput | null>(null);
+  const descriptionRef = useRef<TextInput | null>(null);
 
   //Constants
   const { colors } = useTheme();
@@ -44,6 +48,8 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   const [name, setName] = useState('');
   const [port, setPort] = useState('');
   const [path, setPath] = useState('');
+  const [gitHubLink, setGitHubLink] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     if (!piAppServer) {
@@ -53,16 +59,20 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     setName(piAppServer.name);
     setPath(piAppServer.path);
     setPort(piAppServer.port.toString());
+    setGitHubLink(piAppServer.github.toString());
+    setDescription(piAppServer.description.toString());
   }, [piAppServer]);
 
   const onPressSave = useCallback(() => {
     Keyboard.dismiss();
 
-    let piAppServerAddOrUpdate = {
+    let piAppServerAddOrUpdate: IPiAppServer = {
       id: piAppServer ? piAppServer.id : uuid.v4().toString(),
       name: name.trim(),
       path: path.trim(),
       port: parseInt(port, 10),
+      github: gitHubLink.trim(),
+      description: description.trim(),
     };
 
     if (mode === 'edit_device_piAppServer') {
@@ -71,7 +81,18 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
       upsertPiAppServer(piAppServerAddOrUpdate);
     }
     navigation.pop();
-  }, [piAppServer, name, path, port, mode, navigation, updatePiAppServerToSelectedDevice, upsertPiAppServer]);
+  }, [
+    piAppServer,
+    name,
+    path,
+    port,
+    gitHubLink,
+    description,
+    mode,
+    navigation,
+    updatePiAppServerToSelectedDevice,
+    upsertPiAppServer,
+  ]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -91,6 +112,13 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     [t],
   );
 
+  const validURL = useCallback(
+    (field: string): string | null => {
+      return field.trim().length > 1 && !isValidHttpUrl(field) ? t('addPiAppServer.invalidURLAddress') : null;
+    },
+    [t],
+  );
+
   const validInputs = useMemo(() => {
     return validPort(port) !== null || validName(name) !== null;
   }, [name, port, validName, validPort]);
@@ -104,7 +132,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
       <View style={styles.subView}>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView keyboardDismissMode={'interactive'} style={styles.scrollView}>
           <View style={[styles.centeredView]}>
             <View
               style={[
@@ -116,7 +144,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 ref={nameRef}
                 autoCapitalize="none"
                 value={name}
-                onChangeText={value => setName(value)}
+                onChangeText={setName}
                 placeholder={t('addPiAppServer.inputPlaceholder1')!}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
@@ -147,8 +175,38 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 errorText={validPort(port)}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
+                onSubmitEditing={() => githubLinkRef.current?.focus()}
                 keyboardType={'numeric'}
-                returnKeyType={'done'}
+                returnKeyType={'next'}
+              />
+
+              <Components.AppTextInput
+                ref={githubLinkRef}
+                autoCapitalize="none"
+                value={gitHubLink}
+                onChangeText={setGitHubLink}
+                placeholder={t('addPiAppServer.inputPlaceholder4')!}
+                errorText={validURL(gitHubLink)}
+                containerStyle={styles.inputStyle}
+                placeholderTextColor={theme.colors.onSurface}
+                onSubmitEditing={() => descriptionRef.current?.focus()}
+                keyboardType={'default'}
+                returnKeyType={'next'}
+              />
+
+              <Components.AppTextInput
+                ref={descriptionRef}
+                multiline={true}
+                autoCapitalize="none"
+                value={description}
+                onChangeText={setDescription}
+                placeholder={t('addPiAppServer.inputPlaceholder5')!}
+                errorText={validURL(gitHubLink)}
+                containerStyle={styles.inputStyle}
+                style={[styles.inputMultilineStyle, { color: colors.onBackground }]}
+                placeholderTextColor={theme.colors.onSurface}
+                keyboardType={'default'}
+                returnKeyType={'default'}
               />
             </View>
           </View>

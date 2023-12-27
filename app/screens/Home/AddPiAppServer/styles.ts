@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
   inputStyle: {
     marginBottom: 16,
   },
+  inputMultilineStyle: {
+    minHeight: 60,
+    maxHeight: 300,
+    flex: 1,
+    marginTop: 12,
+  },
   inputStyleBottom: {
     marginBottom: 16,
   },
