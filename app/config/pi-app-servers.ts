@@ -10,9 +10,9 @@ const PI_APP_SERVERS = [
   {
     id: 'ad-guard-home',
     name: 'AdGuardHome',
-    path: 'https://github.com/AdguardTeam/AdGuardHome',
-    port: 80,
-    github: '8123',
+    path: '',
+    port: 8123,
+    github: 'https://github.com/AdguardTeam/AdGuardHome',
     description: 'A network-wide ad and tracker blocker.',
   },
   {

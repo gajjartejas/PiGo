@@ -29,10 +29,10 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
       <View style={[styles.textInputContainer, { borderBottomColor: theme.colors.primary }]}>
         <TextInput
           ref={ref}
-          {...otherProps}
           onBlur={handleOnBlur}
           placeholderTextColor={`${theme.colors.onBackground}80`}
           style={[styles.textInput, { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground }]}
+          {...otherProps}
         />
         {RightAccessoryView}
       </View>
