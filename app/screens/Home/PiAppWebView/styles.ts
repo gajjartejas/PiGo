@@ -132,10 +132,37 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   progressBar: {
-    height: 1,
+    height: '100%',
+    backgroundColor: 'transparent',
   },
   navigationButton: {
     marginHorizontal: 8,
+  },
+  homeBackFwdButtonContainer: {
+    flexDirection: 'row',
+  },
+  docker: {
+    position: 'absolute',
+    left: 12,
+    right: 12,
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  dockerLoadingProgress: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+    zIndex: 10,
+    height: 50,
+    overflow: 'hidden',
+    borderRadius: 25,
+    backgroundColor: 'transparent',
   },
 });
 
