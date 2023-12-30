@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { CompositeNavigationProp, useIsFocused, useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
-import LanPortScanner from 'react-native-lan-port-scanner';
 
 //App modules
 import Components from 'app/components';
@@ -85,22 +84,39 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       }
       refDeviceInfoRequestInProgress.current = true;
       try {
-        const result = selectedDevice.piAppServers.map(v =>
-          LanPortScanner.scanHost(selectedDevice.ip, v.port, 1000, false),
+        const result:any = await Promise.allSettled(
+          selectedDevice.piAppServers.map(async v => {
+            const url = `http://${selectedDevice.ip}:${v.port}${v.path}`;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1000);
+
+            try {
+              const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
+
+              clearTimeout(timeoutId);
+
+              return { status: 'fulfilled', reachable: response.ok };
+            } catch (error) {
+              clearTimeout(timeoutId);
+              return { status: 'rejected', reason: error };
+            }
+          }),
         );
-        const res = await Promise.allSettled(result);
+        console.log('response', result);
+
         for (let i = 0; i < selectedDevice.piAppServers.length; i++) {
           selectedDevice.piAppServers[i] = {
             ...selectedDevice.piAppServers[i],
-            reachable: res[i].status === 'fulfilled',
+            reachable: result[i].status === 'fulfilled' && result[i].value.reachable,
           };
         }
+
         selectDevice({ ...selectedDevice });
       } catch (error) {
         console.log('error', error);
       }
       refDeviceInfoRequestInProgress.current = false;
-    }, 20000);
+    }, 2000);
 
     return () => {
       clearInterval(to);
