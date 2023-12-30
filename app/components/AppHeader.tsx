@@ -14,6 +14,7 @@ interface AppHeaderProps {
   showBackButton?: boolean;
   onPressBackButton?: () => void;
   title?: string | null;
+  subTitle?: string | null;
   leftTitle?: string;
   style?: object;
   textStyle?: object | null;
@@ -21,6 +22,7 @@ interface AppHeaderProps {
   showNotificationBell?: boolean | null;
   RightViewComponent?: React.ReactElement | null;
   LeftViewComponent?: React.ReactElement | null;
+  SubTitleComponent?: React.ReactElement | null;
   statusBarHeight?: number | null;
   backArrowImage?: string;
   largeHeader?: boolean;
@@ -35,6 +37,7 @@ const AppHeader = (props: AppHeaderProps) => {
   let LeftViewComponent = props.RightViewComponent === undefined ? <></> : props.LeftViewComponent;
   let backArrowImage = props.backArrowImage === undefined ? 'chevron-left' : props.backArrowImage;
   let RightViewComponent = props.RightViewComponent === undefined ? <></> : props.RightViewComponent;
+  let SubTitleComponent = props.SubTitleComponent === undefined ? <></> : props.SubTitleComponent;
 
   //Const
   const insets = useSafeAreaInsets();
@@ -54,12 +57,20 @@ const AppHeader = (props: AppHeaderProps) => {
       <View style={[styles.statusBar, { height: statusBarHeight }]} />
       <View style={[styles.navigationContainer, props.largeHeader && styles.largeStatusBarHeight]}>
         <View style={[StyleSheet.absoluteFill, styles.titleViewStyle]}>
-          <Text
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={{ ...styles.titleTextStyle, color: colors.text, ...backButtonPaddingForTitle, ...textStyle }}>
-            {props.title}
-          </Text>
+          {!!props.title && (
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              style={{ ...styles.titleTextStyle, color: colors.text, ...backButtonPaddingForTitle, ...textStyle }}>
+              {props.title}
+            </Text>
+          )}
+          {!!props.subTitle && (
+            <Text numberOfLines={1} ellipsizeMode={'tail'} style={{ ...styles.subTitleTextStyle, color: colors.text }}>
+              {props.subTitle}
+            </Text>
+          )}
+          {SubTitleComponent}
         </View>
         {LeftViewComponent}
         {props.showBackButton && (
@@ -111,6 +122,10 @@ const styles = StyleSheet.create({
   titleTextStyle: {
     fontSize: 16,
     fontWeight: '500',
+  },
+  subTitleTextStyle: {
+    fontSize: 12,
+    fontWeight: '400',
   },
   titleViewStyle: {
     flex: 1,

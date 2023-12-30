@@ -5,6 +5,7 @@ interface IPiAppServer {
   port: number;
   github: string;
   description: string;
+  reachable?: boolean;
 }
 
 export default IPiAppServer;
