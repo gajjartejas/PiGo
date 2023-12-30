@@ -1,24 +1,25 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 
 //ThirdParty
 import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
+import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
+import { CompositeNavigationProp, useIsFocused, useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import LanPortScanner from 'react-native-lan-port-scanner';
 
 //App modules
 import Components from 'app/components';
 import styles from './styles';
 
 //Redux
-import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
-import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useAppConfigStore from 'app/store/appConfig';
 import AppHeader from 'app/components/AppHeader';
-import { useTranslation } from 'react-i18next';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import IPiAppServer from 'app/models/models/piAppServer';
 
@@ -42,9 +43,12 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   const disconnect = useAppConfigStore(store => store.disconnect);
   const addPiAppServerToSelectedDevice = useAppConfigStore(store => store.addPiAppServerToSelectedDevice);
   const deletePiAppServerToSelectedDevice = useAppConfigStore(store => store.deletePiAppServerToSelectedDevice);
+  const selectDevice = useAppConfigStore(store => store.selectDevice);
+  const isFocused = useIsFocused();
 
   //States
   const [title, setTitle] = useState('');
+  const [subTitle, setSubTitle] = useState('');
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
 
   useEventEmitter<IPiAppServer>('on_select_piAppServer', eventData => {
@@ -55,11 +59,9 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     if (!selectedDevice) {
       return;
     }
-    if (selectedDevice.name) {
-      setTitle(selectedDevice.name);
-    }
-    setTitle(selectedDevice?.name! + '-' + selectedDevice?.ip);
-  }, [selectedDevice, selectedDevice?.ip, selectedDevice?.name]);
+    setTitle(selectedDevice.name);
+    setSubTitle(selectedDevice.ip);
+  }, [selectedDevice]);
 
   const onLogout = useCallback(() => {
     disconnect();
@@ -73,7 +75,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   }, [navigation, selectedDevice]);
 
   useEffect(() => {
-    if (!selectedDevice) {
+    if (!selectedDevice || !isFocused) {
       return;
     }
 
@@ -82,14 +84,28 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
         return;
       }
       refDeviceInfoRequestInProgress.current = true;
-      //await connect(selectedDevice, false, null);
+      try {
+        const result = selectedDevice.piAppServers.map(v =>
+          LanPortScanner.scanHost(selectedDevice.ip, v.port, 1000, false),
+        );
+        const res = await Promise.allSettled(result);
+        for (let i = 0; i < selectedDevice.piAppServers.length; i++) {
+          selectedDevice.piAppServers[i] = {
+            ...selectedDevice.piAppServers[i],
+            reachable: res[i].status === 'fulfilled',
+          };
+        }
+        selectDevice({ ...selectedDevice });
+      } catch (error) {
+        console.log('error', error);
+      }
       refDeviceInfoRequestInProgress.current = false;
-    }, 5000);
+    }, 20000);
 
     return () => {
       clearInterval(to);
     };
-  }, [selectedDevice]);
+  }, [isFocused, selectDevice, selectedDevice]);
 
   const onPressSelectPiAppServer = useCallback(() => {
     navigation.navigate('PiAppServers', { mode: 'select' });
@@ -150,17 +166,15 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             onPress={onLogout}
           />
         }
+        SubTitleComponent={
+          <Text
+            numberOfLines={1}
+            ellipsizeMode={'tail'}
+            style={[styles.subTitleTextStyle, { color: colors.onBackground }]}>
+            {subTitle}
+          </Text>
+        }
       />
-
-      {/*{errorMessageDesc && selectedDevice && (*/}
-      {/*  <Components.AppMiniBanner*/}
-      {/*    onPress={onPressSetting}*/}
-      {/*    RightViewComponent={*/}
-      {/*      <IconButton icon="arrow-right" iconColor={colors.onBackground} size={20} onPress={onPressSetting} />*/}
-      {/*    }*/}
-      {/*    message={errorMessageDesc}*/}
-      {/*  />*/}
-      {/*)}*/}
 
       {selectedDevice && selectedDevice.piAppServers.length > 0 && (
         <View style={styles.subView}>
@@ -172,7 +186,13 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
                   onPress={() => onPressPiAppServer(item, idx)}
                   title={item.name}
                   description={`${item.path}:${item.port}`}
-                  left={props => <List.Icon {...props} icon="web" />}
+                  left={props => (
+                    <List.Icon
+                      {...props}
+                      color={item.reachable ? '#00D100' : '#ff0000'}
+                      icon={item.reachable ? 'web' : 'web-off'}
+                    />
+                  )}
                   right={props => (
                     <Menu
                       visible={visibleIndex === idx}

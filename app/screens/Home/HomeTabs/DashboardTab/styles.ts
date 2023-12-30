@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
   navigationButton: {
     marginHorizontal: 16,
   },
+  subTitleTextStyle: {
+    fontSize: 12,
+    fontWeight: '400',
+  },
 });
 
 export default styles;
