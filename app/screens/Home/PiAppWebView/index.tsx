@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { Animated, View } from 'react-native';
 
 //ThirdParty
 import { Button, IconButton, Menu, ProgressBar } from 'react-native-paper';
@@ -23,10 +23,15 @@ import Clipboard from '@react-native-clipboard/clipboard';
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppWebView'>;
 
+const THRESHOLD_DIFF_Y = 100;
+
 const PiAppWebView = ({ navigation, route }: Props) => {
   //Refs
   const webViewRef = useRef<WebView | null>(null);
   const refCurrentURL = useRef<string>('');
+  const refCurrentY = useRef(0);
+  const refDiffY = useRef(0);
+  const refDirection = useRef<'up' | 'down'>('up');
 
   //Constants
   const { colors } = useTheme();
@@ -37,6 +42,12 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const piAppServer = route.params.piAppServer;
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const translateY = scrollY.interpolate({
+    inputRange: [0, THRESHOLD_DIFF_Y],
+    outputRange: [0, THRESHOLD_DIFF_Y],
+    extrapolate: 'clamp',
+  });
 
   //States
   const [menuVisible, setMenuVisible] = useState(false);
@@ -125,6 +136,38 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const onDismissModal = useCallback(() => {
     setMenuVisible(false);
   }, []);
+  const handleScroll = useCallback(
+    (e: any) => {
+      if (showProgress || e.nativeEvent.contentOffset.y < 0) {
+        return;
+      }
+
+      const { contentOffset } = e.nativeEvent;
+      const direction = contentOffset.y - refCurrentY.current > 0 ? 'up' : 'down';
+
+      if (refDirection.current === direction && refDiffY.current >= THRESHOLD_DIFF_Y) {
+        refCurrentY.current = contentOffset.y;
+        return;
+      }
+
+      const diffY = Math.abs(contentOffset.y - refCurrentY.current);
+      refDiffY.current = diffY;
+
+      if (direction === 'down') {
+        scrollY.setValue(THRESHOLD_DIFF_Y - (refCurrentY.current - contentOffset.y));
+      } else {
+        scrollY.setValue(contentOffset.y - refCurrentY.current);
+      }
+
+      refDirection.current = direction;
+    },
+    [scrollY, showProgress],
+  );
+
+  const onScroll = Animated.event([{ nativeEvent: { contentOffset: {} } }], {
+    useNativeDriver: false,
+    listener: event => handleScroll(event),
+  });
 
   return (
     <AppBaseView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
@@ -143,6 +186,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
               refCurrentURL.current = state.url;
               setShowProgress(true);
             }}
+            onScroll={onScroll}
           />
         )}
         {piAppServers.length < 1 && (
@@ -157,13 +201,14 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         )}
       </View>
 
-      <View
+      <Animated.View
         style={[
           styles.docker,
           {
             bottom: insets.bottom + 12,
             backgroundColor: colors.background,
             borderColor: `${colors.primary}50`,
+            transform: [{ translateY }],
           },
         ]}>
         <IconButton icon={'chevron-left'} size={26} style={{}} onPress={onGoBack} />
@@ -187,7 +232,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         <View pointerEvents={'none'} style={styles.dockerLoadingProgress}>
           {showProgress && <ProgressBar color={`${colors.primary}50`} style={styles.progressBar} progress={progress} />}
         </View>
-      </View>
+      </Animated.View>
     </AppBaseView>
   );
 };
