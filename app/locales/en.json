@@ -5,6 +5,22 @@
     "save": "SAVE",
     "connecting": "Connecting..."
   },
+  "piAppsCategories": {
+    "adsBlocker": "Ad and Tracker Blockers",
+    "mediaCenters": "Media Centers",
+    "homeAutomation": "Home Automation",
+    "informationDisplay": "Information Display",
+    "surveillanceAndSecurity": "Surveillance and Security",
+    "printingManagement": "Printing Management",
+    "systemMonitoring": "System Monitoring",
+    "networkRouting": "Network Routing",
+    "selfHostedServerOS": "Self-hosted Server OS",
+    "kvm": "KVM (Keyboard, Video, Mouse) Solutions",
+    "networkAnalysis": "Network Analysis",
+    "torrentClients": "Torrent Clients",
+    "photoGallery": "Photo Gallery",
+    "other": "Other"
+  },
   "about": {
     "version": "Version: {{version}}",
     "sendFeedback": "Send Feedback",
@@ -194,8 +210,13 @@
     "inputPlaceholder1": "Enter Name",
     "inputPlaceholder2": "Enter Path",
     "inputPlaceholder3": "Enter Port",
-    "inputPlaceholder4": "Enter GitHub Link (Optional)",
-    "inputPlaceholder5": "Enter Description (Optional)",
+    "inputPlaceholder4": "Select Category",
+    "inputPlaceholder5": "Enter GitHub Link (Optional)",
+    "inputPlaceholder6": "Enter Description (Optional)",
+    "selectCategoryDialog": {
+      "title": "Select Category",
+      "ok": "OK"
+    },
     "updateButton": "UPDATE",
     "saveButton": "SAVE"
   },

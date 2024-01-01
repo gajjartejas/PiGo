@@ -1,5 +1,14 @@
 import React, { forwardRef, memo, useState } from 'react';
-import { Text, TextInputProps, View, StyleSheet, ViewStyle, TextInputFocusEventData, TextInput } from 'react-native';
+import {
+  Text,
+  TextInputProps,
+  View,
+  StyleSheet,
+  ViewStyle,
+  TextInputFocusEventData,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 
@@ -7,11 +16,12 @@ interface IAppTextInputProps extends TextInputProps {
   errorText?: string | null;
   containerStyle?: ViewStyle;
   RightAccessoryView?: React.JSX.Element;
+  onPress?: () => void;
 }
 
 const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   const theme = useTheme();
-  const { errorText, containerStyle, onBlur, RightAccessoryView, ...otherProps } = props;
+  const { errorText, containerStyle, onBlur, RightAccessoryView, onPress, ...otherProps } = props;
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -26,16 +36,21 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.titleTextStyle, { color: theme.colors.primary }]}>{props.placeholder}</Text>
 
-      <View style={[styles.textInputContainer, { borderBottomColor: theme.colors.primary }]}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={onPress}
+        style={[styles.textInputContainer, { borderBottomColor: theme.colors.primary }]}>
         <TextInput
           ref={ref}
+          pointerEvents={onPress ? 'none' : 'auto'}
+          editable={!onPress}
           onBlur={handleOnBlur}
           placeholderTextColor={`${theme.colors.onBackground}80`}
           style={[styles.textInput, { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground }]}
           {...otherProps}
         />
         {RightAccessoryView}
-      </View>
+      </TouchableOpacity>
 
       {isFocused && !!errorText && <Text style={[styles.errorText, { color: theme.colors.error }]}>{errorText}</Text>}
     </View>

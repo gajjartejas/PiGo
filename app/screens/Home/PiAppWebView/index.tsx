@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 
 //ThirdParty
-import { Button, IconButton, Menu, ProgressBar } from 'react-native-paper';
+import { Button, IconButton, Menu, ProgressBar, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import WebView from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
 
@@ -150,8 +149,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         return;
       }
 
-      const diffY = Math.abs(contentOffset.y - refCurrentY.current);
-      refDiffY.current = diffY;
+      refDiffY.current = Math.abs(contentOffset.y - refCurrentY.current);
 
       if (direction === 'down') {
         scrollY.setValue(THRESHOLD_DIFF_Y - (refCurrentY.current - contentOffset.y));

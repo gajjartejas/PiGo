@@ -84,17 +84,14 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       }
       refDeviceInfoRequestInProgress.current = true;
       try {
-        const result:any = await Promise.allSettled(
+        const result: any = await Promise.allSettled(
           selectedDevice.piAppServers.map(async v => {
             const url = `http://${selectedDevice.ip}:${v.port}${v.path}`;
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 1000);
-
             try {
               const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
-
               clearTimeout(timeoutId);
-
               return { status: 'fulfilled', reachable: response.ok };
             } catch (error) {
               clearTimeout(timeoutId);
@@ -102,18 +99,15 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             }
           }),
         );
-        console.log('response', result);
-
         for (let i = 0; i < selectedDevice.piAppServers.length; i++) {
           selectedDevice.piAppServers[i] = {
             ...selectedDevice.piAppServers[i],
             reachable: result[i].status === 'fulfilled' && result[i].value.reachable,
           };
         }
-
         selectDevice({ ...selectedDevice });
       } catch (error) {
-        console.log('error', error);
+        console.log('useEffect->refresh->error', error);
       }
       refDeviceInfoRequestInProgress.current = false;
     }, 2000);
