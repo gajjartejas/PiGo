@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import { useTranslation } from 'react-i18next';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import PiAppServer from 'app/models/models/piAppServer';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppServers'>;
@@ -36,15 +37,41 @@ const PiAppServers = ({ navigation, route }: Props) => {
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
 
+  interface GroupedPiAppServers {
+    category: string;
+    servers: PiAppServer[];
+  }
+
+  const groupedPiAppServers: GroupedPiAppServers[] = piAppServers.reduce(
+    (accumulator: GroupedPiAppServers[], appServer: PiAppServer) => {
+      const category = appServer.category;
+      const existingCategory = accumulator.find(group => group.category === category);
+      if (existingCategory) {
+        existingCategory.servers.push(appServer);
+      } else {
+        accumulator.push({
+          category,
+          servers: [appServer],
+        });
+      }
+
+      return accumulator;
+    },
+    [],
+  );
+
   //States
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
+  const [visibleSectionIndex, setVisibleSectionIndex] = React.useState<number | null>(null);
 
-  const openMenu = useCallback((index: number) => {
+  const openMenu = useCallback((subIndex: number, index: number) => {
+    setVisibleSectionIndex(subIndex);
     setVisibleIndex(index);
   }, []);
 
   const closeMenu = useCallback(() => {
     setVisibleIndex(null);
+    setVisibleSectionIndex(null);
   }, []);
 
   const onGoBack = useCallback(() => {
@@ -52,7 +79,7 @@ const PiAppServers = ({ navigation, route }: Props) => {
   }, [navigation]);
 
   const onPressPiAppServer = useCallback(
-    (item: IPiAppServer, _index: number) => {
+    (item: IPiAppServer, _sectionIndex: number, _index: number) => {
       if (mode === 'select') {
         onSelectPiAppServerEmitter(item);
         navigation.goBack();
@@ -72,7 +99,7 @@ const PiAppServers = ({ navigation, route }: Props) => {
   }, [navigation]);
 
   const onPressEditMenu = useCallback(
-    (item: IPiAppServer, _index: number) => {
+    (item: IPiAppServer, _subIndex: number, _index: number) => {
       closeMenu();
       navigation.navigate('AddPiAppServer', { piAppServer: item });
     },
@@ -80,7 +107,7 @@ const PiAppServers = ({ navigation, route }: Props) => {
   );
 
   const onPressDeleteMenu = useCallback(
-    (item: IPiAppServer, _index: number) => {
+    (item: IPiAppServer, _subIndex: number, _index: number) => {
       deletePiAppServer(item.id);
       closeMenu();
     },
@@ -106,41 +133,47 @@ const PiAppServers = ({ navigation, route }: Props) => {
       <View style={[styles.subView, largeScreenMode && styles.cardTablet]}>
         {piAppServers && piAppServers.length > 0 && (
           <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
-            <List.Section>
-              <List.Subheader>{t('piAppServersList.subTitle')}</List.Subheader>
-              {piAppServers.map((piAppServer, idx) => {
-                return (
-                  <List.Item
-                    key={idx.toString()}
-                    onPress={() => onPressPiAppServer(piAppServer, idx)}
-                    title={piAppServer.name}
-                    description={`${piAppServer.path}:${piAppServer.port}`}
-                    left={props => <List.Icon {...props} icon="web" />}
-                    right={props => (
-                      <Menu
-                        visible={visibleIndex === idx}
-                        onDismiss={closeMenu}
-                        anchor={<IconButton {...props} icon={'dots-vertical'} onPress={() => openMenu(idx)} />}>
-                        <Menu.Item
-                          leadingIcon="pencil"
-                          onPress={() => {
-                            onPressEditMenu(piAppServer, idx);
-                          }}
-                          title={t('piAppServersList.edit')}
-                        />
-                        <Menu.Item
-                          leadingIcon="delete"
-                          onPress={() => {
-                            onPressDeleteMenu(piAppServer, idx);
-                          }}
-                          title={t('piAppServersList.delete')}
-                        />
-                      </Menu>
-                    )}
-                  />
-                );
-              })}
-            </List.Section>
+            {groupedPiAppServers.map((item, sidx) => {
+              return (
+                <List.Section key={item.category}>
+                  <List.Subheader>{t(item.category)}</List.Subheader>
+                  {item.servers.map((piAppServer, idx) => {
+                    return (
+                      <List.Item
+                        key={piAppServer.id}
+                        onPress={() => onPressPiAppServer(piAppServer, sidx, idx)}
+                        title={piAppServer.name}
+                        description={`${piAppServer.path}:${piAppServer.port}`}
+                        left={props => <List.Icon {...props} icon="web" />}
+                        right={props => (
+                          <Menu
+                            visible={visibleIndex === idx && visibleSectionIndex === sidx}
+                            onDismiss={closeMenu}
+                            anchor={
+                              <IconButton {...props} icon={'dots-vertical'} onPress={() => openMenu(sidx, idx)} />
+                            }>
+                            <Menu.Item
+                              leadingIcon="pencil"
+                              onPress={() => {
+                                onPressEditMenu(piAppServer, sidx, idx);
+                              }}
+                              title={t('piAppServersList.edit')}
+                            />
+                            <Menu.Item
+                              leadingIcon="delete"
+                              onPress={() => {
+                                onPressDeleteMenu(piAppServer, sidx, idx);
+                              }}
+                              title={t('piAppServersList.delete')}
+                            />
+                          </Menu>
+                        )}
+                      />
+                    );
+                  })}
+                </List.Section>
+              );
+            })}
           </ScrollView>
         )}
 

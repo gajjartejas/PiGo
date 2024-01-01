@@ -94,6 +94,9 @@ const styles = StyleSheet.create({
     width: '70%',
     alignSelf: 'center',
   },
+  centered: {
+    alignSelf: 'center',
+  },
 });
 
 export default styles;

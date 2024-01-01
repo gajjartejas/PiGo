@@ -4,5 +4,6 @@
         "ios/Pods/RCT-Folly/folly/lang",
         "ios/Pods/boost/boost/locale",
         "ios/Pods/boost/boost/predef/language"
-    ]
+    ],
+    "files.autoSaveDelay": 6000
 }

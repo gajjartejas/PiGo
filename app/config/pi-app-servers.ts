@@ -1,3 +1,20 @@
+export const PI_APP_CATEGORIES = {
+  adsBlocker: 'piAppsCategories.adsBlocker', // 'Ad and Tracker Blockers',
+  mediaCenters: 'piAppsCategories.mediaCenters', // 'Media Centers',
+  homeAutomation: 'piAppsCategories.homeAutomation', // 'Home Automation',
+  informationDisplay: 'piAppsCategories.informationDisplay', // 'Information Display',
+  surveillanceAndSecurity: 'piAppsCategories.surveillanceAndSecurity', // 'Surveillance and Security',
+  printingManagement: 'piAppsCategories.printingManagement', // 'Printing Management',
+  systemMonitoring: 'piAppsCategories.systemMonitoring', // 'System Monitoring',
+  networkRouting: 'piAppsCategories.networkRouting', // 'Network Routing',
+  selfHostedServerOS: 'piAppsCategories.selfHostedServerOS', // 'Self-hosted Server OS',
+  kvm: 'piAppsCategories.kvm', // 'KVM (Keyboard, Video, Mouse) Solutions',
+  networkAnalysis: 'piAppsCategories.networkAnalysis', // 'Network Analysis',
+  torrentClients: 'piAppsCategories.torrentClients', // 'Torrent Clients',
+  photoGallery: 'piAppsCategories.photoGallery', // 'Photo Gallery',
+  other: 'piAppsCategories.other', // 'Other',
+} as const;
+
 const PI_APP_SERVERS = [
   {
     id: 'pi-hole',
@@ -6,6 +23,7 @@ const PI_APP_SERVERS = [
     port: 80,
     github: 'https://github.com/pi-hole/pi-hole',
     description: 'A black hole for Internet advertisements',
+    category: PI_APP_CATEGORIES.adsBlocker,
   },
   {
     id: 'ad-guard-home',
@@ -14,6 +32,7 @@ const PI_APP_SERVERS = [
     port: 8123,
     github: 'https://github.com/AdguardTeam/AdGuardHome',
     description: 'A network-wide ad and tracker blocker.',
+    category: PI_APP_CATEGORIES.adsBlocker,
   },
   {
     id: 'kodi',
@@ -22,6 +41,7 @@ const PI_APP_SERVERS = [
     port: 80,
     github: 'https://github.com/xbmc/xbmc',
     description: 'Transform your Raspberry Pi into a media center for streaming and playing multimedia content.',
+    category: PI_APP_CATEGORIES.mediaCenters,
   },
   {
     id: 'plex',
@@ -30,6 +50,7 @@ const PI_APP_SERVERS = [
     port: 32400,
     github: 'https://github.com/plexinc',
     description: 'Plex organizes all of your personal media so you can enjoy it no matter where you are.',
+    category: PI_APP_CATEGORIES.mediaCenters,
   },
   {
     id: 'home-assistant',
@@ -38,6 +59,7 @@ const PI_APP_SERVERS = [
     port: 80,
     github: 'https://github.com/home-assistant',
     description: 'Open-source home automation platform that runs on Raspberry Pi.',
+    category: PI_APP_CATEGORIES.homeAutomation,
   },
   {
     id: 'homebridge',
@@ -46,6 +68,7 @@ const PI_APP_SERVERS = [
     port: 8581,
     github: 'https://github.com/homebridge/homebridge',
     description: 'HomeKit support for the impatient.',
+    category: PI_APP_CATEGORIES.homeAutomation,
   },
   {
     id: 'magic-mirror',
@@ -54,6 +77,7 @@ const PI_APP_SERVERS = [
     port: 8080,
     github: 'https://github.com/MichMich/MagicMirror',
     description: 'A smart mirror displaying useful information',
+    category: PI_APP_CATEGORIES.informationDisplay,
   },
   {
     id: 'motion-eye-os',
@@ -62,6 +86,7 @@ const PI_APP_SERVERS = [
     port: 80,
     github: 'https://github.com/motioneye-project/motioneyeos',
     description: 'Convert your Raspberry Pi into a surveillance camera.',
+    category: PI_APP_CATEGORIES.surveillanceAndSecurity,
   },
   {
     id: 'octoprint',
@@ -70,8 +95,8 @@ const PI_APP_SERVERS = [
     port: 5000,
     github: 'https://github.com/OctoPrint/OctoPrint',
     description: 'Manage and monitor 3D printers remotely',
+    category: PI_APP_CATEGORIES.printingManagement,
   },
-
   {
     id: 'rpi-monitor',
     name: 'RPi-Monitor',
@@ -79,6 +104,7 @@ const PI_APP_SERVERS = [
     port: 8888,
     github: 'https://github.com/XavierBerger/RPi-Monitor',
     description: 'Real time monitoring for embedded devices',
+    category: PI_APP_CATEGORIES.systemMonitoring,
   },
   {
     id: 'open-wrt-x86-r2s-r4s-r5s-n1',
@@ -88,6 +114,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/kiddin9/OpenWrt_x86-r2s-r4s-r5s-N1',
     description:
       'OpenWrt is an open-source project for embedded operating systems based on Linux, primarily used on embedded devices to route network traffic. The main components are Linux, util-linux, musl, and BusyBox.',
+    category: PI_APP_CATEGORIES.networkRouting,
   },
   {
     id: 'umbrel-os',
@@ -97,6 +124,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/getumbrel/umbrel',
     description:
       'A beautiful home server OS for self-hosting with an app store. Buy a pre-built Umbrel Home with umbrelOS, or install on a Raspberry Pi 4, any Ubuntu/Debian system, or a VPS.',
+    category: PI_APP_CATEGORIES.selfHostedServerOS,
   },
   {
     id: 'tinypilot',
@@ -105,6 +133,7 @@ const PI_APP_SERVERS = [
     port: 80,
     github: 'https://github.com/tiny-pilot/tinypilot',
     description: 'Use your Raspberry Pi as a browser-based KVM',
+    category: PI_APP_CATEGORIES.kvm,
   },
   {
     id: 'tiny-check',
@@ -114,6 +143,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/KasperskyLab/TinyCheck',
     description:
       'TinyCheck allows you to easily capture network communications from a smartphone or any device which can be associated to a Wi-Fi access point in order to quickly analyze them.',
+    category: PI_APP_CATEGORIES.networkAnalysis,
   },
   {
     id: 'qbittorrent',
@@ -123,6 +153,7 @@ const PI_APP_SERVERS = [
     github: 'https://manpages.ubuntu.com/manpages/jammy/man1/qbittorrent-nox.1.html',
     description:
       'Bittorrent-nox is an advanced command-line Bittorrent client written in C++ / Qt using the libtorrent-rasterbar library by Arvid Norberg',
+    category: PI_APP_CATEGORIES.torrentClients,
   },
   {
     id: 'pigallery2',
@@ -132,6 +163,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/bpatrik/pigallery2',
     description:
       'A fast directory-first photo gallery website, with rich UI, optimized for running on low resource servers (especially on raspberry pi)',
+    category: PI_APP_CATEGORIES.photoGallery,
   },
 ];
 

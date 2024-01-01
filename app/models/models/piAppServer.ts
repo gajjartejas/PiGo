@@ -6,6 +6,7 @@ interface IPiAppServer {
   github: string;
   description: string;
   reachable?: boolean;
+  category: string;
 }
 
 export default IPiAppServer;

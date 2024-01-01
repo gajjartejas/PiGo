@@ -21,6 +21,7 @@ import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import validatePort from 'app/utils/validatePort';
 import IPiAppServer from 'app/models/models/piAppServer';
 import isValidHttpUrl from 'app/utils/isValidURL';
+import { PI_APP_CATEGORIES } from 'app/config/pi-app-servers';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddPiAppServer'>;
@@ -30,6 +31,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   const nameRef = useRef<TextInput | null>(null);
   const portRef = useRef<TextInput | null>(null);
   const pathRef = useRef<TextInput | null>(null);
+  const categoryRef = useRef<TextInput | null>(null);
   const githubLinkRef = useRef<TextInput | null>(null);
   const descriptionRef = useRef<TextInput | null>(null);
 
@@ -50,6 +52,8 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   const [path, setPath] = useState('');
   const [gitHubLink, setGitHubLink] = useState('');
   const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [categoryDialogVisible, setCategoryDialogVisible] = useState(false);
 
   useEffect(() => {
     if (!piAppServer) {
@@ -61,6 +65,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     setPort(piAppServer.port.toString());
     setGitHubLink(piAppServer.github.toString());
     setDescription(piAppServer.description.toString());
+    setCategory(piAppServer.category);
   }, [piAppServer]);
 
   const onPressSave = useCallback(() => {
@@ -73,6 +78,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
       port: parseInt(port, 10),
       github: gitHubLink.trim(),
       description: description.trim(),
+      category: category,
     };
 
     if (mode === 'edit_device_piAppServer') {
@@ -88,6 +94,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     port,
     gitHubLink,
     description,
+    category,
     mode,
     navigation,
     updatePiAppServerToSelectedDevice,
@@ -97,6 +104,19 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   const onGoBack = useCallback(() => {
     navigation.pop();
   }, [navigation]);
+
+  const onPressCategoryMenu = () => {
+    setCategoryDialogVisible(true);
+  };
+
+  const onPressConfirmCategory = (v: string) => {
+    setCategory(v);
+    setCategoryDialogVisible(false);
+  };
+
+  const hideCategoryDialog = () => {
+    setCategoryDialogVisible(false);
+  };
 
   const validName = useCallback(
     (field: string): string | null => {
@@ -175,8 +195,23 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 errorText={validPort(port)}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => githubLinkRef.current?.focus()}
+                onSubmitEditing={onPressCategoryMenu}
                 keyboardType={'numeric'}
+                returnKeyType={'next'}
+              />
+
+              <Components.AppTextInput
+                ref={categoryRef}
+                autoCapitalize="none"
+                value={t(category)!}
+                onChangeText={setGitHubLink}
+                placeholder={t('addPiAppServer.inputPlaceholder4')!}
+                errorText={validURL(gitHubLink)}
+                containerStyle={styles.inputStyle}
+                placeholderTextColor={theme.colors.onSurface}
+                onPress={onPressCategoryMenu}
+                onSubmitEditing={() => {}}
+                keyboardType={'default'}
                 returnKeyType={'next'}
               />
 
@@ -185,7 +220,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={gitHubLink}
                 onChangeText={setGitHubLink}
-                placeholder={t('addPiAppServer.inputPlaceholder4')!}
+                placeholder={t('addPiAppServer.inputPlaceholder5')!}
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
                 placeholderTextColor={theme.colors.onSurface}
@@ -200,7 +235,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={description}
                 onChangeText={setDescription}
-                placeholder={t('addPiAppServer.inputPlaceholder5')!}
+                placeholder={t('addPiAppServer.inputPlaceholder6')!}
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
                 style={[styles.inputMultilineStyle, { color: colors.onBackground }]}
@@ -220,6 +255,16 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
           {piAppServer ? t('addPiAppServer.updateButton') : t('addPiAppServer.saveButton')}
         </Button>
       </View>
+
+      <Components.AppRadioSelectDialog
+        visible={categoryDialogVisible}
+        title={t('addPiAppServer.selectCategoryDialog.title')}
+        items={Object.values(PI_APP_CATEGORIES)}
+        onPressConfirm={onPressConfirmCategory}
+        confirmText={t('addPiAppServer.selectCategoryDialog.ok')}
+        onPressCancel={hideCategoryDialog}
+        selectedItem={category}
+      />
     </View>
   );
 };
