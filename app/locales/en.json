@@ -220,6 +220,16 @@
     "updateButton": "UPDATE",
     "saveButton": "SAVE"
   },
+  "viewPiAppServer": {
+    "inputPlaceholder1": "Name",
+    "inputPlaceholder2": "Path",
+    "inputPlaceholder3": "Port",
+    "fullLink": "Full Link",
+    "inputPlaceholder4": "Category",
+    "inputPlaceholder5": "GitHub Link",
+    "inputPlaceholder6": "Description",
+    "openLink": "OPEN Pi APP LINK"
+  },
   "piAppServersList": {
     "selectTitle": "Select Pi App Server",
     "listTitle": "Pi App Servers",
@@ -227,6 +237,7 @@
     "subTitle": "Pi App Servers",
     "edit": "Edit",
     "delete": "Delete",
+    "info": "Info",
     "emptyData": {
       "title": "No Pi app server found!",
       "message": "Please create a new Pi App Server."

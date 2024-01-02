@@ -114,6 +114,14 @@ const PiAppServers = ({ navigation, route }: Props) => {
     [closeMenu, deletePiAppServer],
   );
 
+  const onPressInfoMenu = useCallback(
+    (item: IPiAppServer, _subIndex: number, _index: number) => {
+      navigation.navigate('ViewPiAppServer', { piAppServer: item });
+      closeMenu();
+    },
+    [closeMenu, navigation],
+  );
+
   const renderNoDataButtons = useCallback(() => {
     return (
       <View style={styles.noDataButtonsContainer}>
@@ -165,6 +173,13 @@ const PiAppServers = ({ navigation, route }: Props) => {
                                 onPressDeleteMenu(piAppServer, sidx, idx);
                               }}
                               title={t('piAppServersList.delete')}
+                            />
+                            <Menu.Item
+                              leadingIcon="information"
+                              onPress={() => {
+                                onPressInfoMenu(piAppServer, sidx, idx);
+                              }}
+                              title={t('piAppServersList.info')}
                             />
                           </Menu>
                         )}

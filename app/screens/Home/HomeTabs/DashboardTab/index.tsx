@@ -151,6 +151,17 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     navigation.navigate('PiAppWebView', { piAppServer: item });
   };
 
+  const onPressInfoMenu = useCallback(
+    (item: IPiAppServer, _index: number) => {
+      if (!selectedDevice) {
+        return;
+      }
+      navigation.navigate('ViewPiAppServer', { piAppServer: item, device: selectedDevice });
+      closeMenu();
+    },
+    [closeMenu, navigation, selectedDevice],
+  );
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
@@ -221,6 +232,13 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
                           onPressDeleteMenu(item, idx);
                         }}
                         title={t('piAppServersList.delete')}
+                      />
+                      <Menu.Item
+                        leadingIcon="information"
+                        onPress={() => {
+                          onPressInfoMenu(item, idx);
+                        }}
+                        title={t('piAppServersList.info')}
                       />
                     </Menu>
                   )}

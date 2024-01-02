@@ -14,6 +14,7 @@ import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventType
 
 interface IAppTextInputProps extends TextInputProps {
   errorText?: string | null;
+  viewOnly?: boolean;
   containerStyle?: ViewStyle;
   RightAccessoryView?: React.JSX.Element;
   onPress?: () => void;
@@ -21,7 +22,7 @@ interface IAppTextInputProps extends TextInputProps {
 
 const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   const theme = useTheme();
-  const { errorText, containerStyle, onBlur, RightAccessoryView, onPress, ...otherProps } = props;
+  const { errorText, containerStyle, onBlur, RightAccessoryView, onPress, viewOnly, ...otherProps } = props;
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -39,15 +40,19 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={onPress}
-        style={[styles.textInputContainer, { borderBottomColor: theme.colors.primary }]}>
+        style={[styles.textInputContainer, !viewOnly && { borderBottomColor: theme.colors.primary }]}>
         <TextInput
           ref={ref}
-          pointerEvents={onPress ? 'none' : 'auto'}
-          editable={!onPress}
+          pointerEvents={onPress || viewOnly ? 'none' : 'auto'}
+          editable={!onPress && !viewOnly}
           onBlur={handleOnBlur}
           placeholderTextColor={`${theme.colors.onBackground}80`}
-          style={[styles.textInput, { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground }]}
           {...otherProps}
+          style={[
+            styles.textInput,
+            { borderBottomColor: theme.colors.primary, color: theme.colors.onBackground },
+            otherProps.style,
+          ]}
         />
         {RightAccessoryView}
       </TouchableOpacity>
