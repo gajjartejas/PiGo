@@ -30,6 +30,7 @@ import useAppConfigStore from 'app/store/appConfig';
 import DashboardTab from 'app/screens/Home/HomeTabs/DashboardTab';
 import ScanDevices from 'app/screens/Home/ScanDevices';
 import PiAppWebView from 'app/screens/Home/PiAppWebView';
+import ViewPiAppServer from 'app/screens/Home/ViewPiAppServer';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
 
@@ -108,6 +109,7 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="Devices" component={Devices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="PiAppWebView" component={PiAppWebView} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="ViewPiAppServer" component={ViewPiAppServer} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };
