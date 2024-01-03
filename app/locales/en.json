@@ -233,6 +233,7 @@
   "piAppServersList": {
     "selectTitle": "Select Pi App Server",
     "listTitle": "Pi App Servers",
+    "searchText": "Search",
     "createNewPiAppServer": "Add New Pi App Servers",
     "subTitle": "Pi App Servers",
     "edit": "Edit",

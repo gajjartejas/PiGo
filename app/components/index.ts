@@ -14,6 +14,7 @@ import AppToast from './AppToast';
 import AppTextInput from './AppTextInput';
 import AppActionDialog from './AppActionDialog';
 import AppRadioSelectDialog from './AppRadioSelectDialog';
+import PiAppServerRow from './PiAppServerRow';
 
 const Components = {
   AppMiniBanner,
@@ -32,6 +33,7 @@ const Components = {
   AppTextInput,
   AppActionDialog,
   AppRadioSelectDialog,
+  PiAppServerRow,
 };
 
 export default Components;
