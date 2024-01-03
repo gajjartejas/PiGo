@@ -110,6 +110,29 @@ const styles = StyleSheet.create({
     width: '70%',
     alignSelf: 'center',
   },
+  searchTextInputText: {
+    fontSize: 16,
+    flex: 1,
+  },
+  searchContainer: {
+    height: 44,
+    borderRadius: 22,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    marginHorizontal: 12,
+  },
+  leftSearchButton: {
+    width: 50,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rightSearchButton: {
+    width: 50,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

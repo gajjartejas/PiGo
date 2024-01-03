@@ -218,7 +218,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
                     <Menu
                       visible={visibleIndex === idx}
                       onDismiss={closeMenu}
-                      anchor={<IconButton {...props} icon={'dots-vertical'} onPress={() => openMenu(idx)} />}>
+                      anchor={<IconButton {...props} size={16} icon={'dots-vertical'} onPress={() => openMenu(idx)} />}>
                       <Menu.Item
                         leadingIcon="pencil"
                         onPress={() => {
