@@ -51,7 +51,7 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
     setCategory(piAppServer.category);
 
     if (device) {
-      setFullLink('http://' + device?.ip + piAppServer.port + piAppServer.path);
+      setFullLink('http://' + device?.ip1 + piAppServer.port + piAppServer.path);
     }
   }, [device, piAppServer]);
 
@@ -96,7 +96,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                 onChangeText={setName}
                 placeholder={t('viewPiAppServer.inputPlaceholder1')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 viewOnly={true}
               />
 
@@ -106,7 +105,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                 onChangeText={setPath}
                 placeholder={t('viewPiAppServer.inputPlaceholder2')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 viewOnly={true}
               />
 
@@ -116,7 +114,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                 onChangeText={setPort}
                 placeholder={t('viewPiAppServer.inputPlaceholder3')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 viewOnly={true}
               />
 
@@ -126,7 +123,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                   value={fullLink}
                   placeholder={t('viewPiAppServer.fullLink')!}
                   containerStyle={styles.inputStyle}
-                  placeholderTextColor={theme.colors.onSurface}
                   style={styles.underline}
                   viewOnly={true}
                   onPress={onPressFullLink}
@@ -138,7 +134,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                 value={t(category)!}
                 placeholder={t('viewPiAppServer.inputPlaceholder4')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 viewOnly={true}
               />
 
@@ -148,7 +143,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                 onChangeText={setGitHubLink}
                 placeholder={t('viewPiAppServer.inputPlaceholder5')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 style={gitHubLink.trim().length > 0 ? styles.underline : {}}
                 viewOnly={true}
                 onPress={onPressGitHub}
@@ -162,7 +156,6 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
                 placeholder={t('viewPiAppServer.inputPlaceholder6')!}
                 containerStyle={styles.inputStyle}
                 style={[styles.inputMultilineStyle, { color: colors.onBackground }]}
-                placeholderTextColor={theme.colors.onSurface}
                 viewOnly={true}
               />
             </View>

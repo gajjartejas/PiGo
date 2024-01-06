@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 
 //ThirdParty
-import { Button, IconButton, Menu, ProgressBar, useTheme } from 'react-native-paper';
+import { Button, Dialog, Text, IconButton, Menu, ProgressBar, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import WebView from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 //App modules
 import styles from './styles';
@@ -15,9 +17,8 @@ import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useAppConfigStore from 'app/store/appConfig';
 import Components from 'app/components';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppBaseView from 'app/components/AppBaseView';
-import Clipboard from '@react-native-clipboard/clipboard';
+import getLiveURL from 'app/utils/getLiveURL';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppWebView'>;
@@ -34,7 +35,6 @@ const PiAppWebView = ({ navigation, route }: Props) => {
 
   //Constants
   const { colors } = useTheme();
-  const piAppServers = useAppConfigStore(store => store.piAppServers);
   const selectedDevice = useAppConfigStore(store => store.selectedDevice);
   const insets = useSafeAreaInsets();
 
@@ -53,15 +53,34 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const [progress, setProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(true);
   const [appServerURL, setAppServerURL] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+  const [infoDialogVisible, setInfoDialogVisible] = useState<boolean>(false);
 
-  useEffect(() => {
+  const loadURL = useCallback(async () => {
     if (!selectedDevice) {
       setAppServerURL(null);
       return;
     }
-    let url = 'http://' + selectedDevice!.ip + ':' + piAppServer.port + '/' + piAppServer.path.replace(/^\//, '');
-    setAppServerURL(url);
+
+    const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
+      .filter(v => !!v)
+      .map(v => {
+        return 'http://' + v + ':' + piAppServer.port + '/' + piAppServer.path.replace(/^\//, '');
+      });
+    const abortController = new AbortController();
+
+    try {
+      const value = await getLiveURL(serverURLs, abortController);
+      setAppServerURL(value);
+      setError(false);
+    } catch (e) {
+      setError(true);
+    }
   }, [piAppServer.path, piAppServer.port, selectedDevice]);
+
+  useEffect(() => {
+    loadURL();
+  }, [loadURL]);
 
   useEffect(() => {
     let timeoutId = setTimeout(() => {
@@ -77,23 +96,24 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     navigation.pop();
   }, [navigation]);
 
-  const onRedirectToCreatePiAppServer = useCallback(() => {
-    navigation.navigate('AddPiAppServer', {});
-  }, [navigation]);
+  const onRefresh = useCallback(() => {
+    (async () => {
+      await loadURL();
+    })();
+  }, [loadURL]);
 
   const renderNoDataButtons = useCallback(() => {
     return (
       <View style={styles.noDataButtonsContainer}>
-        <Button onPress={onRedirectToCreatePiAppServer}>{t('piAppServersList.createNewPiAppServer')}</Button>
+        <Button onPress={onRefresh}>{t('piAppWebView.emptyData.button')}</Button>
       </View>
     );
-  }, [onRedirectToCreatePiAppServer, t]);
+  }, [onRefresh, t]);
 
-  const onWGoHome = () => {
+  const onWGoHome = useCallback(() => {
     setMenuVisible(false);
-    let url = 'http://' + selectedDevice!.ip + ':' + piAppServer.port + '/' + piAppServer.path.replace(/^\//, '');
-    setAppServerURL(url);
-  };
+    webViewRef.current?.reload();
+  }, []);
 
   const onWGoBack = useCallback(() => {
     setMenuVisible(false);
@@ -123,9 +143,8 @@ const PiAppWebView = ({ navigation, route }: Props) => {
 
   const onInfo = useCallback(() => {
     setMenuVisible(false);
-    if (webViewRef.current) {
-      webViewRef.current.reload();
-    }
+    setInfoDialogVisible(true);
+    //appServerURL
   }, []);
 
   const onPressMore = useCallback(() => {
@@ -135,28 +154,28 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const onDismissModal = useCallback(() => {
     setMenuVisible(false);
   }, []);
+
   const handleScroll = useCallback(
     (e: any) => {
       if (showProgress || e.nativeEvent.contentOffset.y < 0) {
         return;
       }
-
       const { contentOffset } = e.nativeEvent;
       const direction = contentOffset.y - refCurrentY.current > 0 ? 'up' : 'down';
-
       if (refDirection.current === direction && refDiffY.current >= THRESHOLD_DIFF_Y) {
         refCurrentY.current = contentOffset.y;
         return;
       }
-
       refDiffY.current = Math.abs(contentOffset.y - refCurrentY.current);
-
       if (direction === 'down') {
         scrollY.setValue(THRESHOLD_DIFF_Y - (refCurrentY.current - contentOffset.y));
       } else {
         scrollY.setValue(contentOffset.y - refCurrentY.current);
       }
-
+      if (contentOffset.y === 0) {
+        scrollY.setValue(0);
+        refCurrentY.current = contentOffset.y;
+      }
       refDirection.current = direction;
     },
     [scrollY, showProgress],
@@ -187,13 +206,13 @@ const PiAppWebView = ({ navigation, route }: Props) => {
             onScroll={onScroll}
           />
         )}
-        {piAppServers.length < 1 && (
+        {error && (
           <Components.AppEmptyDataView
             iconType={'font-awesome5'}
             iconName="box-open"
             style={styles.webview}
-            header={t('piAppServersList.emptyData.title')}
-            subHeader={t('piAppServersList.emptyData.message')}
+            header={t('piAppWebView.emptyData.title')}
+            subHeader={t('piAppWebView.emptyData.message')}
             renderContent={renderNoDataButtons}
           />
         )}
@@ -231,6 +250,16 @@ const PiAppWebView = ({ navigation, route }: Props) => {
           {showProgress && <ProgressBar color={`${colors.primary}50`} style={styles.progressBar} progress={progress} />}
         </View>
       </Animated.View>
+
+      <Dialog visible={infoDialogVisible} onDismiss={() => setInfoDialogVisible(false)}>
+        <Dialog.Title>{t('piAppWebView.infoDialog.title')}</Dialog.Title>
+        <Dialog.Content>
+          <Text variant="bodyMedium">{t('piAppWebView.infoDialog.description', { url: appServerURL })}</Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={() => setInfoDialogVisible(false)}>Done</Button>
+        </Dialog.Actions>
+      </Dialog>
     </AppBaseView>
   );
 };

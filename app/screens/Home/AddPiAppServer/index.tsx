@@ -167,7 +167,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 onChangeText={setName}
                 placeholder={t('addPiAppServer.inputPlaceholder1')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={() => pathRef.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
@@ -180,7 +179,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 onChangeText={setPath}
                 placeholder={t('addPiAppServer.inputPlaceholder2')!}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={() => portRef.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
@@ -194,7 +192,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 placeholder={t('addPiAppServer.inputPlaceholder3')!}
                 errorText={validPort(port)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={onPressCategoryMenu}
                 keyboardType={'numeric'}
                 returnKeyType={'next'}
@@ -208,7 +205,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 placeholder={t('addPiAppServer.inputPlaceholder4')!}
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onPress={onPressCategoryMenu}
                 onSubmitEditing={() => {}}
                 keyboardType={'default'}
@@ -223,7 +219,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 placeholder={t('addPiAppServer.inputPlaceholder5')!}
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
                 onSubmitEditing={() => descriptionRef.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
@@ -239,7 +234,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
                 style={[styles.inputMultilineStyle, { color: colors.onBackground }]}
-                placeholderTextColor={theme.colors.onSurface}
                 keyboardType={'default'}
                 returnKeyType={'default'}
               />

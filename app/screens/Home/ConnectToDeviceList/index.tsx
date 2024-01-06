@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
-import { Appbar, Button, FAB, List, Menu, Text, useTheme } from 'react-native-paper';
+import { Appbar, Button, FAB, List, Menu, useTheme } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
@@ -83,15 +83,10 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
         style={{ backgroundColor: colors.background }}
         RightViewComponent={
           <View style={styles.navigationButton}>
-            <Appbar.Action icon={'dots-vertical'} onPress={onPressMore} />
             <Menu
               visible={menuVisible}
               onDismiss={onDismissModal}
-              anchor={
-                <TouchableOpacity onPress={() => {}}>
-                  <Text> </Text>
-                </TouchableOpacity>
-              }>
+              anchor={<Appbar.Action icon={'dots-vertical'} onPress={onPressMore} />}>
               <Menu.Item onPress={onPressAddDevice} title={t('connectToDeviceList.addManually')} />
               <Menu.Item onPress={onPressAdvanceSetting} title={t('connectToDeviceList.devicesSettings')} />
             </Menu>
@@ -110,9 +105,8 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
                     key={device.id}
                     onPress={() => onPressDevice(device, idx)}
                     title={device.name}
-                    description={device.ip}
-                    left={props => <List.Icon {...props} icon="microsoft-windows" />}
-                    right={props => <List.Icon {...props} icon={'antenna'} color={'green'} />}
+                    description={[device.ip1, device.ip2, device.ip3].filter(element => !!element).join(',')}
+                    left={props => <List.Icon {...props} icon="raspberry-pi" />}
                   />
                 );
               })}

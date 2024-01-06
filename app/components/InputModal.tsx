@@ -61,7 +61,7 @@ const InputModal = React.forwardRef((props: IInputModalProps, ref: any) => {
             value={props.value}
             onChangeText={props.onChangeText}
             placeholder={props.placeholder}
-            placeholderTextColor={theme.colors.onSurface}
+            placeholderTextColor={`${theme.colors.onBackground}80`}
             {...props}
           />
 

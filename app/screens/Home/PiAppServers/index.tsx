@@ -192,7 +192,6 @@ const PiAppServers = ({ navigation, route }: Props) => {
             value={searchText}
             onChangeText={v => setSearchText(v)}
             placeholder={t('piAppServersList.searchText')!}
-            placeholderTextColor={`${colors.onBackground}50`}
             style={[styles.searchTextInputText, { color: colors.onBackground }]}
           />
           {searchText.length > 0 && (

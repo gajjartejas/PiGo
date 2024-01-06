@@ -5,19 +5,18 @@ import { View, ScrollView, TextInput, Keyboard } from 'react-native';
 import { Button, IconButton } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
+import uuid from 'react-native-uuid';
+import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 //App modules
 import styles from './styles';
 
 //Redux
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
-import validateIPAddress from 'app/utils/validateIPAddress';
-import { useTranslation } from 'react-i18next';
 import AppHeader from 'app/components/AppHeader';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Components from 'app/components';
 import useAppConfigStore from 'app/store/appConfig';
-import uuid from 'react-native-uuid';
 import IDevice from 'app/models/models/device';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
@@ -29,7 +28,9 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddDevice'>;
 const AddDevice = ({ navigation, route }: Props) => {
   //Refs
   let connectionNameRef = useRef<TextInput | null>(null);
-  let ipAddressRef = useRef<TextInput | null>(null);
+  let ipAddress1Ref = useRef<TextInput | null>(null);
+  let ipAddress2Ref = useRef<TextInput | null>(null);
+  let ipAddress3Ref = useRef<TextInput | null>(null);
 
   //Constants
   const { colors } = useTheme();
@@ -44,7 +45,9 @@ const AddDevice = ({ navigation, route }: Props) => {
   //States
   const [device, setDevice] = useState<IDevice | null>(null);
   const [connectionName, setConnectionName] = useState('');
-  const [ipAddress, setIPAddress] = useState('');
+  const [ipAddress1, setIPAddress1] = useState('');
+  const [ipAddress2, setIPAddress2] = useState('');
+  const [ipAddress3, setIPAddress3] = useState('');
   const [headerTitle, setHeaderTitle] = useState('');
   const [buttonTitle, setButtonTitle] = useState('');
 
@@ -81,7 +84,9 @@ const AddDevice = ({ navigation, route }: Props) => {
     }
 
     setConnectionName(device.name ? device.name : '');
-    setIPAddress(device.ip);
+    setIPAddress1(device.ip1);
+    setIPAddress2(device.ip2 || '');
+    setIPAddress3(device.ip3 || '');
   }, [device]);
 
   const onPressSave = useCallback(async () => {
@@ -91,14 +96,16 @@ const AddDevice = ({ navigation, route }: Props) => {
       id: device ? device.id : uuid.v4().toString(),
       name: connectionName.trim(),
       scanPorts: ports,
-      ip: ipAddress.trim(),
+      ip1: ipAddress1.trim(),
+      ip2: ipAddress2.trim(),
+      ip3: ipAddress3.trim(),
       piAppServers: device?.piAppServers ?? [],
     };
 
     upsertDevice(deviceAddOrUpdate);
 
     navigation.pop();
-  }, [connectionName, device, ipAddress, navigation, ports, upsertDevice]);
+  }, [connectionName, device, ipAddress1, ipAddress2, ipAddress3, navigation, ports, upsertDevice]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();
@@ -106,7 +113,7 @@ const AddDevice = ({ navigation, route }: Props) => {
 
   const validIPAddress = useCallback(
     (field: string): string | null => {
-      return !validateIPAddress(field) ? t('addDevice.invalidIpAddress') : null;
+      return field.trim().length < 2 ? t('addDevice.invalidIpAddress') : null;
     },
     [t],
   );
@@ -123,8 +130,8 @@ const AddDevice = ({ navigation, route }: Props) => {
   }, [navigation]);
 
   const validInputs = useMemo(() => {
-    return validIPAddress(ipAddress) !== null || validateName(connectionName) !== null;
-  }, [connectionName, ipAddress, validIPAddress, validateName]);
+    return validIPAddress(ipAddress1) !== null || validateName(connectionName) !== null;
+  }, [connectionName, ipAddress1, validIPAddress, validateName]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -149,34 +156,56 @@ const AddDevice = ({ navigation, route }: Props) => {
                 value={connectionName}
                 onChangeText={setConnectionName}
                 placeholder={t('addDevice.inputPlaceholder1')!}
-                errorText={validateName(ipAddress)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => ipAddressRef.current?.focus()}
+                onSubmitEditing={() => ipAddress1Ref.current?.focus()}
                 keyboardType={'default'}
                 returnKeyType={'next'}
               />
 
               <Components.AppTextInput
-                ref={ipAddressRef}
+                ref={ipAddress1Ref}
                 autoCapitalize="none"
-                value={ipAddress}
-                onChangeText={setIPAddress}
+                value={ipAddress1}
+                onChangeText={setIPAddress1}
                 placeholder={t('addDevice.inputPlaceholder2')!}
-                errorText={validIPAddress(ipAddress)}
+                errorText={validIPAddress(ipAddress1)}
                 containerStyle={styles.inputStyle}
-                placeholderTextColor={theme.colors.onSurface}
-                onSubmitEditing={() => ipAddressRef.current?.focus()}
+                onSubmitEditing={() => ipAddress2Ref.current?.focus()}
                 keyboardType={'numeric'}
                 returnKeyType={'next'}
                 RightAccessoryView={
                   <IconButton icon="magnify" iconColor={theme.colors.primary} size={20} onPress={onScanDevices} />
                 }
               />
+              <Components.AppTextInput
+                ref={ipAddress2Ref}
+                autoCapitalize="none"
+                value={ipAddress2}
+                onChangeText={setIPAddress2}
+                placeholder={t('addDevice.inputPlaceholder3')!}
+                containerStyle={styles.inputStyle}
+                onSubmitEditing={() => ipAddress3Ref.current?.focus()}
+                keyboardType={'numeric'}
+                returnKeyType={'next'}
+              />
+
+              <Components.AppTextInput
+                ref={ipAddress3Ref}
+                autoCapitalize="none"
+                value={ipAddress3}
+                onChangeText={setIPAddress3}
+                placeholder={t('addDevice.inputPlaceholder4')!}
+                containerStyle={styles.inputStyle}
+                keyboardType={'numeric'}
+                returnKeyType={'done'}
+              />
             </View>
           </View>
         </ScrollView>
 
+        <Button icon={'magnify'} mode={'text'} onPress={onScanDevices}>
+          {t('addDevice.searchNearbyDevices')}
+        </Button>
         <Button
           disabled={validInputs}
           mode={'contained'}
