@@ -21,6 +21,7 @@ import useAppConfigStore from 'app/store/appConfig';
 import AppHeader from 'app/components/AppHeader';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import IPiAppServer from 'app/models/models/piAppServer';
+import getLiveURL from 'app/utils/getLiveURL';
 
 //Params
 type DashboardTabNavigationProp = CompositeNavigationProp<
@@ -30,6 +31,7 @@ type DashboardTabNavigationProp = CompositeNavigationProp<
 const DashboardTab = ({}: DashboardTabNavigationProp) => {
   //Refs
   const refDeviceInfoRequestInProgress = useRef(false);
+  const refRefreshTimeoutMs = useRef(1000);
 
   //Actions
 
@@ -59,7 +61,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       return;
     }
     setTitle(selectedDevice.name);
-    setSubTitle(selectedDevice.ip);
+    setSubTitle(selectedDevice.ip1);
   }, [selectedDevice]);
 
   const onLogout = useCallback(() => {
@@ -75,6 +77,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
 
   useEffect(() => {
     if (!selectedDevice || !isFocused) {
+      refRefreshTimeoutMs.current = 1000;
       return;
     }
 
@@ -82,17 +85,22 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       if (refDeviceInfoRequestInProgress.current) {
         return;
       }
+      refRefreshTimeoutMs.current = 30000;
       refDeviceInfoRequestInProgress.current = true;
       try {
         const result: any = await Promise.allSettled(
           selectedDevice.piAppServers.map(async v => {
-            const url = `http://${selectedDevice.ip}:${v.port}${v.path}`;
+            const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
+              .filter(m => !!m)
+              .map(m => {
+                return 'http://' + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
+              });
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1000);
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
             try {
-              const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
+              const response = await getLiveURL(serverURLs, controller);
               clearTimeout(timeoutId);
-              return { status: 'fulfilled', reachable: response.ok };
+              return { status: 'fulfilled', reachable: !!response };
             } catch (error) {
               clearTimeout(timeoutId);
               return { status: 'rejected', reason: error };
@@ -110,9 +118,10 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
         console.log('useEffect->refresh->error', error);
       }
       refDeviceInfoRequestInProgress.current = false;
-    }, 2000);
+    }, refRefreshTimeoutMs.current);
 
     return () => {
+      refDeviceInfoRequestInProgress.current = false;
       clearInterval(to);
     };
   }, [isFocused, selectDevice, selectedDevice]);

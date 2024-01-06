@@ -21,6 +21,7 @@ import uuid from 'react-native-uuid';
 import AppHeader from 'app/components/AppHeader';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ScanDevices'>;
@@ -38,6 +39,7 @@ const ScanDevices = ({ navigation }: Props) => {
   const scanTimeoutInMs = useAppScanConfigStore(store => store.scanTimeoutInMs);
   const onSelectScannedDeviceEmitter = useEventEmitter<IDevice>('on_select_scanned_device');
   const largeScreenMode = useLargeScreenMode();
+  const insets = useSafeAreaInsets();
 
   //States
   const [scanningFinished, setScanningFinished] = useState(false);
@@ -64,9 +66,33 @@ const ScanDevices = ({ navigation }: Props) => {
       result => {
         if (result) {
           setScannedDevices(d => {
-            return d.findIndex(c => c.ip === result.ip) === -1
-              ? [...d, { id: uuid.v4().toString(), name: '', scanPorts: [], piAppServers: [], ...result }]
-              : d;
+            const updatedDevices = d.map(device => {
+              if (device.ip1 === result.ip) {
+                return {
+                  ...device,
+                  scanPorts: [...device.scanPorts, result.port],
+                  ip1: result.ip,
+                  ip2: null,
+                  ip3: null,
+                };
+              }
+              return device;
+            });
+            return updatedDevices.some(device => device.ip1 === result.ip)
+              ? updatedDevices
+              : [
+                  ...updatedDevices,
+                  {
+                    id: uuid.v4().toString(),
+                    name: '',
+                    ip1: result.ip,
+                    ip2: null,
+                    ip3: null,
+                    scanPorts: [result.port],
+                    piAppServers: [],
+                    ...result,
+                  },
+                ];
           });
         }
       },
@@ -139,8 +165,8 @@ const ScanDevices = ({ navigation }: Props) => {
                   <List.Item
                     key={device.id}
                     onPress={() => onPressDevice(device, idx)}
-                    title={device.ip}
-                    description={device.port}
+                    title={device.ip1}
+                    description={device.scanPorts.join(', ')}
                     left={props => <List.Icon {...props} icon="raspberry-pi" />}
                     right={props => <List.Icon {...props} icon={'antenna'} color={'green'} />}
                   />
@@ -161,6 +187,12 @@ const ScanDevices = ({ navigation }: Props) => {
           />
         )}
         {!scanningFinished && <Components.AppLoadingPlaceHolder />}
+
+        {scanningFinished && scannedDevices.length > 0 && (
+          <Button style={{ marginBottom: insets.bottom }} icon={'refresh'} mode={'text'} onPress={startScan}>
+            {t('scanDevices.refresh')}
+          </Button>
+        )}
       </View>
     </View>
   );

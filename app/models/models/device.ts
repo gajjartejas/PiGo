@@ -4,7 +4,9 @@ interface IDevice {
   id: string;
   name: string;
   scanPorts: number[];
-  ip: string;
+  ip1: string;
+  ip2: string | null;
+  ip3: string | null;
   piAppServers: IPiAppServer[];
 }
 

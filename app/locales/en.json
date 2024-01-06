@@ -177,18 +177,18 @@
     "addDevice": "Add Pi server",
     "updateDevice": "Update Pi server",
     "connectDevice": "Connect",
-    "invalidIpAddress": "Invalid IP address",
+    "invalidIpAddress": "Invalid URL or IPv4/IPv6",
     "invalidName": "Invalid Pi server name",
     "invalidRefreshRate": "Invalid refresh rate",
     "connectionOk": "Connection ok",
     "authRequired": "Authorization required!",
     "inputPlaceholder1": "Enter the Pi server name",
-    "inputPlaceholder2": "Enter IP Address",
-    "inputPlaceholder3": "Enter Path (ex: /data.json)",
-    "inputPlaceholder4": "Enter Port",
-    "inputPlaceholder5": "Enter refresh rate in milliseconds",
+    "inputPlaceholder2": "Enter URL or IPv4/IPv6",
+    "inputPlaceholder3": "Enter URL or IPv4/IPv6 (Alternative) Optional",
+    "inputPlaceholder4": "Enter URL or IPv4/IPv6 (Alternative) Optional",
     "selectPiAppServer": "Select Pi App Server",
-    "testConnection": "Test Connection"
+    "testConnection": "Test Connection",
+    "searchNearbyDevices": "Search Nearby Devices"
   },
   "devicesList": {
     "title": "Pi Servers",
@@ -203,7 +203,7 @@
   },
   "addPiAppServer": {
     "invalidName": "Invalid name",
-    "invalidIpAddress": "Invalid IP address",
+    "invalidIpAddress": "Invalid URL or IPv4/IPv6",
     "invalidURLAddress": "Invalid URL",
     "titleUpdate": "Update Pi App Server",
     "titleAddPiAppServer": "Add Pi App Server",
@@ -254,7 +254,8 @@
       "help": "Help",
       "or": "OR",
       "rescan": "Scan Again"
-    }
+    },
+    "refresh": "REFRESH"
   },
   "connectToDeviceList": {
     "savedConnections": "Saved Pi Servers",
@@ -273,6 +274,16 @@
     "back": "Back",
     "forward": "Forward",
     "copyURL": "Copy URL",
-    "info": "Info"
+    "info": "Info",
+    "emptyData": {
+      "title": "Server Not Available!",
+      "message": "Please try to refresh",
+      "button": "Refresh"
+    },
+    "infoDialog": {
+      "title": "Info",
+      "description": "URL Loaded: {{url}}\n",
+
+    }
   }
 }

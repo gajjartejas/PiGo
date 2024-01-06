@@ -104,7 +104,7 @@ const Devices = ({ navigation }: Props) => {
                     key={idx.toString()}
                     onPress={() => onPressDevice(item, idx)}
                     title={item.name ? item.name : t('devicesList.emptyName')}
-                    description={`${item.name}-${item.ip}`}
+                    description={[item.ip1, item.ip2, item.ip3].filter(element => !!element).join(',')}
                     left={props => <List.Icon {...props} icon="server-network" />}
                     right={props => (
                       <Menu
