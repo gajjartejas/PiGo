@@ -65,18 +65,24 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
       .filter(v => !!v)
       .map(v => {
-        return 'http://' + v + ':' + piAppServer.port + '/' + piAppServer.path.replace(/^\//, '');
+        return piAppServer.secureConnection
+          ? 'https://'
+          : 'http://' + v + ':' + piAppServer.port + '/' + piAppServer.path.replace(/^\//, '');
       });
     const abortController = new AbortController();
 
+    console.log(serverURLs);
     try {
       const value = await getLiveURL(serverURLs, abortController);
+      console.log('value', value);
       setAppServerURL(value);
       setError(false);
     } catch (e) {
+      console.log('error', e);
+
       setError(true);
     }
-  }, [piAppServer.path, piAppServer.port, selectedDevice]);
+  }, [piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice]);
 
   useEffect(() => {
     loadURL();
@@ -144,7 +150,6 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const onInfo = useCallback(() => {
     setMenuVisible(false);
     setInfoDialogVisible(true);
-    //appServerURL
   }, []);
 
   const onPressMore = useCallback(() => {

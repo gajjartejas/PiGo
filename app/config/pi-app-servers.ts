@@ -1,3 +1,5 @@
+import IPiAppServer from 'app/models/models/piAppServer';
+
 export const PI_APP_CATEGORIES = {
   adsBlocker: 'piAppsCategories.adsBlocker', // 'Ad and Tracker Blockers',
   mediaCenters: 'piAppsCategories.mediaCenters', // 'Media Centers',
@@ -15,7 +17,7 @@ export const PI_APP_CATEGORIES = {
   other: 'piAppsCategories.other', // 'Other',
 } as const;
 
-const PI_APP_SERVERS = [
+const PI_APP_SERVERS: IPiAppServer[] = [
   {
     id: 'pi-hole',
     name: 'Pi Hole',
@@ -24,6 +26,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/pi-hole/pi-hole',
     description: 'A black hole for Internet advertisements',
     category: PI_APP_CATEGORIES.adsBlocker,
+    secureConnection: false,
   },
   {
     id: 'ad-guard-home',
@@ -33,6 +36,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/AdguardTeam/AdGuardHome',
     description: 'A network-wide ad and tracker blocker.',
     category: PI_APP_CATEGORIES.adsBlocker,
+    secureConnection: false,
   },
   {
     id: 'kodi',
@@ -42,6 +46,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/xbmc/xbmc',
     description: 'Transform your Raspberry Pi into a media center for streaming and playing multimedia content.',
     category: PI_APP_CATEGORIES.mediaCenters,
+    secureConnection: false,
   },
   {
     id: 'plex',
@@ -51,6 +56,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/plexinc',
     description: 'Plex organizes all of your personal media so you can enjoy it no matter where you are.',
     category: PI_APP_CATEGORIES.mediaCenters,
+    secureConnection: false,
   },
   {
     id: 'home-assistant',
@@ -60,6 +66,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/home-assistant',
     description: 'Open-source home automation platform that runs on Raspberry Pi.',
     category: PI_APP_CATEGORIES.homeAutomation,
+    secureConnection: false,
   },
   {
     id: 'homebridge',
@@ -69,6 +76,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/homebridge/homebridge',
     description: 'HomeKit support for the impatient.',
     category: PI_APP_CATEGORIES.homeAutomation,
+    secureConnection: false,
   },
   {
     id: 'magic-mirror',
@@ -78,6 +86,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/MichMich/MagicMirror',
     description: 'A smart mirror displaying useful information',
     category: PI_APP_CATEGORIES.informationDisplay,
+    secureConnection: false,
   },
   {
     id: 'motion-eye-os',
@@ -87,6 +96,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/motioneye-project/motioneyeos',
     description: 'Convert your Raspberry Pi into a surveillance camera.',
     category: PI_APP_CATEGORIES.surveillanceAndSecurity,
+    secureConnection: false,
   },
   {
     id: 'octoprint',
@@ -96,6 +106,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/OctoPrint/OctoPrint',
     description: 'Manage and monitor 3D printers remotely',
     category: PI_APP_CATEGORIES.printingManagement,
+    secureConnection: false,
   },
   {
     id: 'rpi-monitor',
@@ -105,6 +116,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/XavierBerger/RPi-Monitor',
     description: 'Real time monitoring for embedded devices',
     category: PI_APP_CATEGORIES.systemMonitoring,
+    secureConnection: false,
   },
   {
     id: 'open-wrt-x86-r2s-r4s-r5s-n1',
@@ -115,6 +127,7 @@ const PI_APP_SERVERS = [
     description:
       'OpenWrt is an open-source project for embedded operating systems based on Linux, primarily used on embedded devices to route network traffic. The main components are Linux, util-linux, musl, and BusyBox.',
     category: PI_APP_CATEGORIES.networkRouting,
+    secureConnection: false,
   },
   {
     id: 'umbrel-os',
@@ -125,6 +138,7 @@ const PI_APP_SERVERS = [
     description:
       'A beautiful home server OS for self-hosting with an app store. Buy a pre-built Umbrel Home with umbrelOS, or install on a Raspberry Pi 4, any Ubuntu/Debian system, or a VPS.',
     category: PI_APP_CATEGORIES.selfHostedServerOS,
+    secureConnection: false,
   },
   {
     id: 'tinypilot',
@@ -134,6 +148,7 @@ const PI_APP_SERVERS = [
     github: 'https://github.com/tiny-pilot/tinypilot',
     description: 'Use your Raspberry Pi as a browser-based KVM',
     category: PI_APP_CATEGORIES.kvm,
+    secureConnection: false,
   },
   {
     id: 'tiny-check',
@@ -144,6 +159,7 @@ const PI_APP_SERVERS = [
     description:
       'TinyCheck allows you to easily capture network communications from a smartphone or any device which can be associated to a Wi-Fi access point in order to quickly analyze them.',
     category: PI_APP_CATEGORIES.networkAnalysis,
+    secureConnection: false,
   },
   {
     id: 'qbittorrent',
@@ -154,6 +170,7 @@ const PI_APP_SERVERS = [
     description:
       'Bittorrent-nox is an advanced command-line Bittorrent client written in C++ / Qt using the libtorrent-rasterbar library by Arvid Norberg',
     category: PI_APP_CATEGORIES.torrentClients,
+    secureConnection: false,
   },
   {
     id: 'pigallery2',
@@ -164,6 +181,7 @@ const PI_APP_SERVERS = [
     description:
       'A fast directory-first photo gallery website, with rich UI, optimized for running on low resource servers (especially on raspberry pi)',
     category: PI_APP_CATEGORIES.photoGallery,
+    secureConnection: false,
   },
 ];
 

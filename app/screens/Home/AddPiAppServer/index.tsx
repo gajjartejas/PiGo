@@ -29,8 +29,9 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddPiAppServer'
 const AddPiAppServer = ({ navigation, route }: Props) => {
   //Refs
   const nameRef = useRef<TextInput | null>(null);
-  const portRef = useRef<TextInput | null>(null);
   const pathRef = useRef<TextInput | null>(null);
+  const portRef = useRef<TextInput | null>(null);
+  const secureConnectionRef = useRef<TextInput | null>(null);
   const categoryRef = useRef<TextInput | null>(null);
   const githubLinkRef = useRef<TextInput | null>(null);
   const descriptionRef = useRef<TextInput | null>(null);
@@ -48,12 +49,14 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
 
   //States
   const [name, setName] = useState('');
-  const [port, setPort] = useState('');
   const [path, setPath] = useState('');
+  const [port, setPort] = useState('');
+  const [secureConnection, setSecureConnection] = useState(false);
   const [gitHubLink, setGitHubLink] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [categoryDialogVisible, setCategoryDialogVisible] = useState(false);
+  const [connectionTypeDialogVisible, setConnectionTypeDialogVisible] = useState(false);
 
   useEffect(() => {
     if (!piAppServer) {
@@ -63,6 +66,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     setName(piAppServer.name);
     setPath(piAppServer.path);
     setPort(piAppServer.port.toString());
+    setSecureConnection(piAppServer.secureConnection);
     setGitHubLink(piAppServer.github.toString());
     setDescription(piAppServer.description.toString());
     setCategory(piAppServer.category);
@@ -76,6 +80,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
       name: name.trim(),
       path: path.trim(),
       port: parseInt(port, 10),
+      secureConnection: secureConnection,
       github: gitHubLink.trim(),
       description: description.trim(),
       category: category,
@@ -92,6 +97,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     name,
     path,
     port,
+    secureConnection,
     gitHubLink,
     description,
     category,
@@ -105,6 +111,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     navigation.pop();
   }, [navigation]);
 
+  //Category
   const onPressCategoryMenu = () => {
     setCategoryDialogVisible(true);
   };
@@ -116,6 +123,20 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
 
   const hideCategoryDialog = () => {
     setCategoryDialogVisible(false);
+  };
+
+  //Connection Type
+  const onPressConnectionTypeMenu = () => {
+    setConnectionTypeDialogVisible(true);
+  };
+
+  const onPressConfirmConnectionType = (v: string) => {
+    setSecureConnection(v === 'HTTPS');
+    setConnectionTypeDialogVisible(false);
+  };
+
+  const hideConnectionTypeDialog = () => {
+    setConnectionTypeDialogVisible(false);
   };
 
   const validName = useCallback(
@@ -132,6 +153,13 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     [t],
   );
 
+  const validCategory = useCallback(
+    (field: string): string | null => {
+      return field.trim().length < 1 ? t('addPiAppServer.invalidCategory') : null;
+    },
+    [t],
+  );
+
   const validURL = useCallback(
     (field: string): string | null => {
       return field.trim().length > 1 && !isValidHttpUrl(field) ? t('addPiAppServer.invalidURLAddress') : null;
@@ -140,8 +168,8 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   );
 
   const validInputs = useMemo(() => {
-    return validPort(port) !== null || validName(name) !== null;
-  }, [name, port, validName, validPort]);
+    return validName(name) !== null || validPort(port) !== null || validCategory(category) !== null;
+  }, [category, name, port, validCategory, validName, validPort]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -166,6 +194,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 value={name}
                 onChangeText={setName}
                 placeholder={t('addPiAppServer.inputPlaceholder1')!}
+                errorText={validName(name)}
                 containerStyle={styles.inputStyle}
                 onSubmitEditing={() => pathRef.current?.focus()}
                 keyboardType={'default'}
@@ -198,17 +227,19 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
               />
 
               <Components.AppTextInput
-                ref={categoryRef}
-                autoCapitalize="none"
-                value={t(category)!}
-                onChangeText={setGitHubLink}
+                ref={secureConnectionRef}
+                value={secureConnection ? 'HTTPS(Secure)' : 'HTTP (Not Secure)'}
                 placeholder={t('addPiAppServer.inputPlaceholder4')!}
-                errorText={validURL(gitHubLink)}
+                containerStyle={styles.inputStyle}
+                onPress={onPressConnectionTypeMenu}
+              />
+
+              <Components.AppTextInput
+                ref={categoryRef}
+                value={t(category)!}
+                placeholder={t('addPiAppServer.inputPlaceholder5')!}
                 containerStyle={styles.inputStyle}
                 onPress={onPressCategoryMenu}
-                onSubmitEditing={() => {}}
-                keyboardType={'default'}
-                returnKeyType={'next'}
               />
 
               <Components.AppTextInput
@@ -216,7 +247,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={gitHubLink}
                 onChangeText={setGitHubLink}
-                placeholder={t('addPiAppServer.inputPlaceholder5')!}
+                placeholder={t('addPiAppServer.inputPlaceholder6')!}
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
                 onSubmitEditing={() => descriptionRef.current?.focus()}
@@ -230,7 +261,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
                 autoCapitalize="none"
                 value={description}
                 onChangeText={setDescription}
-                placeholder={t('addPiAppServer.inputPlaceholder6')!}
+                placeholder={t('addPiAppServer.inputPlaceholder7')!}
                 errorText={validURL(gitHubLink)}
                 containerStyle={styles.inputStyle}
                 style={[styles.inputMultilineStyle, { color: colors.onBackground }]}
@@ -258,6 +289,16 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
         confirmText={t('addPiAppServer.selectCategoryDialog.ok')}
         onPressCancel={hideCategoryDialog}
         selectedItem={category}
+      />
+
+      <Components.AppRadioSelectDialog
+        visible={connectionTypeDialogVisible}
+        title={t('addPiAppServer.selectConnectionTypeDialog.title')}
+        items={['HTTP', 'HTTPS']}
+        onPressConfirm={onPressConfirmConnectionType}
+        confirmText={t('addPiAppServer.selectConnectionTypeDialog.ok')}
+        onPressCancel={hideConnectionTypeDialog}
+        selectedItem={secureConnection ? 'HTTPS' : 'HTTP'}
       />
     </View>
   );
