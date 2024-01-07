@@ -205,16 +205,23 @@
     "invalidName": "Invalid name",
     "invalidIpAddress": "Invalid URL or IPv4/IPv6",
     "invalidURLAddress": "Invalid URL",
+    "invalidPath": "Invalid Path",
+    "invalidCategory": "Invalid Category",
     "titleUpdate": "Update Pi App Server",
     "titleAddPiAppServer": "Add Pi App Server",
     "inputPlaceholder1": "Enter Name",
     "inputPlaceholder2": "Enter Path",
     "inputPlaceholder3": "Enter Port",
-    "inputPlaceholder4": "Select Category",
-    "inputPlaceholder5": "Enter GitHub Link (Optional)",
-    "inputPlaceholder6": "Enter Description (Optional)",
+    "inputPlaceholder4": "Enter Connection Type",
+    "inputPlaceholder5": "Select Category",
+    "inputPlaceholder6": "Enter GitHub Link (Optional)",
+    "inputPlaceholder7": "Enter Description (Optional)",
     "selectCategoryDialog": {
       "title": "Select Category",
+      "ok": "OK"
+    },
+    "selectConnectionTypeDialog": {
+      "title": "Select Connection Type",
       "ok": "OK"
     },
     "updateButton": "UPDATE",

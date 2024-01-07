@@ -7,7 +7,7 @@ const getLiveURL = (serverURLs: string[], controller: AbortController): Promise<
         reject();
       }, 2000);
       let url = serverURLs[i];
-      fetch(url, { method: 'HEAD', signal })
+      fetch(url, { method: 'GET', signal })
         .then(response => {
           if (response.ok) {
             resolve(url);

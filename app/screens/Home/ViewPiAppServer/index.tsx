@@ -51,7 +51,9 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
     setCategory(piAppServer.category);
 
     if (device) {
-      setFullLink('http://' + device?.ip1 + piAppServer.port + piAppServer.path);
+      setFullLink(
+        piAppServer.secureConnection ? 'https://' : 'http://' + device?.ip1 + piAppServer.port + piAppServer.path,
+      );
     }
   }, [device, piAppServer]);
 

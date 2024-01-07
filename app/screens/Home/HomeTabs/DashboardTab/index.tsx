@@ -93,7 +93,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
               .filter(m => !!m)
               .map(m => {
-                return 'http://' + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
+                return v.secureConnection ? 'https://' : 'http://' + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
               });
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 2000);

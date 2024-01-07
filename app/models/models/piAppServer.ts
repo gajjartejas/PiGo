@@ -7,6 +7,7 @@ interface IPiAppServer {
   description: string;
   reachable?: boolean;
   category: string;
+  secureConnection: boolean;
 }
 
 export default IPiAppServer;
