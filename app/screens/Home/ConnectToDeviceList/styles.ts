@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    right: 32,
+    right: 16,
   },
   cardTablet: {
     width: '70%',

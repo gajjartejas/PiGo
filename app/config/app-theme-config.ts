@@ -12,10 +12,10 @@ export const PaperThemeDefault = {
     ...MD3LightTheme.colors,
     ...LightTheme.colors,
 
-    primary: '#6200EE',
-    onPrimary: '#000000',
+    primary: '#DC143C',
+    onPrimary: '#FFFFFF',
 
-    secondaryContainer: '#6200EE',
+    secondaryContainer: '#DC143C',
     onSecondary: '#FFFFFF',
 
     background: '#F9F9F9',
@@ -44,11 +44,11 @@ export const PaperThemeDark = {
     ...MD3DarkTheme.colors,
     ...DarkTheme.colors,
 
-    primary: '#6200EE',
-    onPrimary: '#000000',
+    primary: '#DC143C',
+    onPrimary: '#FFFFFF',
 
-    secondaryContainer: '#6200EE',
-    onSecondary: '#000000',
+    secondaryContainer: '#DC143C',
+    onSecondary: '#FFFFFF',
 
     background: '#000000',
     onBackground: '#FFFFFF',

@@ -22,6 +22,7 @@ import AppHeader from 'app/components/AppHeader';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
+import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 //Params
 type DashboardTabNavigationProp = CompositeNavigationProp<
@@ -46,6 +47,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   const deletePiAppServerToSelectedDevice = useAppConfigStore(store => store.deletePiAppServerToSelectedDevice);
   const selectDevice = useAppConfigStore(store => store.selectDevice);
   const isFocused = useIsFocused();
+  const largeScreenMode = useLargeScreenMode();
 
   //States
   const [title, setTitle] = useState('');
@@ -172,7 +174,9 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={false}
         onPressBackButton={onLogout}
@@ -205,9 +209,8 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
           </Text>
         }
       />
-
       {selectedDevice && selectedDevice.piAppServers.length > 0 && (
-        <View style={styles.subView}>
+        <View style={[styles.subView, largeScreenMode && styles.cardTablet, { backgroundColor: colors.background }]}>
           <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
             {selectedDevice.piAppServers.map((item, idx) => {
               return (
@@ -272,10 +275,11 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       <FAB
         label={t('dashboard.fabAddMore')!}
         icon="plus"
-        style={[styles.fab, { bottom: insets.bottom }]}
+        color={colors.onPrimary}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
         onPress={onPressSelectPiAppServer}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

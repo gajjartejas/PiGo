@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   inputMultilineStyle: {
     minHeight: 60,
-    maxHeight: 300,
+    maxHeight: 400,
     flex: 1,
     marginTop: 12,
   },
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
+    marginHorizontal: 8,
   },
   errorText: {
     fontSize: 12,
@@ -96,6 +97,9 @@ const styles = StyleSheet.create({
   },
   centered: {
     alignSelf: 'center',
+  },
+  bottomView: {
+    marginHorizontal: 8,
   },
 });
 

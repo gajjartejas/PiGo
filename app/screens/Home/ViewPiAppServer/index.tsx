@@ -76,7 +76,9 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
   }, [gitHubLink]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -164,7 +166,7 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </Components.AppBaseView>
   );
 };
 

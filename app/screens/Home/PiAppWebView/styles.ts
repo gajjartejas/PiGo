@@ -102,10 +102,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
   },
-  fab: {
-    position: 'absolute',
-    right: 32,
-  },
   cardTablet: {
     width: '70%',
     alignSelf: 'center',

@@ -175,7 +175,9 @@ const PiAppServers = ({ navigation, route }: Props) => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -184,8 +186,8 @@ const PiAppServers = ({ navigation, route }: Props) => {
       />
 
       <View style={[styles.subView, largeScreenMode && styles.cardTablet]}>
-        <View style={[styles.searchContainer, { backgroundColor: colors.surface }]}>
-          <View style={[styles.leftSearchButton, { backgroundColor: colors.surface }]}>
+        <View style={[styles.searchContainer, { backgroundColor: colors.surfaceVariant }]}>
+          <View style={[styles.leftSearchButton, { backgroundColor: colors.surfaceVariant }]}>
             <IconButton icon={'magnify'} iconColor={`${colors.onBackground}50`} size={22} />
           </View>
           <TextInput
@@ -213,7 +215,9 @@ const PiAppServers = ({ navigation, route }: Props) => {
             keyExtractor={item => item.id}
             renderItem={renderItem}
             renderSectionHeader={({ section: { title } }) => (
-              <List.Subheader style={{ backgroundColor: colors.background }}>{t(title)}</List.Subheader>
+              <List.Subheader style={{ backgroundColor: colors.background, color: `${colors.onBackground}80` }}>
+                {t(title)}
+              </List.Subheader>
             )}
           />
         )}
@@ -233,10 +237,11 @@ const PiAppServers = ({ navigation, route }: Props) => {
       <FAB
         label={t('piAppServersList.fabAddMore')!}
         icon="plus"
-        style={[styles.fab, { bottom: insets.bottom + 16 }]}
+        color={colors.onPrimary}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
         onPress={onPressAddNewPiAppServer}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

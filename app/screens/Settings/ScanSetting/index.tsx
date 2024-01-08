@@ -137,7 +137,9 @@ const ScanSetting = ({ navigation }: Props) => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -251,7 +253,7 @@ const ScanSetting = ({ navigation }: Props) => {
           setModalVisibleScanThreads(false);
         }}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

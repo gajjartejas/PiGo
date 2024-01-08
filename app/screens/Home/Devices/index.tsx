@@ -86,7 +86,9 @@ const Devices = ({ navigation }: Props) => {
   }, [onRedirectToCreateDevice, t]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -149,10 +151,11 @@ const Devices = ({ navigation }: Props) => {
       <FAB
         label={t('devicesList.fabAddMore')!}
         icon="plus"
-        style={[styles.fab, { bottom: insets.bottom + 16 }]}
+        color={colors.onPrimary}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
         onPress={onPressAddNewDevice}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

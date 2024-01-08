@@ -76,7 +76,9 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
   }, [onPressAddDevice, t]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={false}
         title={t('general.appname')}
@@ -94,7 +96,7 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
         }
       />
 
-      <View style={[styles.safeArea, largeScreenMode && styles.cardTablet, { backgroundColor: colors.background }]}>
+      <View style={[styles.subView, largeScreenMode && styles.cardTablet, { backgroundColor: colors.background }]}>
         {recentDevices.length > 0 && (
           <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
             <List.Section>
@@ -128,10 +130,11 @@ const ConnectToDeviceList = ({}: ConnectToDeviceListTabNavigationProp) => {
       <FAB
         label={t('connectToDeviceList.fabAddMore')!}
         icon="plus"
-        style={[styles.fab, { bottom: insets.bottom }]}
+        color={colors.onPrimary}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
         onPress={onPressAddDevice}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 
