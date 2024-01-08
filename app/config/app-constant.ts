@@ -11,7 +11,7 @@ const Constant = {
 
   REPO_URL: GITHUB_PROJECT_LINK,
 
-  ABOUT_NEW_GITHUB_ISSUE: `${GITHUB_PROJECT_LINK}/issues`,
+  ABOUT_NEW_GITHUB_ISSUE: `${GITHUB_PROJECT_LINK}/issues/new`,
   ABOUT_TELEGRAM_LINK: 'https://t.me/tejasapps',
   ABOUT_SUPPORT_EMAIL: 'gajjartejas26@gmail.com',
 

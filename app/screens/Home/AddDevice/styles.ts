@@ -89,6 +89,9 @@ const styles = StyleSheet.create({
     width: '70%',
     alignSelf: 'center',
   },
+  bottomView: {
+    marginHorizontal: 8,
+  },
 });
 
 export default styles;

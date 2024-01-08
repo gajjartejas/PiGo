@@ -192,8 +192,8 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   });
 
   return (
-    <AppBaseView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.subView, largeScreenMode && styles.cardTablet]}>
+    <AppBaseView edges={['left', 'right', 'top']} style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.subView]}>
         {!!appServerURL && (
           <WebView
             ref={webViewRef}
@@ -256,7 +256,10 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         </View>
       </Animated.View>
 
-      <Dialog visible={infoDialogVisible} onDismiss={() => setInfoDialogVisible(false)}>
+      <Dialog
+        style={largeScreenMode && styles.cardTablet}
+        visible={infoDialogVisible}
+        onDismiss={() => setInfoDialogVisible(false)}>
         <Dialog.Title>{t('piAppWebView.infoDialog.title')}</Dialog.Title>
         <Dialog.Content>
           <Text variant="bodyMedium">{t('piAppWebView.infoDialog.description', { url: appServerURL })}</Text>

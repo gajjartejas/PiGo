@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 //ThirdParty
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
 import { useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -41,8 +40,6 @@ const AppHeader = (props: AppHeaderProps) => {
 
   //Const
   const insets = useSafeAreaInsets();
-  const isHasNotch = DeviceInfo.hasNotch();
-  let statusBarHeight = props.statusBarHeight === undefined ? insets.top + (isHasNotch ? 0 : 5) : props.statusBarHeight;
 
   const backButtonPaddingForTitle = !props.showBackButton ? { marginLeft: 0 } : { marginLeft: 60, marginRight: 60 };
   return (
@@ -54,7 +51,7 @@ const AppHeader = (props: AppHeaderProps) => {
         backgroundColor: colors.background,
         ...props.style,
       }}>
-      <View style={[styles.statusBar, { height: statusBarHeight }]} />
+      <View style={[styles.statusBar]} />
       <View style={[styles.navigationContainer, props.largeHeader && styles.largeStatusBarHeight]}>
         <View style={[StyleSheet.absoluteFill, styles.titleViewStyle]}>
           {!!props.title && (

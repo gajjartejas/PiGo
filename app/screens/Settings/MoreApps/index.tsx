@@ -94,7 +94,9 @@ const MoreApps = ({ navigation }: Props) => {
   }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
@@ -120,7 +122,7 @@ const MoreApps = ({ navigation }: Props) => {
           })}
         </View>
       </Components.AppBaseView>
-    </View>
+    </Components.AppBaseView>
   );
 };
 

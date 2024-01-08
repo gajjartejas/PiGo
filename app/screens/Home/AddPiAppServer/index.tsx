@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Keyboard, TextInput } from 'react-native';
+import { View, ScrollView, Keyboard, TextInput, KeyboardAvoidingView } from 'react-native';
 
 //ThirdParty
 import { Button } from 'react-native-paper';
@@ -172,14 +172,16 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   }, [category, name, port, validCategory, validName, validPort]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
         title={piAppServer ? t('addPiAppServer.titleUpdate') : t('addPiAppServer.titleAddPiAppServer')}
         style={{ backgroundColor: colors.background }}
       />
-      <View style={styles.subView}>
+      <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={0} style={styles.subView}>
         <ScrollView keyboardDismissMode={'interactive'} style={styles.scrollView}>
           <View style={[styles.centeredView]}>
             <View
@@ -271,7 +273,9 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
             </View>
           </View>
         </ScrollView>
+      </KeyboardAvoidingView>
 
+      <View style={styles.bottomView}>
         <Button
           disabled={validInputs}
           mode={'contained'}
@@ -280,7 +284,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
           {piAppServer ? t('addPiAppServer.updateButton') : t('addPiAppServer.saveButton')}
         </Button>
       </View>
-
       <Components.AppRadioSelectDialog
         visible={categoryDialogVisible}
         title={t('addPiAppServer.selectCategoryDialog.title')}
@@ -300,7 +303,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
         onPressCancel={hideConnectionTypeDialog}
         selectedItem={secureConnection ? 'HTTPS' : 'HTTP'}
       />
-    </View>
+    </Components.AppBaseView>
   );
 };
 

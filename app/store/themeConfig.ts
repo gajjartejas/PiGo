@@ -29,9 +29,9 @@ const useThemeConfigStore = create<IThemeConfigState>()(
       set => ({
         isDark: colorScheme === 'dark',
         appearance: IAppearanceType.Auto,
-        primary: '#6200EE',
-        onPrimary: '#000000',
-        secondaryContainer: '#6200EE',
+        primary: '#DC143C',
+        onPrimary: '#FFFFFF',
+        secondaryContainer: '#DC143C',
         onSecondary: '#FFFFFF',
         setAppearance: a =>
           set(_state => ({

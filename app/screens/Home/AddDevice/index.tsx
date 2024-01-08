@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, TextInput, Keyboard } from 'react-native';
+import { View, ScrollView, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
 
 //ThirdParty
 import { Button, IconButton } from 'react-native-paper';
@@ -134,14 +134,17 @@ const AddDevice = ({ navigation, route }: Props) => {
   }, [connectionName, ipAddress1, validIPAddress, validateName]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Components.AppBaseView
+      edges={['left', 'right', 'top']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
         title={headerTitle}
         style={{ backgroundColor: colors.background }}
       />
-      <View style={styles.subView}>
+
+      <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={0} style={styles.subView}>
         <ScrollView keyboardDismissMode={'interactive'} style={styles.scrollView}>
           <View style={[styles.centeredView]}>
             <View
@@ -202,7 +205,9 @@ const AddDevice = ({ navigation, route }: Props) => {
             </View>
           </View>
         </ScrollView>
+      </KeyboardAvoidingView>
 
+      <View style={styles.bottomView}>
         <Button icon={'magnify'} mode={'text'} onPress={onScanDevices}>
           {t('addDevice.searchNearbyDevices')}
         </Button>
@@ -214,7 +219,7 @@ const AddDevice = ({ navigation, route }: Props) => {
           {buttonTitle}
         </Button>
       </View>
-    </View>
+    </Components.AppBaseView>
   );
 };
 
