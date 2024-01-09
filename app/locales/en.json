@@ -2,8 +2,7 @@
   "general": {
     "appname": "PiGo",
     "close": "CLOSE",
-    "save": "SAVE",
-    "connecting": "Connecting..."
+    "save": "SAVE"
   },
   "piAppsCategories": {
     "adsBlocker": "Ad and Tracker Blockers",
@@ -50,7 +49,7 @@
     "scanTitle": "Scan Settings",
     "scanSubTitle": "Auto scan(nearby scan) settings",
     "piAppServersTitle": "Default Pi App Servers",
-    "piAppServersSubTitle": "Manage list of default Pi app servers like Pi-hole, Plex etc",
+    "piAppServersSubTitle": "Manage list of default Pi app servers like Pi-hole, Plex, etc",
     "recentConnectionsTitle": "Pi Servers",
     "recentConnectionsSubTitle": "Manage added Pi servers",
     "infoHeader": "Information",
@@ -114,8 +113,8 @@
       "row1": {
         "title": "Ports",
         "subTitle": "{{ports}}",
-        "dialogTitle": "Enter Ports (Comma Seperated)",
-        "dialogSubTitle": "Add ports of possible Pi server's ports, this will help to identify your Pi on the local network. (eg: 80 default, 32400 for plex etc`)"
+        "dialogTitle": "Enter Ports (Comma Separated)",
+        "dialogSubTitle": "Add ports of possible Pi server's ports, this will help to identify your Pi on the local network. (eg: 80 default, 32400 for plex, etc`)"
       }
     },
     "section3": {
@@ -124,7 +123,7 @@
         "title": "Scan Timeout",
         "subTitle": "{{scanTimeoutInMs}} ms",
         "dialogTitle": "Enter Scan Timeout (1 - 10000)",
-        "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If Pi server not found try to increase the timeout."
+        "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If Pi server is not found try to increase the timeout."
       },
       "row2": {
         "title": "Scan Threads",
@@ -148,25 +147,14 @@
       "max": "Max"
     },
     "emptyData": {
-      "item1": {
-        "title": "Disconnected!",
-        "message": "Pi server disconnected, Please try again!",
-        "button": "Add New Pi App Server"
-      },
-      "item2": {
-        "title": "Connection Timeout",
-        "message": "Pi server taking a long time to connect, Please try again!",
-        "button": "Update Settings"
-      },
+      "item1": {},
+      "item2": {},
       "item3": {
         "title": "No apps added!",
-        "message": "Please add apps by clicking Add Apps button",
+        "message": "Please add apps by clicking the Add Apps button",
         "button": "Add New Pi App Server"
       },
-      "item4": {
-        "title": "Disconnected",
-        "button": "Update Settings"
-      }
+      "item4": {}
     },
     "fabAddMore": "Add"
   },
@@ -179,15 +167,10 @@
     "connectDevice": "Connect",
     "invalidIpAddress": "Invalid URL or IPv4/IPv6",
     "invalidName": "Invalid Pi server name",
-    "invalidRefreshRate": "Invalid refresh rate",
-    "connectionOk": "Connection ok",
-    "authRequired": "Authorization required!",
     "inputPlaceholder1": "Enter the Pi server name",
     "inputPlaceholder2": "Enter URL or IPv4/IPv6",
     "inputPlaceholder3": "Enter URL or IPv4/IPv6 (Alternative) Optional",
     "inputPlaceholder4": "Enter URL or IPv4/IPv6 (Alternative) Optional",
-    "selectPiAppServer": "Select Pi App Server",
-    "testConnection": "Test Connection",
     "searchNearbyDevices": "Search Nearby Devices"
   },
   "devicesList": {
@@ -205,7 +188,6 @@
     "invalidName": "Invalid name",
     "invalidIpAddress": "Invalid URL or IPv4/IPv6",
     "invalidURLAddress": "Invalid URL",
-    "invalidPath": "Invalid Path",
     "invalidCategory": "Invalid Category",
     "titleUpdate": "Update Pi App Server",
     "titleAddPiAppServer": "Add Pi App Server",
@@ -234,15 +216,13 @@
     "fullLink": "Full Link",
     "inputPlaceholder4": "Category",
     "inputPlaceholder5": "GitHub Link",
-    "inputPlaceholder6": "Description",
-    "openLink": "OPEN Pi APP LINK"
+    "inputPlaceholder6": "Description"
   },
   "piAppServersList": {
     "selectTitle": "Select Pi App Server",
     "listTitle": "Pi App Servers",
     "searchText": "Search",
     "createNewPiAppServer": "Add New Pi App Servers",
-    "subTitle": "Pi App Servers",
     "edit": "Edit",
     "delete": "Delete",
     "info": "Info",
@@ -266,7 +246,6 @@
   },
   "connectToDeviceList": {
     "savedConnections": "Saved Pi Servers",
-    "noDeviceFoundTryAddingItManually": "No Pi server found!\nPlease try adding it manually.",
     "addManually": "Add Pi server",
     "devicesSettings": "Manage Pi server",
     "emptyData": {
@@ -289,8 +268,7 @@
     },
     "infoDialog": {
       "title": "Info",
-      "description": "URL Loaded: {{url}}\n",
-
+      "description": "URL Loaded: {{url}}\n"
     }
   }
 }

@@ -1,0 +1,271 @@
+{
+  "about": {
+    "app": "О ПиГо",
+    "github": "Внесите свой вклад на GitHub",
+    "moreApps": "Больше приложений",
+    "rateApp": "Оцените приложение",
+    "sendFeedback": "Отправить отзыв",
+    "sendFeedbackDetail": "Вы можете отправить свой ценный отзыв в канал Telegram или отправить письмо напрямую.",
+    "setting": "Настройки",
+    "version": "Версия: {{version}}"
+  },
+  "aboutScreen": {
+    "developerTitle": "Разработчик",
+    "githubSubTitle": "Профиль разработчика и список проектов с открытым исходным кодом",
+    "githubTitle": "GitHub",
+    "infoAuthorNameTitle": "Теджас Гаджар",
+    "infoDescTitle": "PiGo — бесплатный мобильный компаньон с открытым исходным кодом для энтузиастов Raspberry Pi. \nЛегко исследуйте и управляйте несколькими серверами Pi на ходу.",
+    "infoHeader": "Информация",
+    "instagramSubTitle": "Мое хобби и мои гаджеты",
+    "instagramTitle": "Инстаграм",
+    "portfolioSubTitle": "Вся информация о застройщике",
+    "portfolioTitle": "портфолио",
+    "telegramSubTitle": "Обсуждение ошибок, улучшений, запросов на добавление функций и новостей разработки.",
+    "telegramTitle": "Присоединяйтесь к Телеграмме",
+    "title": "О ПиГо",
+    "twitterSubTitle": "Личный микроблог",
+    "twitterTitle": "Твиттер"
+  },
+  "addDevice": {
+    "addDevice": "Добавить Pi-сервер",
+    "connectDevice": "Соединять",
+    "inputPlaceholder1": "Введите имя сервера Pi",
+    "inputPlaceholder2": "Введите URL или IPv4/IPv6",
+    "inputPlaceholder3": "Введите URL-адрес или IPv4/IPv6 (альтернативный вариант) Необязательно.",
+    "inputPlaceholder4": "Введите URL-адрес или IPv4/IPv6 (альтернативный вариант) Необязательно.",
+    "invalidIpAddress": "Неверный URL-адрес или IPv4/IPv6.",
+    "invalidName": "Неверное имя сервера Pi",
+    "searchNearbyDevices": "Поиск ближайших устройств",
+    "titleConnect": "СОЕДИНЯТЬ",
+    "titleCreate": "СОЗДАВАТЬ",
+    "titleUpdate": "ОБНОВЛЯТЬ",
+    "updateDevice": "Обновить Pi-сервер"
+  },
+  "addPiAppServer": {
+    "inputPlaceholder1": "Введите имя",
+    "inputPlaceholder2": "Введите путь",
+    "inputPlaceholder3": "Введите порт",
+    "inputPlaceholder4": "Введите тип соединения",
+    "inputPlaceholder5": "выберите категорию",
+    "inputPlaceholder6": "Введите ссылку на GitHub (необязательно)",
+    "inputPlaceholder7": "Введите описание (необязательно)",
+    "invalidCategory": "Неверная категория",
+    "invalidIpAddress": "Неверный URL-адрес или IPv4/IPv6.",
+    "invalidName": "Неверное имя",
+    "invalidURLAddress": "Неверная ссылка",
+    "saveButton": "СОХРАНЯТЬ",
+    "selectCategoryDialog": {
+      "ok": "ХОРОШО",
+      "title": "выберите категорию"
+    },
+    "selectConnectionTypeDialog": {
+      "ok": "ХОРОШО",
+      "title": "Выберите тип подключения"
+    },
+    "titleAddPiAppServer": "Добавить сервер приложений Pi",
+    "titleUpdate": "Обновить сервер приложений Pi",
+    "updateButton": "ОБНОВЛЯТЬ"
+  },
+  "appearanceSettings": {
+    "accentColorSubTitle": "Цвет, используемый для оттенка элементов пользовательского интерфейса.",
+    "accentColorTitle": "Акцентный цвет",
+    "interfaceHeader": "Интерфейс",
+    "otherHeader": "Другой",
+    "otherSubTitle": "Восстановить настройки темы по умолчанию",
+    "otherTitle": "Восстановить тему по умолчанию",
+    "themeOption": "Тема",
+    "themeOption1": "Свет",
+    "themeOption2": "Темный",
+    "themeOption3": "Системные установки по умолчанию",
+    "themeSubTitle": "Основная тема приложения",
+    "themeTitle": "Тема",
+    "title": "Появление"
+  },
+  "connectToDeviceList": {
+    "addManually": "Добавить Pi-сервер",
+    "devicesSettings": "Управление сервером Pi",
+    "emptyData": {
+      "button": "Добавить Pi-сервер",
+      "emptyDeviceSubtitle": "Пожалуйста, добавьте новый сервер Pi",
+      "emptyDeviceTitle": "Сервер Pi не найден!"
+    },
+    "fabAddMore": "Новый",
+    "savedConnections": "Сохраненные Pi-серверы"
+  },
+  "dashboard": {
+    "card": {
+      "current": "Текущий",
+      "max": "Макс",
+      "min": "Мин"
+    },
+    "emptyData": {
+      "item3": {
+        "button": "Добавить новый сервер приложений Pi",
+        "message": "Пожалуйста, добавьте приложения, нажав кнопку «Добавить приложения».",
+        "title": "Приложения не добавлены!"
+      }
+    },
+    "fabAddMore": "Добавлять"
+  },
+  "devicesList": {
+    "createNewDevice": "Добавить новый Pi-сервер",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "emptyDeviceSubtitle": "Пожалуйста, добавьте новый сервер Pi.",
+    "emptyDeviceTitle": "Raspberry Pi не найден!",
+    "emptyName": "Без имени",
+    "fabAddMore": "Добавить больше",
+    "subTitle": "Пи-серверы",
+    "title": "Пи-серверы"
+  },
+  "general": {
+    "appname": "ПиГо",
+    "close": "ЗАКРЫВАТЬ",
+    "save": "СОХРАНЯТЬ"
+  },
+  "librariesScreen": {
+    "title": "Библиотеки"
+  },
+  "moreApps": {
+    "apps1Desc": "PiGo — бесплатный мобильный компаньон с открытым исходным кодом для энтузиастов Raspberry Pi. \nЛегко исследуйте и управляйте несколькими серверами Pi на ходу.",
+    "apps1Title": "PiGo — изучайте свои серверы Pi на ходу",
+    "apps2Desc": "«OHM-Client» — это неофициальное открытое клиентское приложение для мониторинга оборудования для Android и iOS, написанное на языке React-Native. \nС помощью этого приложения вы можете контролировать открытый веб-сервер аппаратного монитора.",
+    "apps2Title": "OHM-Клиент",
+    "apps3Desc": "Это приложение позволяет включать/отключать рекламу или рекомендации для различных приложений на устройствах Xiaomi (MIUI).",
+    "apps3Title": "MIUI - Помощник по рекламе",
+    "apps4Desc": "Интерактивный способ выучить какко, барахади и цифры на гуджаратском языке.",
+    "apps4Title": "Кано",
+    "appsTitle": "Больше приложений"
+  },
+  "piAppServersList": {
+    "createNewPiAppServer": "Добавьте новые серверы приложений Pi",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "emptyData": {
+      "message": "Создайте новый сервер приложений Pi.",
+      "title": "Сервер приложений Pi не найден!"
+    },
+    "fabAddMore": "Добавить больше",
+    "info": "Информация",
+    "listTitle": "Серверы приложений Pi",
+    "searchText": "Поиск",
+    "selectTitle": "Выберите сервер приложений Pi."
+  },
+  "piAppWebView": {
+    "back": "Назад",
+    "copyURL": "Копировать URL",
+    "emptyData": {
+      "button": "Обновить",
+      "message": "Пожалуйста, попробуйте обновить",
+      "title": "Сервер недоступен!"
+    },
+    "forward": "Вперед",
+    "info": "Информация",
+    "infoDialog": {
+      "description": "URL-адрес загружен: {{url}}",
+      "title": "Информация"
+    },
+    "refresh": "Обновить"
+  },
+  "piAppsCategories": {
+    "adsBlocker": "Блокировщики рекламы и трекеров",
+    "homeAutomation": "Домашняя автоматизация",
+    "informationDisplay": "Информационный дисплей",
+    "kvm": "Решения KVM (клавиатура, видео, мышь)",
+    "mediaCenters": "Медиа-центры",
+    "networkAnalysis": "Сетевой анализ",
+    "networkRouting": "Сетевая маршрутизация",
+    "other": "Другой",
+    "photoGallery": "Фотогалерея",
+    "printingManagement": "Управление печатью",
+    "selfHostedServerOS": "Самостоятельная серверная ОС",
+    "surveillanceAndSecurity": "Наблюдение и безопасность",
+    "systemMonitoring": "Мониторинг системы",
+    "torrentClients": "Торрент-клиенты"
+  },
+  "scanDevices": {
+    "emptyData": {
+      "help": "Помощь",
+      "or": "ИЛИ",
+      "rescan": "Отсканируйте еще раз",
+      "subtitle": "Пожалуйста, попробуйте сканировать еще раз",
+      "title": "Ближайший сервер Pi не найден!"
+    },
+    "refresh": "ОБНОВИТЬ",
+    "subTitle": "Ближайшие Pi-серверы",
+    "title": "Ближайшие Pi-серверы"
+  },
+  "scanSetting": {
+    "section1": {
+      "header": "Конфигурация сканирования по умолчанию",
+      "row1": {
+        "dialogSubTitle": "Добавьте порты возможных портов Pi-сервера, это поможет идентифицировать ваш Pi в локальной сети. \n(например: 80 по умолчанию, 32400 для плекса и т. д.)",
+        "dialogTitle": "Введите порты (через запятую)",
+        "subTitle": "{{ports}}",
+        "title": "Порты"
+      }
+    },
+    "section3": {
+      "header": "Передовой",
+      "row1": {
+        "dialogSubTitle": "Тайм-аут сканирования для каждого потока, например: 150 потоков за 1500 мс. Если сервер Pi не найден, попробуйте увеличить тайм-аут.",
+        "dialogTitle": "Введите таймаут сканирования (1–10000)",
+        "subTitle": "{{scanTimeoutInMs}} мс",
+        "title": "Тайм-аут сканирования"
+      },
+      "row2": {
+        "dialogSubTitle": "Сканируйте потоки за таймауты, например: 150 потоков за 1500 мс. Если сервер Pi не найден, попробуйте уменьшить количество потоков.",
+        "dialogTitle": "Введите потоки сканирования (1–999)",
+        "subTitle": "{{scanThreads}}",
+        "title": "Сканировать темы"
+      }
+    },
+    "section4": {
+      "header": "Другой",
+      "row1": {
+        "subTitle": "Восстановить настройки по умолчанию",
+        "title": "Сброс настроек"
+      }
+    },
+    "title": "Настройки сканирования"
+  },
+  "settings": {
+    "appearanceSubTitle": "Кастомизация внешнего вида",
+    "appearanceTitle": "Появление",
+    "changelogSubTitle": "Список изменений, внесенных во все обновления",
+    "changelogTitle": "Журнал изменений",
+    "commonHeader": "Общие настройки",
+    "faqSubTitle": "Ответ на часто задаваемые вопросы",
+    "faqTitle": "Часто задаваемые вопросы",
+    "infoHeader": "Информация",
+    "librariesSubTitle": "Список библиотек с открытым исходным кодом, использованных в этом проекте",
+    "librariesTitle": "Библиотеки",
+    "piAppServersSubTitle": "Управление списком серверов приложений Pi по умолчанию, таких как Pi-hole, Plex и т. д.",
+    "piAppServersTitle": "Серверы приложений Pi по умолчанию",
+    "privacySubTitle": "Политика использования информации и разрешений",
+    "privacyTitle": "Политика конфиденциальности",
+    "recentConnectionsSubTitle": "Управление добавленными серверами Pi",
+    "recentConnectionsTitle": "Пи-серверы",
+    "scanSubTitle": "Настройки автоматического сканирования (сканирования поблизости)",
+    "scanTitle": "Настройки сканирования",
+    "title": "Настройки",
+    "translateSubTitle": "Переведите это приложение на свой язык",
+    "translateTitle": "Перевести это приложение",
+    "translatorsSubTitle": "Люди, которые помогли локализовать это приложение",
+    "translatorsTitle": "Переводчики"
+  },
+  "translatorsScreen": {
+    "emptyList": "Будьте пионером — участников пока не найдено!",
+    "emptyListAction": "Нажмите здесь, чтобы внести свой вклад",
+    "title": "Переводчики"
+  },
+  "viewPiAppServer": {
+    "fullLink": "Полная ссылка",
+    "inputPlaceholder1": "Имя",
+    "inputPlaceholder2": "Путь",
+    "inputPlaceholder3": "Порт",
+    "inputPlaceholder4": "Категория",
+    "inputPlaceholder5": "Ссылка на GitHub",
+    "inputPlaceholder6": "Описание"
+  }
+}

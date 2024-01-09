@@ -1,9 +1,29 @@
 {
-    "i18n-ally.localesPaths": [
-        "app/locales",
-        "ios/Pods/RCT-Folly/folly/lang",
-        "ios/Pods/boost/boost/locale",
-        "ios/Pods/boost/boost/predef/language"
-    ],
-    "files.autoSaveDelay": 6000
+  "i18n-ally.localesPaths": ["app/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.extract.autoDetect": true,
+  "grammarly.selectors": [
+    {
+      "language": "json",
+      "scheme": "file",
+      "pattern": "app/locales/en.json"
+    }
+  ],
+  "cSpell.words": [],
+  "i18n-ally.keysInUse": [
+    "piAppsCategories.mediaCenters",
+    "piAppsCategories.adsBlocker",
+    "piAppsCategories.homeAutomation",
+    "piAppsCategories.informationDisplay",
+    "piAppsCategories.surveillanceAndSecurity",
+    "piAppsCategories.printingManagement",
+    "piAppsCategories.systemMonitoring",
+    "piAppsCategories.networkRouting",
+    "piAppsCategories.selfHostedServerOS",
+    "piAppsCategories.kvm",
+    "piAppsCategories.networkAnalysis",
+    "piAppsCategories.torrentClients",
+    "piAppsCategories.photoGallery",
+    "piAppsCategories.other"
+  ]
 }

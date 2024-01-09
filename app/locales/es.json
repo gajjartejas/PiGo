@@ -1,0 +1,271 @@
+{
+  "about": {
+    "app": "Acerca de PiGo",
+    "github": "Contribuir en GitHub",
+    "moreApps": "Más aplicaciones",
+    "rateApp": "Calificar aplicacion",
+    "sendFeedback": "Enviar comentarios",
+    "sendFeedbackDetail": "Puede enviar sus valiosos comentarios al canal de Telegram o enviar un correo directamente.",
+    "setting": "Ajustes",
+    "version": "Versión: {{version}}"
+  },
+  "aboutScreen": {
+    "developerTitle": "Desarrollador",
+    "githubSubTitle": "Perfil de desarrollador y lista de proyectos de código abierto",
+    "githubTitle": "GitHub",
+    "infoAuthorNameTitle": "Tejas Gajjar",
+    "infoDescTitle": "PiGo: el compañero móvil gratuito y de código abierto para los entusiastas de Raspberry Pi. \nExplore y administre sin esfuerzo múltiples servidores Pi mientras viaja.",
+    "infoHeader": "Información",
+    "instagramSubTitle": "Mi hobby y mis gadgets.",
+    "instagramTitle": "Instagram",
+    "portfolioSubTitle": "Toda la información sobre el desarrollador.",
+    "portfolioTitle": "portafolio",
+    "telegramSubTitle": "Discusión sobre errores, mejoras, solicitud de funciones y noticias de desarrollo.",
+    "telegramTitle": "Únete a Telegrama",
+    "title": "Acerca de PiGo",
+    "twitterSubTitle": "Microblog personal",
+    "twitterTitle": "Gorjeo"
+  },
+  "addDevice": {
+    "addDevice": "Agregar servidor Pi",
+    "connectDevice": "Conectar",
+    "inputPlaceholder1": "Ingrese el nombre del servidor Pi",
+    "inputPlaceholder2": "Ingrese la URL o IPv4/IPv6",
+    "inputPlaceholder3": "Ingrese la URL o IPv4/IPv6 (alternativa) Opcional",
+    "inputPlaceholder4": "Ingrese la URL o IPv4/IPv6 (alternativa) Opcional",
+    "invalidIpAddress": "URL no válida o IPv4/IPv6",
+    "invalidName": "Nombre de servidor Pi no válido",
+    "searchNearbyDevices": "Buscar dispositivos cercanos",
+    "titleConnect": "CONECTAR",
+    "titleCreate": "CREAR",
+    "titleUpdate": "ACTUALIZAR",
+    "updateDevice": "Actualizar el servidor Pi"
+  },
+  "addPiAppServer": {
+    "inputPlaceholder1": "Ingrese su nombre",
+    "inputPlaceholder2": "Ingresar ruta",
+    "inputPlaceholder3": "Ingresar puerto",
+    "inputPlaceholder4": "Ingrese el tipo de conexión",
+    "inputPlaceholder5": "selecciona una categoría",
+    "inputPlaceholder6": "Ingrese al enlace de GitHub (opcional)",
+    "inputPlaceholder7": "Ingrese la descripción (opcional)",
+    "invalidCategory": "Categoría no válida",
+    "invalidIpAddress": "URL no válida o IPv4/IPv6",
+    "invalidName": "Nombre inválido",
+    "invalidURLAddress": "URL invalida",
+    "saveButton": "AHORRAR",
+    "selectCategoryDialog": {
+      "ok": "DE ACUERDO",
+      "title": "selecciona una categoría"
+    },
+    "selectConnectionTypeDialog": {
+      "ok": "DE ACUERDO",
+      "title": "Seleccione el tipo de conexión"
+    },
+    "titleAddPiAppServer": "Agregar el servidor de aplicaciones Pi",
+    "titleUpdate": "Actualizar el servidor de aplicaciones Pi",
+    "updateButton": "ACTUALIZAR"
+  },
+  "appearanceSettings": {
+    "accentColorSubTitle": "Color utilizado para teñir elementos de la interfaz de usuario.",
+    "accentColorTitle": "Acentuar el color",
+    "interfaceHeader": "Interfaz",
+    "otherHeader": "Otro",
+    "otherSubTitle": "Restaurar la configuración predeterminada del tema",
+    "otherTitle": "Restaurar tema predeterminado",
+    "themeOption": "Tema",
+    "themeOption1": "Luz",
+    "themeOption2": "Oscuro",
+    "themeOption3": "Sistema por defecto",
+    "themeSubTitle": "Tema principal de la aplicación.",
+    "themeTitle": "Tema",
+    "title": "Apariencia"
+  },
+  "connectToDeviceList": {
+    "addManually": "Agregar servidor Pi",
+    "devicesSettings": "Administrar el servidor Pi",
+    "emptyData": {
+      "button": "Agregar servidor Pi",
+      "emptyDeviceSubtitle": "Agregue un nuevo servidor Pi",
+      "emptyDeviceTitle": "¡No se encontró ningún servidor Pi!"
+    },
+    "fabAddMore": "Nuevo",
+    "savedConnections": "Servidores Pi guardados"
+  },
+  "dashboard": {
+    "card": {
+      "current": "Actual",
+      "max": "máx.",
+      "min": "mín."
+    },
+    "emptyData": {
+      "item3": {
+        "button": "Agregar un nuevo servidor de aplicaciones Pi",
+        "message": "Agregue aplicaciones haciendo clic en el botón Agregar aplicaciones",
+        "title": "¡No se agregaron aplicaciones!"
+      }
+    },
+    "fabAddMore": "Agregar"
+  },
+  "devicesList": {
+    "createNewDevice": "Agregar nuevo servidor Pi",
+    "delete": "Borrar",
+    "edit": "Editar",
+    "emptyDeviceSubtitle": "Agregue un nuevo servidor Pi.",
+    "emptyDeviceTitle": "¡No se encontró Raspberry Pi!",
+    "emptyName": "Sin nombre",
+    "fabAddMore": "Añadir más",
+    "subTitle": "Servidores Pi",
+    "title": "Servidores Pi"
+  },
+  "general": {
+    "appname": "PiGo",
+    "close": "CERCA",
+    "save": "AHORRAR"
+  },
+  "librariesScreen": {
+    "title": "Bibliotecas"
+  },
+  "moreApps": {
+    "apps1Desc": "PiGo: el compañero móvil gratuito y de código abierto para los entusiastas de Raspberry Pi. \nExplore y administre sin esfuerzo múltiples servidores Pi mientras viaja.",
+    "apps1Title": "PiGo: explore sus servidores Pi mientras viaja",
+    "apps2Desc": "`OHM-Client` es una aplicación cliente de monitor de hardware abierta no oficial para Android e iOS escrita en nativo de reacción. \nCon esta aplicación puede monitorear el servidor web del monitor de hardware abierto.",
+    "apps2Title": "Cliente OHM",
+    "apps3Desc": "Esta aplicación le permite habilitar/deshabilitar anuncios o recomendaciones para varias aplicaciones en dispositivos Xiaomi (MIUI).",
+    "apps3Title": "MIUI - Ayudante de anuncios",
+    "apps4Desc": "Una forma interactiva de aprender gujarati kakko, barakhadi y números.",
+    "apps4Title": "cano",
+    "appsTitle": "Más aplicaciones"
+  },
+  "piAppServersList": {
+    "createNewPiAppServer": "Agregar nuevos servidores de aplicaciones Pi",
+    "delete": "Borrar",
+    "edit": "Editar",
+    "emptyData": {
+      "message": "Cree un nuevo servidor de aplicaciones Pi.",
+      "title": "¡No se encontró ningún servidor de aplicaciones Pi!"
+    },
+    "fabAddMore": "Añadir más",
+    "info": "Información",
+    "listTitle": "Servidores de aplicaciones Pi",
+    "searchText": "Buscar",
+    "selectTitle": "Seleccione el servidor de aplicaciones Pi"
+  },
+  "piAppWebView": {
+    "back": "Atrás",
+    "copyURL": "Copiar URL",
+    "emptyData": {
+      "button": "Actualizar",
+      "message": "Por favor intenta actualizar",
+      "title": "¡Servidor no disponible!"
+    },
+    "forward": "Adelante",
+    "info": "Información",
+    "infoDialog": {
+      "description": "URL cargada: {{url}}",
+      "title": "Información"
+    },
+    "refresh": "Actualizar"
+  },
+  "piAppsCategories": {
+    "adsBlocker": "Bloqueadores de anuncios y rastreadores",
+    "homeAutomation": "Automatización del hogar",
+    "informationDisplay": "Pantalla de información",
+    "kvm": "Soluciones KVM (teclado, vídeo, ratón)",
+    "mediaCenters": "Centros de medios",
+    "networkAnalysis": "Análisis de red",
+    "networkRouting": "Enrutamiento de red",
+    "other": "Otro",
+    "photoGallery": "Galería de fotos",
+    "printingManagement": "Gestión de impresión",
+    "selfHostedServerOS": "SO de servidor autohospedado",
+    "surveillanceAndSecurity": "Vigilancia y Seguridad",
+    "systemMonitoring": "Monitoreo del sistema",
+    "torrentClients": "Clientes de torrents"
+  },
+  "scanDevices": {
+    "emptyData": {
+      "help": "Ayuda",
+      "or": "O",
+      "rescan": "Escanea otra vez",
+      "subtitle": "Por favor intente escanear nuevamente",
+      "title": "¡No se encontró ningún servidor Pi cercano!"
+    },
+    "refresh": "ACTUALIZAR",
+    "subTitle": "Servidores Pi cercanos",
+    "title": "Servidores Pi cercanos"
+  },
+  "scanSetting": {
+    "section1": {
+      "header": "Configuración de escaneo predeterminada",
+      "row1": {
+        "dialogSubTitle": "Agregue puertos de posibles puertos del servidor Pi, esto ayudará a identificar su Pi en la red local. \n(por ejemplo: 80 predeterminado, 32400 para plex, etc`)",
+        "dialogTitle": "Ingresar puertos (separados por comas)",
+        "subTitle": "{{ports}}",
+        "title": "Puertos"
+      }
+    },
+    "section3": {
+      "header": "Avanzado",
+      "row1": {
+        "dialogSubTitle": "Tiempo de espera de escaneo por subproceso, por ejemplo: 150 subprocesos por 1500 ms. Si no se encuentra el servidor Pi, intente aumentar el tiempo de espera.",
+        "dialogTitle": "Ingrese el tiempo de espera de escaneo (1 - 10000)",
+        "subTitle": "{{scanTimeoutInMs}} ms",
+        "title": "Tiempo de espera de escaneo"
+      },
+      "row2": {
+        "dialogSubTitle": "Escanee subprocesos por tiempo de espera, por ejemplo: 150 subprocesos cada 1500 ms. Si no se encuentra el servidor Pi, intente disminuir los subprocesos.",
+        "dialogTitle": "Ingresar hilos de escaneo (1 - 999)",
+        "subTitle": "{{scanThreads}}",
+        "title": "Escanear hilos"
+      }
+    },
+    "section4": {
+      "header": "Otro",
+      "row1": {
+        "subTitle": "Restaurar la configuración predeterminada",
+        "title": "Restaurar valor predeterminado"
+      }
+    },
+    "title": "Configuración de escaneo"
+  },
+  "settings": {
+    "appearanceSubTitle": "Personalización de la apariencia",
+    "appearanceTitle": "Apariencia",
+    "changelogSubTitle": "Lista de cambios realizados en todas las actualizaciones.",
+    "changelogTitle": "Registro de cambios",
+    "commonHeader": "Configuraciones comunes",
+    "faqSubTitle": "Respuesta a preguntas frecuentes",
+    "faqTitle": "Preguntas más frecuentes",
+    "infoHeader": "Información",
+    "librariesSubTitle": "Lista de bibliotecas de código abierto utilizadas en este proyecto",
+    "librariesTitle": "Bibliotecas",
+    "piAppServersSubTitle": "Administre la lista de servidores de aplicaciones Pi predeterminados como Pi-hole, Plex, etc.",
+    "piAppServersTitle": "Servidores de aplicaciones Pi predeterminados",
+    "privacySubTitle": "Política de uso de información y permisos",
+    "privacyTitle": "Política de privacidad",
+    "recentConnectionsSubTitle": "Administrar servidores Pi agregados",
+    "recentConnectionsTitle": "Servidores Pi",
+    "scanSubTitle": "Configuración de escaneo automático (escaneo cercano)",
+    "scanTitle": "Configuración de escaneo",
+    "title": "Ajustes",
+    "translateSubTitle": "Traduce esta aplicación en tu idioma",
+    "translateTitle": "Traducir esta aplicación",
+    "translatorsSubTitle": "Personas que ayudaron a localizar esta aplicación",
+    "translatorsTitle": "Traductores"
+  },
+  "translatorsScreen": {
+    "emptyList": "Sea el pionero: ¡aún no se han encontrado contribuyentes!",
+    "emptyListAction": "Haga clic aquí para contribuir",
+    "title": "Traductores"
+  },
+  "viewPiAppServer": {
+    "fullLink": "Enlace completo",
+    "inputPlaceholder1": "Nombre",
+    "inputPlaceholder2": "Camino",
+    "inputPlaceholder3": "Puerto",
+    "inputPlaceholder4": "Categoría",
+    "inputPlaceholder5": "Enlace de GitHub",
+    "inputPlaceholder6": "Descripción"
+  }
+}

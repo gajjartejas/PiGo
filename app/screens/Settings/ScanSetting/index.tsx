@@ -199,7 +199,7 @@ const ScanSetting = ({ navigation }: Props) => {
           }, []);
           setPorts(p);
         }}
-        placeholder={t('scanSetting.section1.row2.dialogTitle')!}
+        placeholder={t('scanSetting.section1.row1.dialogTitle')!}
         value={modalPorts}
         onChangeText={text => setModalPorts(text)}
         keyboardType={'numeric'}
