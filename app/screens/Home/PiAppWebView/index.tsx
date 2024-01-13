@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 
 //ThirdParty
@@ -19,6 +19,7 @@ import Components from 'app/components';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import AppBaseView from 'app/components/AppBaseView';
 import getLiveURL from 'app/utils/getLiveURL';
+import Utils from 'app/utils';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppWebView'>;
@@ -28,19 +29,19 @@ const THRESHOLD_DIFF_Y = 100;
 const PiAppWebView = ({ navigation, route }: Props) => {
   //Refs
   const webViewRef = useRef<WebView | null>(null);
-  const refCurrentURL = useRef<string>('');
+  const refCurrentURL = useRef<string | null>(null);
   const refCurrentY = useRef(0);
   const refDiffY = useRef(0);
   const refDirection = useRef<'up' | 'down'>('up');
 
   //Constants
   const { colors } = useTheme();
-  const selectedDevice = useAppConfigStore(store => store.selectedDevice);
-  const insets = useSafeAreaInsets();
-
-  const piAppServer = route.params.piAppServer;
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
   const largeScreenMode = useLargeScreenMode();
+  const selectedDevice = useAppConfigStore(store => store.selectedDevice);
+  const urlLoadCount = useRef(0);
+  const piAppServer = route.params.piAppServer;
   const scrollY = useRef(new Animated.Value(0)).current;
   const translateY = scrollY.interpolate({
     inputRange: [0, THRESHOLD_DIFF_Y],
@@ -53,40 +54,57 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const [progress, setProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(true);
   const [appServerURL, setAppServerURL] = useState<string | null>(null);
-  const [error, setError] = useState<boolean>(false);
   const [infoDialogVisible, setInfoDialogVisible] = useState<boolean>(false);
+  const [appServerAltURL, setAppServerAltURL] = useState<string | null>(null);
+  const [error, setError] = useState<any | null>(null);
+  const [retryAttempt, setRetryAttempt] = useState<number>(0);
+  const [webViewKey, setWebViewKey] = useState<number>(0);
 
-  const loadURL = useCallback(async () => {
+  const allUrls = useMemo(() => {
+    return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
+  }, [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3]);
+
+  useEffect(() => {
+    urlLoadCount.current = allUrls.filter(v => !!v).length;
+  }, [allUrls]);
+
+  const getURL = (url: string, path: string, port: number, secure: boolean) => {
+    return (secure ? 'https://' : 'http://') + url + ':' + port + '/' + path.replace(/^\//, '');
+  };
+
+  const loadURL = useCallback(() => {
     if (!selectedDevice) {
       setAppServerURL(null);
       return;
     }
+    const serverURL = getURL(selectedDevice?.ip1, piAppServer.path, piAppServer.port, piAppServer.secureConnection);
+    console.log('serverURL', serverURL);
+    setAppServerURL(serverURL);
+  }, [piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice]);
 
-    const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
-      .filter(v => !!v)
-      .map(v => {
-        return piAppServer.secureConnection
-          ? 'https://'
-          : 'http://' + v + ':' + piAppServer.port + '/' + piAppServer.path.replace(/^\//, '');
-      });
+  const fetchAlternateAddress = useCallback(async (): Promise<string | null> => {
     const abortController = new AbortController();
-
-    console.log(serverURLs);
     try {
-      const value = await getLiveURL(serverURLs, abortController);
+      const serverURLs = allUrls.slice(1).map(v => {
+        return getURL(v!, piAppServer.path, piAppServer.port, piAppServer.secureConnection);
+      });
+      const value = await getLiveURL(serverURLs, abortController, 10000);
       console.log('value', value);
-      setAppServerURL(value);
-      setError(false);
+      return value;
     } catch (e) {
       console.log('error', e);
-
-      setError(true);
+      return null;
     }
-  }, [piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice]);
+  }, [allUrls, piAppServer.path, piAppServer.port, piAppServer.secureConnection]);
 
   useEffect(() => {
     loadURL();
-  }, [loadURL]);
+    fetchAlternateAddress().then(url => {
+      if (url) {
+        setAppServerAltURL(url);
+      }
+    });
+  }, [fetchAlternateAddress, loadURL]);
 
   useEffect(() => {
     let timeoutId = setTimeout(() => {
@@ -104,7 +122,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
 
   const onRefresh = useCallback(() => {
     (async () => {
-      await loadURL();
+      loadURL();
     })();
   }, [loadURL]);
 
@@ -118,8 +136,9 @@ const PiAppWebView = ({ navigation, route }: Props) => {
 
   const onWGoHome = useCallback(() => {
     setMenuVisible(false);
-    webViewRef.current?.reload();
-  }, []);
+    setWebViewKey(v => v + 1);
+    setAppServerURL(appServerURL);
+  }, [appServerURL]);
 
   const onWGoBack = useCallback(() => {
     setMenuVisible(false);
@@ -137,8 +156,22 @@ const PiAppWebView = ({ navigation, route }: Props) => {
 
   const onCopyURL = useCallback(() => {
     setMenuVisible(false);
-    Clipboard.setString(refCurrentURL.current);
-  }, []);
+
+    if (refCurrentURL.current !== null) {
+      Clipboard.setString(refCurrentURL.current);
+    } else if (appServerURL) {
+      Clipboard.setString(appServerURL);
+    }
+  }, [appServerURL]);
+
+  const onOpenWith = useCallback(() => {
+    setMenuVisible(false);
+    if (refCurrentURL.current !== null) {
+      Utils.openBrowser(refCurrentURL.current);
+    } else if (appServerURL) {
+      Utils.openBrowser(appServerURL);
+    }
+  }, [appServerURL]);
 
   const onWRefresh = useCallback(() => {
     setMenuVisible(false);
@@ -191,16 +224,26 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     listener: event => handleScroll(event),
   });
 
+  useEffect(() => {
+    if (error && appServerAltURL && appServerURL !== appServerAltURL) {
+      webViewRef.current?.stopLoading();
+      setError(null);
+      setAppServerURL(appServerAltURL);
+    }
+  }, [appServerAltURL, appServerURL, error]);
+
   return (
     <AppBaseView edges={['left', 'right', 'top']} style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.subView]}>
-        {!!appServerURL && (
+        {!error && !!appServerURL && (
           <WebView
+            key={webViewKey}
             ref={webViewRef}
             source={{ uri: appServerURL }}
             style={{ ...styles.webview, backgroundColor: colors.background }}
             javaScriptEnabled={true}
             domStorageEnabled={true}
+            originWhitelist={['*']}
             onLoadProgress={({ nativeEvent }) => {
               setProgress(nativeEvent.progress);
             }}
@@ -209,15 +252,34 @@ const PiAppWebView = ({ navigation, route }: Props) => {
               setShowProgress(true);
             }}
             onScroll={onScroll}
+            onHttpError={(e: any) => {
+              console.log('onHttpError', e);
+            }}
+            onError={(e: any) => {
+              console.log('onError', e.nativeEvent.description);
+              setError(e);
+              setRetryAttempt(retryAttempt + 1);
+            }}
+            onLoad={() => {
+              console.log('onLoad');
+            }}
+            onLoadEnd={() => {
+              console.log('onLoadEnd');
+            }}
+            onLoadStart={() => {
+              console.log('onLoadStart');
+            }}
           />
         )}
-        {error && (
+        {error && retryAttempt > 2 && (
           <Components.AppEmptyDataView
-            iconType={'font-awesome5'}
-            iconName="box-open"
+            iconType={'material-community'}
+            iconName="web-off"
             style={styles.webview}
             header={t('piAppWebView.emptyData.title')}
-            subHeader={t('piAppWebView.emptyData.message')}
+            subHeader={
+              error.nativeEvent.description ? error.nativeEvent.description : t('piAppWebView.emptyData.message')
+            }
             renderContent={renderNoDataButtons}
           />
         )}
@@ -244,12 +306,13 @@ const PiAppWebView = ({ navigation, route }: Props) => {
           visible={menuVisible}
           onDismiss={onDismissModal}
           anchor={<IconButton icon={'dots-vertical'} size={26} onPress={onPressMore} />}>
-          <Menu.Item onPress={onWRefresh} title={t('piAppWebView.refresh')} />
-          <Menu.Item onPress={onWGoBack} title={t('piAppWebView.back')} />
-          <Menu.Item onPress={onWGoForward} title={t('piAppWebView.forward')} />
+          <Menu.Item leadingIcon={'refresh'} onPress={onWRefresh} title={t('piAppWebView.refresh')} />
+          <Menu.Item leadingIcon={'arrow-left'} onPress={onWGoBack} title={t('piAppWebView.back')} />
+          <Menu.Item leadingIcon={'arrow-right'} onPress={onWGoForward} title={t('piAppWebView.forward')} />
           <View style={[styles.separator, { backgroundColor: `${colors.onBackground}30` }]} />
-          <Menu.Item onPress={onCopyURL} title={t('piAppWebView.copyURL')} />
-          <Menu.Item onPress={onInfo} title={t('piAppWebView.info')} />
+          <Menu.Item leadingIcon={'content-copy'} onPress={onCopyURL} title={t('piAppWebView.copyURL')} />
+          <Menu.Item leadingIcon={'open-in-app'} onPress={onOpenWith} title={t('piAppWebView.openWith')} />
+          <Menu.Item leadingIcon={'information-outline'} onPress={onInfo} title={t('piAppWebView.info')} />
         </Menu>
         <View pointerEvents={'none'} style={styles.dockerLoadingProgress}>
           {showProgress && <ProgressBar color={`${colors.primary}50`} style={styles.progressBar} progress={progress} />}

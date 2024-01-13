@@ -5,7 +5,6 @@ import { View, ScrollView, Text } from 'react-native';
 import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { CompositeNavigationProp, useIsFocused, useNavigation } from '@react-navigation/native';
@@ -24,6 +23,8 @@ import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
+const TIMOUT_REQ_MS = 10000;
+
 //Params
 type DashboardTabNavigationProp = CompositeNavigationProp<
   MaterialBottomTabNavigationProp<HomeTabsNavigatorParams, 'DashboardTab'>,
@@ -40,7 +41,6 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   const { colors } = useTheme();
   const navigation = useNavigation<DashboardTabNavigationProp>();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
   const selectedDevice = useAppConfigStore(store => store.selectedDevice);
   const disconnect = useAppConfigStore(store => store.disconnect);
   const addPiAppServerToSelectedDevice = useAppConfigStore(store => store.addPiAppServerToSelectedDevice);
@@ -95,12 +95,17 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
               .filter(m => !!m)
               .map(m => {
-                return v.secureConnection ? 'https://' : 'http://' + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
+                return (
+                  (v.secureConnection ? 'https://' : 'http://') + m + ':' + v.port + '/' + v.path.replace(/^\//, '')
+                );
               });
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            const timeoutId = setTimeout(() => controller.abort(), TIMOUT_REQ_MS);
             try {
-              const response = await getLiveURL(serverURLs, controller);
+              console.log('serverURLs', serverURLs);
+
+              const response = await getLiveURL(serverURLs, controller, TIMOUT_REQ_MS);
+              console.log('response', response);
               clearTimeout(timeoutId);
               return { status: 'fulfilled', reachable: !!response };
             } catch (error) {
@@ -276,7 +281,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
         label={t('dashboard.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
+        style={[styles.fab, { backgroundColor: colors.primary }]}
         onPress={onPressSelectPiAppServer}
       />
     </Components.AppBaseView>

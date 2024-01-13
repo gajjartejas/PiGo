@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useEffect, useState } from 'react';
+import React, { forwardRef, memo, useState } from 'react';
 import {
   Text,
   TextInputProps,
@@ -8,11 +8,9 @@ import {
   TextInputFocusEventData,
   TextInput,
   TouchableOpacity,
-  Keyboard,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
-import { black } from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
 
 interface IAppTextInputProps extends TextInputProps {
   errorText?: string | null;
@@ -27,22 +25,6 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   const { errorText, containerStyle, onBlur, onFocus, RightAccessoryView, onPress, viewOnly, ...otherProps } = props;
   const [isFocused, setIsFocused] = useState(false);
   const [isBlured, setIsBlured] = useState(false);
-
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true); // or some other action
-    });
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false); // or some other action
-    });
-
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
 
   const handleOnBlur = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
     setIsBlured(true);

@@ -52,7 +52,11 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
 
     if (device) {
       setFullLink(
-        piAppServer.secureConnection ? 'https://' : 'http://' + device?.ip1 + piAppServer.port + piAppServer.path,
+        (piAppServer.secureConnection ? 'https://' : 'http://') +
+          device?.ip1 +
+          ':' +
+          piAppServer.port +
+          piAppServer.path,
       );
     }
   }, [device, piAppServer]);
