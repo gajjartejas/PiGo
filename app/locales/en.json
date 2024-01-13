@@ -261,6 +261,7 @@
     "forward": "Forward",
     "copyURL": "Copy URL",
     "info": "Info",
+    "openWith": "Open With",
     "emptyData": {
       "title": "Server Not Available!",
       "message": "Please try to refresh",

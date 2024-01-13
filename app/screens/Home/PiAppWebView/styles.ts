@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   subView: {
-    marginHorizontal: 8,
     flex: 1,
   },
   buttonsContainer: {
