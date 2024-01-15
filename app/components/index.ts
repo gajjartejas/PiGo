@@ -15,6 +15,7 @@ import AppTextInput from './AppTextInput';
 import AppActionDialog from './AppActionDialog';
 import AppRadioSelectDialog from './AppRadioSelectDialog';
 import PiAppServerRow from './PiAppServerRow';
+import AppNoConnection from './AppNoConnection';
 
 const Components = {
   AppMiniBanner,
@@ -34,6 +35,7 @@ const Components = {
   AppActionDialog,
   AppRadioSelectDialog,
   PiAppServerRow,
+  AppNoConnection,
 };
 
 export default Components;

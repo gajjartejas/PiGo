@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { CompositeNavigationProp, useIsFocused, useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import NetInfo from '@react-native-community/netinfo';
 
 //App modules
 import Components from 'app/components';
@@ -23,7 +24,7 @@ import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
-const TIMOUT_REQ_MS = 10000;
+const TIMOUT_REQ_MS = __DEV__ ? 2000 : 10000;
 
 //Params
 type DashboardTabNavigationProp = CompositeNavigationProp<
@@ -53,10 +54,29 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   const [title, setTitle] = useState('');
   const [subTitle, setSubTitle] = useState('');
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
+  const [isConnected, setIsConnected] = useState(true);
 
   useEventEmitter<IPiAppServer>('on_select_piAppServer', eventData => {
     addPiAppServerToSelectedDevice({ ...eventData, id: uuid.v4().toString() });
   });
+
+  useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+    let to: any | null = null;
+    let remove = NetInfo.addEventListener(state => {
+      to && clearTimeout(to);
+      to = setTimeout(async () => {
+        console.log('NetInfoState', JSON.stringify(state.isConnected));
+        setIsConnected(state.isConnected || false);
+      }, 5000);
+    });
+    return () => {
+      to && clearTimeout(to);
+      remove();
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     if (!selectedDevice) {
@@ -87,7 +107,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       if (refDeviceInfoRequestInProgress.current) {
         return;
       }
-      refRefreshTimeoutMs.current = 30000;
+      refRefreshTimeoutMs.current = __DEV__ ? 5000 : 30000;
       refDeviceInfoRequestInProgress.current = true;
       try {
         const result: any = await Promise.allSettled(
@@ -102,8 +122,6 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), TIMOUT_REQ_MS);
             try {
-              console.log('serverURLs', serverURLs);
-
               const response = await getLiveURL(serverURLs, controller, TIMOUT_REQ_MS);
               console.log('response', response);
               clearTimeout(timeoutId);
@@ -131,7 +149,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       refDeviceInfoRequestInProgress.current = false;
       clearInterval(to);
     };
-  }, [isFocused, selectDevice, selectedDevice]);
+  }, [isConnected, isFocused, selectDevice, selectedDevice]);
 
   const onPressSelectPiAppServer = useCallback(() => {
     navigation.navigate('PiAppServers', { mode: 'select' });
@@ -177,6 +195,8 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     },
     [closeMenu, navigation, selectedDevice],
   );
+
+  const bottomPadding = isConnected ? 16 : 40;
 
   return (
     <Components.AppBaseView
@@ -281,9 +301,10 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
         label={t('dashboard.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary }]}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: bottomPadding }]}
         onPress={onPressSelectPiAppServer}
       />
+      {!isConnected && <Components.AppNoConnection />}
     </Components.AppBaseView>
   );
 };

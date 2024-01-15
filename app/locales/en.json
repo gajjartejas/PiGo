@@ -2,7 +2,8 @@
   "general": {
     "appname": "PiGo",
     "close": "CLOSE",
-    "save": "SAVE"
+    "save": "SAVE",
+    "noInternet": "No internet connection!"
   },
   "piAppsCategories": {
     "adsBlocker": "Ad and Tracker Blockers",
@@ -269,7 +270,7 @@
     },
     "infoDialog": {
       "title": "Info",
-      "description": "URL Loaded: {{url}}\n"
+      "description": "URL Loaded:\n{{url}}"
     }
   }
 }

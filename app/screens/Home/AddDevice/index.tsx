@@ -168,13 +168,15 @@ const AddDevice = ({ navigation, route }: Props) => {
               <Components.AppTextInput
                 ref={ipAddress1Ref}
                 autoCapitalize="none"
+                spellCheck={false}
+                autoCorrect={false}
                 value={ipAddress1}
                 onChangeText={setIPAddress1}
                 placeholder={t('addDevice.inputPlaceholder2')!}
                 errorText={validIPAddress(ipAddress1)}
                 containerStyle={styles.inputStyle}
                 onSubmitEditing={() => ipAddress2Ref.current?.focus()}
-                keyboardType={'numeric'}
+                keyboardType={'url'}
                 returnKeyType={'next'}
                 RightAccessoryView={
                   <IconButton icon="magnify" iconColor={theme.colors.primary} size={20} onPress={onScanDevices} />
@@ -183,23 +185,27 @@ const AddDevice = ({ navigation, route }: Props) => {
               <Components.AppTextInput
                 ref={ipAddress2Ref}
                 autoCapitalize="none"
+                spellCheck={false}
+                autoCorrect={false}
                 value={ipAddress2}
                 onChangeText={setIPAddress2}
                 placeholder={t('addDevice.inputPlaceholder3')!}
                 containerStyle={styles.inputStyle}
                 onSubmitEditing={() => ipAddress3Ref.current?.focus()}
-                keyboardType={'numeric'}
+                keyboardType={'url'}
                 returnKeyType={'next'}
               />
 
               <Components.AppTextInput
                 ref={ipAddress3Ref}
                 autoCapitalize="none"
+                spellCheck={false}
+                autoCorrect={false}
                 value={ipAddress3}
                 onChangeText={setIPAddress3}
                 placeholder={t('addDevice.inputPlaceholder4')!}
                 containerStyle={styles.inputStyle}
-                keyboardType={'numeric'}
+                keyboardType={'url'}
                 returnKeyType={'done'}
               />
             </View>
