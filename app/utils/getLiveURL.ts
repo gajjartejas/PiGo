@@ -7,7 +7,13 @@ const getLiveURL = (serverURLs: string[], controller: AbortController, timeoutIn
         reject();
       }, timeoutInMs);
       let url = serverURLs[i];
-      fetch(url, { method: 'GET', signal })
+      fetch(url, {
+        method: 'GET',
+        signal,
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      })
         .then(response => {
           if (response.ok) {
             resolve(url);

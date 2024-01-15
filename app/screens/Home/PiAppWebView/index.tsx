@@ -253,7 +253,9 @@ const PiAppWebView = ({ navigation, route }: Props) => {
             }}
             onScroll={onScroll}
             onHttpError={(e: any) => {
-              console.log('onHttpError', e);
+              console.log('onHttpError', e.nativeEvent.description);
+              setError(e);
+              setRetryAttempt(retryAttempt + 1);
             }}
             onError={(e: any) => {
               console.log('onError', e.nativeEvent.description);
