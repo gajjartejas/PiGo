@@ -129,6 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    marginHorizontal: 44,
+    zIndex: 1,
   },
   leftTitleViewStyle: {
     flex: 1,

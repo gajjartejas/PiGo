@@ -92,13 +92,14 @@ const AddDevice = ({ navigation, route }: Props) => {
   const onPressSave = useCallback(async () => {
     Keyboard.dismiss();
 
-    let deviceAddOrUpdate: IDevice = {
+    const deviceAddOrUpdate: IDevice = {
       id: device ? device.id : uuid.v4().toString(),
       name: connectionName.trim(),
       scanPorts: ports,
       ip1: ipAddress1.trim(),
       ip2: ipAddress2.trim(),
       ip3: ipAddress3.trim(),
+      selectedIp: device ? device.selectedIp : ipAddress1.trim(),
       piAppServers: device?.piAppServers ?? [],
     };
 

@@ -60,6 +60,9 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
           !viewOnly && {
             borderBottomColor: isFocused && !isBlured ? theme.colors.primary : `${theme.colors.onBackground}50`,
           },
+          viewOnly && {
+            borderBottomColor: `${theme.colors.onBackground}20`,
+          },
         ]}>
         <TextInput
           ref={ref}
