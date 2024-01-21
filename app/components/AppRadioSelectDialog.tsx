@@ -1,8 +1,8 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { Dimensions, ScrollView, StyleSheet } from 'react-native';
 
 //ThirdParty
-import { Dialog, Text, useTheme, Button, TouchableRipple, RadioButton } from 'react-native-paper';
+import { Dialog, Text, useTheme, TouchableRipple, RadioButton, Portal } from 'react-native-paper';
 
 //App Modules
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 interface IAppRadioSelectDialogProps<T> {
   visible: boolean;
   title: string;
-  confirmText: string;
   onPressConfirm: (item: T) => void;
   onPressCancel: () => void;
 
@@ -22,57 +21,46 @@ interface IAppRadioSelectDialogProps<T> {
 
 function AppRadioSelectDialog(props: IAppRadioSelectDialogProps<string>) {
   //Constants
-  const { title, onPressCancel, confirmText, items, selectedItem, visible } = props;
+  const { title, onPressCancel, items, selectedItem, visible } = props;
   const { colors } = useTheme();
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
 
-  const [item, selectItem] = useState(selectedItem);
-
-  useEffect(() => {
-    selectItem(selectedItem);
-  }, [selectedItem]);
-
-  const onPressConfirm = useCallback(() => {
-    props.onPressConfirm(item);
-  }, [item, props]);
-
   return (
-    <Dialog
-      dismissableBackButton={true}
-      style={[largeScreenMode && styles.cardTablet]}
-      visible={visible}
-      onDismiss={onPressCancel}>
-      <Dialog.Title style={{ color: colors.onBackground }}>{title}</Dialog.Title>
-      <Dialog.Content>
-        <ScrollView style={styles.scrollView}>
-          {items.map(v => {
-            return (
-              <TouchableRipple
-                key={v}
-                onPress={() => {
-                  selectItem(v);
-                }}
-                style={styles.touchableRow}>
-                <>
-                  <Text style={styles.expand}>{t(v)}</Text>
-                  <RadioButton
-                    onPress={() => {
-                      selectItem(v);
-                    }}
-                    status={v === item ? 'checked' : 'unchecked'}
-                    value={t(v)}
-                  />
-                </>
-              </TouchableRipple>
-            );
-          })}
-        </ScrollView>
-      </Dialog.Content>
-      <Dialog.Actions>
-        <Button onPress={onPressConfirm}>{confirmText}</Button>
-      </Dialog.Actions>
-    </Dialog>
+    <Portal>
+      <Dialog
+        dismissableBackButton={true}
+        style={[largeScreenMode && styles.cardTablet]}
+        visible={visible}
+        onDismiss={onPressCancel}>
+        <Dialog.Title style={[styles.titleText, { color: colors.onBackground }]}>{title}</Dialog.Title>
+        <Dialog.Content>
+          <ScrollView style={styles.scrollView}>
+            {items.map(v => {
+              return (
+                <TouchableRipple
+                  key={v}
+                  onPress={() => {
+                    props.onPressConfirm(v);
+                  }}
+                  style={styles.touchableRow}>
+                  <>
+                    <Text style={styles.expand}>{t(v)}</Text>
+                    <RadioButton
+                      onPress={() => {
+                        props.onPressConfirm(v);
+                      }}
+                      status={v === selectedItem ? 'checked' : 'unchecked'}
+                      value={t(v)}
+                    />
+                  </>
+                </TouchableRipple>
+              );
+            })}
+          </ScrollView>
+        </Dialog.Content>
+      </Dialog>
+    </Portal>
   );
 }
 
@@ -100,7 +88,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     paddingHorizontal: 12,
-    maxHeight: Dimensions.get('screen').height * 0.5,
+    maxHeight: Dimensions.get('screen').height * 0.7,
   },
   touchableRow: {
     flexDirection: 'row',
@@ -110,6 +98,9 @@ const styles = StyleSheet.create({
   },
   expand: {
     flex: 1,
+  },
+  titleText: {
+    fontSize: 16,
   },
 });
 

@@ -74,6 +74,7 @@ const ScanDevices = ({ navigation }: Props) => {
                   ip1: result.ip,
                   ip2: null,
                   ip3: null,
+                  selectedIp: result.ip,
                 };
               }
               return device;
@@ -88,6 +89,7 @@ const ScanDevices = ({ navigation }: Props) => {
                     ip1: result.ip,
                     ip2: null,
                     ip3: null,
+                    selectedIp: result.ip,
                     scanPorts: [result.port],
                     piAppServers: [],
                     ...result,

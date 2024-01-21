@@ -40,6 +40,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
   },
+  subTitleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: -20,
+  },
 });
 
 export default styles;

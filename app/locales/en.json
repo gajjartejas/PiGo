@@ -157,7 +157,10 @@
       },
       "item4": {}
     },
-    "fabAddMore": "Add"
+    "fabAddMore": "Add",
+    "selectIpAddress": {
+      "title": "Select IP Address"
+    },
   },
   "addDevice": {
     "titleCreate": "CREATE",
@@ -271,6 +274,7 @@
     "infoDialog": {
       "title": "Info",
       "description": "URL Loaded:\n{{url}}"
-    }
+    },
+    "switchedURL": "Switched to alternative URL:\n{{URL}}."
   }
 }

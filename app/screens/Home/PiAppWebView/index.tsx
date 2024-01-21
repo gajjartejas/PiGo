@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Animated, View } from 'react-native';
 
 //ThirdParty
-import { Button, Dialog, Text, IconButton, Menu, ProgressBar, useTheme } from 'react-native-paper';
+import { Button, Dialog, Text, IconButton, Menu, ProgressBar, useTheme, Portal, Snackbar } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import WebView from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
@@ -59,6 +59,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const [error, setError] = useState<any | null>(null);
   const [retryAttempt, setRetryAttempt] = useState<number>(0);
   const [webViewKey, setWebViewKey] = useState<number>(0);
+  const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
 
   const allUrls = useMemo(() => {
     return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
@@ -77,7 +78,12 @@ const PiAppWebView = ({ navigation, route }: Props) => {
       setAppServerURL(null);
       return;
     }
-    const serverURL = getURL(selectedDevice?.ip1, piAppServer.path, piAppServer.port, piAppServer.secureConnection);
+    const serverURL = getURL(
+      selectedDevice?.selectedIp,
+      piAppServer.path,
+      piAppServer.port,
+      piAppServer.secureConnection,
+    );
     console.log('serverURL', serverURL);
     setAppServerURL(serverURL);
   }, [piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice]);
@@ -85,17 +91,19 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const fetchAlternateAddress = useCallback(async (): Promise<string | null> => {
     const abortController = new AbortController();
     try {
-      const serverURLs = allUrls.slice(1).map(v => {
-        return getURL(v!, piAppServer.path, piAppServer.port, piAppServer.secureConnection);
-      });
+      const serverURLs = allUrls
+        .filter(v => v !== selectedDevice?.selectedIp)
+        .map(v => {
+          return getURL(v!, piAppServer.path, piAppServer.port, piAppServer.secureConnection);
+        });
       const value = await getLiveURL(serverURLs, abortController, 10000);
-      console.log('value', value);
+      console.log('fetchAlternateAddress->address', value);
       return value;
     } catch (e) {
-      console.log('error', e);
+      console.log('fetchAlternateAddress->error', e);
       return null;
     }
-  }, [allUrls, piAppServer.path, piAppServer.port, piAppServer.secureConnection]);
+  }, [allUrls, piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice?.selectedIp]);
 
   useEffect(() => {
     loadURL();
@@ -229,6 +237,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
       webViewRef.current?.stopLoading();
       setError(null);
       setAppServerURL(appServerAltURL);
+      setSnackbarVisible(true);
     }
   }, [appServerAltURL, appServerURL, error]);
 
@@ -321,18 +330,28 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         </View>
       </Animated.View>
 
-      <Dialog
-        style={largeScreenMode && styles.cardTablet}
-        visible={infoDialogVisible}
-        onDismiss={() => setInfoDialogVisible(false)}>
-        <Dialog.Title>{t('piAppWebView.infoDialog.title')}</Dialog.Title>
-        <Dialog.Content>
-          <Text variant="bodyMedium">{t('piAppWebView.infoDialog.description', { url: appServerURL })}</Text>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={() => setInfoDialogVisible(false)}>Done</Button>
-        </Dialog.Actions>
-      </Dialog>
+      <Portal>
+        <Dialog
+          style={largeScreenMode && styles.cardTablet}
+          visible={infoDialogVisible}
+          onDismiss={() => setInfoDialogVisible(false)}>
+          <Dialog.Title>{t('piAppWebView.infoDialog.title')}</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{t('piAppWebView.infoDialog.description', { url: appServerURL })}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setInfoDialogVisible(false)}>Done</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => {
+          setSnackbarVisible(false);
+        }}>
+        {t('piAppWebView.switchedURL', { URL: appServerAltURL })}
+      </Snackbar>
     </AppBaseView>
   );
 };

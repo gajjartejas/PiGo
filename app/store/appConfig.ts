@@ -24,6 +24,7 @@ interface IAppConfigActions {
   deleteDevice: (deviceId: string) => void;
   selectDevice: (device: IDevice) => void;
   updateDeviceInfo: (device: IDeviceInfo | null) => void;
+  switchDeviceIp: (ipAddress: string) => void;
 
   addPiAppServerToSelectedDevice: (piAppServer: IPiAppServer) => void;
   deletePiAppServerToSelectedDevice: (id: string) => void;
@@ -79,6 +80,11 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
           }),
         deleteDevice: (id: string) =>
           set(state => ({ ...initialState, devices: [...state.devices.filter(v => v.id !== id)] })),
+        switchDeviceIp: (ip: string) =>
+          set(state => ({
+            ...state,
+            selectedDevice: state.selectedDevice ? { ...state.selectedDevice, selectedIp: ip } : null,
+          })),
         selectDevice: (d: IDevice) => set(() => ({ selectedDevice: d })),
         updateDeviceInfo: (d: IDeviceInfo | null) =>
           set(state => ({

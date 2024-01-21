@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 
 //ThirdParty
 import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
@@ -23,6 +23,7 @@ import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import Icon from 'react-native-easy-icon';
 
 const TIMOUT_REQ_MS = __DEV__ ? 2000 : 10000;
 
@@ -43,18 +44,25 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   const navigation = useNavigation<DashboardTabNavigationProp>();
   const { t } = useTranslation();
   const selectedDevice = useAppConfigStore(store => store.selectedDevice);
+  const switchDeviceIp = useAppConfigStore(store => store.switchDeviceIp);
   const disconnect = useAppConfigStore(store => store.disconnect);
   const addPiAppServerToSelectedDevice = useAppConfigStore(store => store.addPiAppServerToSelectedDevice);
   const deletePiAppServerToSelectedDevice = useAppConfigStore(store => store.deletePiAppServerToSelectedDevice);
   const selectDevice = useAppConfigStore(store => store.selectDevice);
   const isFocused = useIsFocused();
   const largeScreenMode = useLargeScreenMode();
+  const urls: string[] = useMemo(() => {
+    return selectedDevice
+      ? [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3].filter(m => !!m).map(m => m!)
+      : [];
+  }, [selectedDevice]);
 
   //States
   const [title, setTitle] = useState('');
   const [subTitle, setSubTitle] = useState('');
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
   const [isConnected, setIsConnected] = useState(true);
+  const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
 
   useEventEmitter<IPiAppServer>('on_select_piAppServer', eventData => {
     addPiAppServerToSelectedDevice({ ...eventData, id: uuid.v4().toString() });
@@ -83,7 +91,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       return;
     }
     setTitle(selectedDevice.name);
-    setSubTitle(selectedDevice.ip1);
+    setSubTitle(selectedDevice.selectedIp);
   }, [selectedDevice]);
 
   const onLogout = useCallback(() => {
@@ -112,13 +120,9 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       try {
         const result: any = await Promise.allSettled(
           selectedDevice.piAppServers.map(async v => {
-            const serverURLs = [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3]
-              .filter(m => !!m)
-              .map(m => {
-                return (
-                  (v.secureConnection ? 'https://' : 'http://') + m + ':' + v.port + '/' + v.path.replace(/^\//, '')
-                );
-              });
+            const serverURLs = [selectedDevice.selectedIp].map(m => {
+              return (v.secureConnection ? 'https://' : 'http://') + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
+            });
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), TIMOUT_REQ_MS);
             try {
@@ -132,6 +136,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             }
           }),
         );
+
         for (let i = 0; i < selectedDevice.piAppServers.length; i++) {
           selectedDevice.piAppServers[i] = {
             ...selectedDevice.piAppServers[i],
@@ -149,7 +154,7 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       refDeviceInfoRequestInProgress.current = false;
       clearInterval(to);
     };
-  }, [isConnected, isFocused, selectDevice, selectedDevice]);
+  }, [isConnected, isFocused, selectDevice, selectedDevice, urls]);
 
   const onPressSelectPiAppServer = useCallback(() => {
     navigation.navigate('PiAppServers', { mode: 'select' });
@@ -196,6 +201,20 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     [closeMenu, navigation, selectedDevice],
   );
 
+  const onCloseSubTitleDialog = () => {
+    setSubTitleDialogVisible(false);
+  };
+
+  const onShowSubTitleDialog = () => {
+    setSubTitleDialogVisible(true);
+  };
+
+  const onPressConfirmIpAddress = (item: string) => {
+    switchDeviceIp(item);
+    setSubTitleDialogVisible(false);
+    refRefreshTimeoutMs.current = 1000;
+  };
+
   const bottomPadding = isConnected ? 16 : 40;
 
   return (
@@ -226,12 +245,15 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
           />
         }
         SubTitleComponent={
-          <Text
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={[styles.subTitleTextStyle, { color: colors.onBackground }]}>
-            {subTitle}
-          </Text>
+          <TouchableOpacity activeOpacity={0.7} onPress={onShowSubTitleDialog} style={styles.subTitleButton}>
+            <Icon type="material-community" name="chevron-down" color={`${colors.onBackground}88`} size={24} />
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              style={[styles.subTitleTextStyle, { color: colors.onBackground }]}>
+              {subTitle}
+            </Text>
+          </TouchableOpacity>
         }
       />
       {selectedDevice && selectedDevice.piAppServers.length > 0 && (
@@ -304,6 +326,16 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
         style={[styles.fab, { backgroundColor: colors.primary, bottom: bottomPadding }]}
         onPress={onPressSelectPiAppServer}
       />
+
+      <Components.AppRadioSelectDialog
+        visible={subTitleDialogVisible}
+        title={t('dashboard.selectIpAddress.title')}
+        items={urls}
+        onPressConfirm={onPressConfirmIpAddress}
+        onPressCancel={onCloseSubTitleDialog}
+        selectedItem={selectedDevice ? selectedDevice.selectedIp : '-'}
+      />
+
       {!isConnected && <Components.AppNoConnection />}
     </Components.AppBaseView>
   );

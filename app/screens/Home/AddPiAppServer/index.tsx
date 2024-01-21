@@ -289,7 +289,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
         title={t('addPiAppServer.selectCategoryDialog.title')}
         items={Object.values(PI_APP_CATEGORIES)}
         onPressConfirm={onPressConfirmCategory}
-        confirmText={t('addPiAppServer.selectCategoryDialog.ok')}
         onPressCancel={hideCategoryDialog}
         selectedItem={category}
       />
@@ -299,7 +298,6 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
         title={t('addPiAppServer.selectConnectionTypeDialog.title')}
         items={['HTTP', 'HTTPS']}
         onPressConfirm={onPressConfirmConnectionType}
-        confirmText={t('addPiAppServer.selectConnectionTypeDialog.ok')}
         onPressCancel={hideConnectionTypeDialog}
         selectedItem={secureConnection ? 'HTTPS' : 'HTTP'}
       />
