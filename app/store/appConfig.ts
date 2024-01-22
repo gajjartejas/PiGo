@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import zustandStorage from 'app/store/zustandStorage';
 import IDevice from 'app/models/models/device';
-import IDeviceInfo from 'app/models/models/deviceInfo';
 import IPiAppServer from 'app/models/models/piAppServer';
 import PI_APP_SERVERS from 'app/config/pi-app-servers';
 
@@ -23,7 +22,6 @@ interface IAppConfigActions {
   upsertDevice: (device: IDevice) => void;
   deleteDevice: (deviceId: string) => void;
   selectDevice: (device: IDevice) => void;
-  updateDeviceInfo: (device: IDeviceInfo | null) => void;
   switchDeviceIp: (ipAddress: string) => void;
 
   addPiAppServerToSelectedDevice: (piAppServer: IPiAppServer) => void;
@@ -61,7 +59,15 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
             return { ...state, piAppServers: newPiAppServer };
           }),
         deletePiAppServer: (id: string) =>
-          set(state => ({ ...state, piAppServers: [...state.piAppServers.filter(v => v.id !== id)] })),
+          set(state => {
+            const selectedDevice = state.selectedDevice;
+
+            return {
+              ...state,
+              piAppServers: [...state.piAppServers.filter(v => v.id !== id)],
+              selectedDevice: selectedDevice ? (selectedDevice.id === id ? null : selectedDevice) : null,
+            };
+          }),
         upsertDevice: (dev: IDevice) =>
           set(state => {
             const newDevice = [...state.devices];
@@ -81,18 +87,17 @@ const useAppConfigStore = create<IAppConfigState & IAppConfigActions>()(
         deleteDevice: (id: string) =>
           set(state => ({ ...initialState, devices: [...state.devices.filter(v => v.id !== id)] })),
         switchDeviceIp: (ip: string) =>
-          set(state => ({
-            ...state,
-            selectedDevice: state.selectedDevice ? { ...state.selectedDevice, selectedIp: ip } : null,
-          })),
+          set(state => {
+            const selectedDevice = state.selectedDevice ? { ...state.selectedDevice, selectedIp: ip } : null;
+            const newDevices = [...state.devices];
+            const devices = newDevices.map(device => (device.id === selectedDevice?.id ? selectedDevice : device));
+            return {
+              ...state,
+              selectedDevice: selectedDevice,
+              devices: devices,
+            };
+          }),
         selectDevice: (d: IDevice) => set(() => ({ selectedDevice: d })),
-        updateDeviceInfo: (d: IDeviceInfo | null) =>
-          set(state => ({
-            ...state,
-            selectedDevice: state.selectedDevice ? { ...state.selectedDevice, deviceInfo: d } : null,
-            error: null,
-            requestAuth: false,
-          })),
         addPiAppServerToSelectedDevice: (piAppServer: IPiAppServer) =>
           set(state => {
             const selectedDevice = state.selectedDevice
