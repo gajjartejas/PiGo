@@ -264,6 +264,7 @@
     "back": "Back",
     "forward": "Forward",
     "copyURL": "Copy URL",
+    "switchURL": "Switch IP/URL",
     "info": "Info",
     "openWith": "Open With",
     "emptyData": {

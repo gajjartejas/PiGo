@@ -48,6 +48,12 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     outputRange: [0, THRESHOLD_DIFF_Y],
     extrapolate: 'clamp',
   });
+  const urls: string[] = useMemo(() => {
+    return selectedDevice
+      ? [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3].filter(m => !!m).map(m => m!)
+      : [];
+  }, [selectedDevice]);
+  const switchDeviceIp = useAppConfigStore(store => store.switchDeviceIp);
 
   //States
   const [menuVisible, setMenuVisible] = useState(false);
@@ -60,6 +66,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const [retryAttempt, setRetryAttempt] = useState<number>(0);
   const [webViewKey, setWebViewKey] = useState<number>(0);
   const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
+  const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
 
   const allUrls = useMemo(() => {
     return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
@@ -162,6 +169,11 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     }
   }, []);
 
+  const onSwitchURL = () => {
+    setMenuVisible(false);
+    setSubTitleDialogVisible(true);
+  };
+
   const onCopyURL = useCallback(() => {
     setMenuVisible(false);
 
@@ -240,6 +252,15 @@ const PiAppWebView = ({ navigation, route }: Props) => {
       setSnackbarVisible(true);
     }
   }, [appServerAltURL, appServerURL, error]);
+
+  const onPressConfirmIpAddress = (item: string) => {
+    switchDeviceIp(item);
+    setSubTitleDialogVisible(false);
+  };
+
+  const onCloseSubTitleDialog = () => {
+    setSubTitleDialogVisible(false);
+  };
 
   return (
     <AppBaseView edges={['left', 'right', 'top']} style={[styles.container, { backgroundColor: colors.background }]}>
@@ -321,6 +342,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
           <Menu.Item leadingIcon={'arrow-left'} onPress={onWGoBack} title={t('piAppWebView.back')} />
           <Menu.Item leadingIcon={'arrow-right'} onPress={onWGoForward} title={t('piAppWebView.forward')} />
           <View style={[styles.separator, { backgroundColor: `${colors.onBackground}30` }]} />
+          <Menu.Item leadingIcon={'swap-horizontal'} onPress={onSwitchURL} title={t('piAppWebView.switchURL')} />
           <Menu.Item leadingIcon={'content-copy'} onPress={onCopyURL} title={t('piAppWebView.copyURL')} />
           <Menu.Item leadingIcon={'open-in-app'} onPress={onOpenWith} title={t('piAppWebView.openWith')} />
           <Menu.Item leadingIcon={'information-outline'} onPress={onInfo} title={t('piAppWebView.info')} />
@@ -352,6 +374,15 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         }}>
         {t('piAppWebView.switchedURL', { URL: appServerAltURL })}
       </Snackbar>
+
+      <Components.AppRadioSelectDialog
+        visible={subTitleDialogVisible}
+        title={t('dashboard.selectIpAddress.title')}
+        items={urls}
+        onPressConfirm={onPressConfirmIpAddress}
+        onPressCancel={onCloseSubTitleDialog}
+        selectedItem={selectedDevice ? selectedDevice.selectedIp : '-'}
+      />
     </AppBaseView>
   );
 };
