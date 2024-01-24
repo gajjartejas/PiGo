@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, View } from 'react-native';
+import { Animated, BackHandler, ToastAndroid, View } from 'react-native';
 
 //ThirdParty
 import { Button, Dialog, Text, IconButton, Menu, ProgressBar, useTheme, Portal, Snackbar } from 'react-native-paper';
@@ -33,6 +33,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const refCurrentY = useRef(0);
   const refDiffY = useRef(0);
   const refDirection = useRef<'up' | 'down'>('up');
+  const showBackToast = useRef(true);
 
   //Constants
   const { colors } = useTheme();
@@ -67,6 +68,10 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const [webViewKey, setWebViewKey] = useState<number>(0);
   const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
   const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
+  const [backPressCount, setBackPressCount] = useState(0);
+
+  const [canGoFw, setCanGoFw] = useState(false);
+  const [canGoBw, setCanGoBw] = useState(false);
 
   const allUrls = useMemo(() => {
     return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
@@ -262,6 +267,31 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     setSubTitleDialogVisible(false);
   };
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (!canGoBw) {
+        navigation.pop();
+        return true;
+      }
+      if (backPressCount === 0) {
+        setBackPressCount(prevCount => prevCount + 1);
+        setTimeout(() => {
+          setBackPressCount(0);
+          webViewRef.current?.goBack();
+        }, 400);
+        if (showBackToast.current) {
+          showBackToast.current = false;
+          ToastAndroid.show(t('piAppWebView.backPressHint'), ToastAndroid.SHORT);
+        }
+      } else if (backPressCount === 1) {
+        navigation.pop();
+      }
+      return true;
+    });
+
+    return () => backHandler.remove();
+  }, [backPressCount, canGoBw, navigation, t]);
+
   return (
     <AppBaseView edges={['left', 'right', 'top']} style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.subView]}>
@@ -280,6 +310,8 @@ const PiAppWebView = ({ navigation, route }: Props) => {
             onNavigationStateChange={state => {
               refCurrentURL.current = state.url;
               setShowProgress(true);
+              setCanGoFw(state.canGoForward);
+              setCanGoBw(state.canGoBack);
             }}
             onScroll={onScroll}
             onHttpError={(e: any) => {
@@ -329,9 +361,9 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         ]}>
         <IconButton icon={'chevron-left'} size={26} style={{}} onPress={onGoBack} />
         <View style={styles.homeBackFwdButtonContainer}>
-          <IconButton icon={'arrow-u-left-top'} size={26} style={{}} onPress={onWGoBack} />
+          <IconButton icon={'arrow-u-left-top'} disabled={!canGoBw} size={26} style={{}} onPress={onWGoBack} />
           <IconButton icon={'home'} size={26} style={{}} onPress={onWGoHome} />
-          <IconButton icon={'arrow-u-right-top'} size={26} style={{}} onPress={onWGoForward} />
+          <IconButton icon={'arrow-u-right-top'} size={26} disabled={!canGoFw} style={{}} onPress={onWGoForward} />
         </View>
 
         <Menu
@@ -339,8 +371,18 @@ const PiAppWebView = ({ navigation, route }: Props) => {
           onDismiss={onDismissModal}
           anchor={<IconButton icon={'dots-vertical'} size={26} onPress={onPressMore} />}>
           <Menu.Item leadingIcon={'refresh'} onPress={onWRefresh} title={t('piAppWebView.refresh')} />
-          <Menu.Item leadingIcon={'arrow-left'} onPress={onWGoBack} title={t('piAppWebView.back')} />
-          <Menu.Item leadingIcon={'arrow-right'} onPress={onWGoForward} title={t('piAppWebView.forward')} />
+          <Menu.Item
+            leadingIcon={'arrow-left'}
+            disabled={!canGoBw}
+            onPress={onWGoBack}
+            title={t('piAppWebView.back')}
+          />
+          <Menu.Item
+            leadingIcon={'arrow-right'}
+            disabled={!canGoFw}
+            onPress={onWGoForward}
+            title={t('piAppWebView.forward')}
+          />
           <View style={[styles.separator, { backgroundColor: `${colors.onBackground}30` }]} />
           <Menu.Item leadingIcon={'swap-horizontal'} onPress={onSwitchURL} title={t('piAppWebView.switchURL')} />
           <Menu.Item leadingIcon={'content-copy'} onPress={onCopyURL} title={t('piAppWebView.copyURL')} />

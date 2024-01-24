@@ -276,6 +276,7 @@
       "title": "Info",
       "description": "URL Loaded:\n{{url}}"
     },
-    "switchedURL": "Switched to alternative URL:\n{{URL}}."
+    "switchedURL": "Switched to alternative URL:\n{{URL}}.",
+    "backPressHint": "Press one more time to go back"
   }
 }
