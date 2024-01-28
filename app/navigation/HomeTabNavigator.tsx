@@ -31,6 +31,7 @@ import DashboardTab from 'app/screens/Home/HomeTabs/DashboardTab';
 import ScanDevices from 'app/screens/Home/ScanDevices';
 import PiAppWebView from 'app/screens/Home/PiAppWebView';
 import ViewPiAppServer from 'app/screens/Home/ViewPiAppServer';
+import WebViewSetting from 'app/screens/Settings/WebViewSetting';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
 
@@ -110,6 +111,7 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="PiAppWebView" component={PiAppWebView} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ViewPiAppServer" component={ViewPiAppServer} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="WebViewSetting" component={WebViewSetting} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };

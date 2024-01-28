@@ -5,6 +5,8 @@ import { Appearance, View } from 'react-native';
 import styles from './styles';
 import AppearancePreferences = Appearance.AppearancePreferences;
 import useThemeConfigStore, { IAppearanceType } from 'app/store/themeConfig';
+import useAppWebViewConfigStore from 'app/store/webViewConfig';
+import DeviceInfo from 'react-native-device-info';
 
 //Interface
 export type Props = {
@@ -14,6 +16,16 @@ export type Props = {
 const AppManager = ({ children }: Props) => {
   const setIsDarkMode = useThemeConfigStore(store => store.setIsDarkMode);
   const appearance = useThemeConfigStore(store => store.appearance);
+  const userAgent = useAppWebViewConfigStore(store => store.userAgent);
+  const setUserAgent = useAppWebViewConfigStore(store => store.setUserAgent);
+
+  useEffect(() => {
+    if (userAgent === undefined) {
+      DeviceInfo.getUserAgent().then(ua => {
+        setUserAgent(ua);
+      });
+    }
+  }, [setUserAgent, userAgent]);
 
   useEffect(() => {
     const onThemeChange = (preferences: AppearancePreferences) => {
