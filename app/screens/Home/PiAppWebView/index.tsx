@@ -20,6 +20,7 @@ import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import AppBaseView from 'app/components/AppBaseView';
 import getLiveURL from 'app/utils/getLiveURL';
 import Utils from 'app/utils';
+import useAppWebViewConfigStore from 'app/store/webViewConfig';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppWebView'>;
@@ -72,6 +73,44 @@ const PiAppWebView = ({ navigation, route }: Props) => {
 
   const [canGoFw, setCanGoFw] = useState(false);
   const [canGoBw, setCanGoBw] = useState(false);
+
+  const [
+    mediaPlaybackRequiresUserAction,
+    scalesPageToFit,
+    domStorageEnabled,
+    javaScriptEnabled,
+    thirdPartyCookiesEnabled,
+    userAgent,
+    allowsFullScreenVideo,
+    allowsInlineMediaPlayback,
+    allowsAirPlayForMediaPlayback,
+    bounces,
+    contentMode,
+    geolocationEnabled,
+    allowFileAccessFromFileUrls,
+    allowsBackForwardNavigationGestures,
+    pullToRefreshEnabled,
+    forceDarkOn,
+    allowsProtectedMedia,
+  ] = useAppWebViewConfigStore(store => [
+    store.mediaPlaybackRequiresUserAction,
+    store.scalesPageToFit,
+    store.domStorageEnabled,
+    store.javaScriptEnabled,
+    store.thirdPartyCookiesEnabled,
+    store.userAgent,
+    store.allowsFullScreenVideo,
+    store.allowsInlineMediaPlayback,
+    store.allowsAirPlayForMediaPlayback,
+    store.bounces,
+    store.contentMode,
+    store.geolocationEnabled,
+    store.allowFileAccessFromFileUrls,
+    store.allowsBackForwardNavigationGestures,
+    store.pullToRefreshEnabled,
+    store.forceDarkOn,
+    store.allowsProtectedMedia,
+  ]);
 
   const allUrls = useMemo(() => {
     return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
@@ -301,8 +340,6 @@ const PiAppWebView = ({ navigation, route }: Props) => {
             ref={webViewRef}
             source={{ uri: appServerURL }}
             style={{ ...styles.webview, backgroundColor: colors.background }}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
             originWhitelist={['*']}
             onLoadProgress={({ nativeEvent }) => {
               setProgress(nativeEvent.progress);
@@ -333,6 +370,23 @@ const PiAppWebView = ({ navigation, route }: Props) => {
             onLoadStart={() => {
               console.log('onLoadStart');
             }}
+            mediaPlaybackRequiresUserAction={mediaPlaybackRequiresUserAction}
+            scalesPageToFit={scalesPageToFit}
+            domStorageEnabled={domStorageEnabled}
+            javaScriptEnabled={javaScriptEnabled}
+            thirdPartyCookiesEnabled={thirdPartyCookiesEnabled}
+            userAgent={userAgent}
+            allowsFullscreenVideo={allowsFullScreenVideo}
+            allowsInlineMediaPlayback={allowsInlineMediaPlayback}
+            allowsAirPlayForMediaPlayback={allowsAirPlayForMediaPlayback}
+            bounces={bounces}
+            contentMode={contentMode ? 'desktop' : 'mobile'}
+            geolocationEnabled={geolocationEnabled}
+            allowFileAccessFromFileURLs={allowFileAccessFromFileUrls}
+            allowsBackForwardNavigationGestures={allowsBackForwardNavigationGestures}
+            pullToRefreshEnabled={pullToRefreshEnabled}
+            forceDarkOn={forceDarkOn}
+            allowsProtectedMedia={allowsProtectedMedia}
           />
         )}
         {error && retryAttempt > 2 && (

@@ -44,6 +44,7 @@ export interface AddPiAppServerParamParams {
   mode?: 'create' | 'edit' | 'edit_device_piAppServer';
 }
 export interface ScanDevicesParams {}
+export interface WebViewSettingParams {}
 
 export type LoggedInTabNavigatorParams = {
   Loading: LoadingParams;
@@ -63,6 +64,7 @@ export type LoggedInTabNavigatorParams = {
   ScanDevices: ScanDevicesParams;
   PiAppWebView: PiAppWebViewParams;
   ViewPiAppServer: ViewPiAppServerParams;
+  WebViewSetting: WebViewSettingParams;
 };
 
 export type HomeTabsNavigatorParams = {
