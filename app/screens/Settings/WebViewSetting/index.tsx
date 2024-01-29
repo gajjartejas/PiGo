@@ -19,6 +19,7 @@ import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import AppHeader from 'app/components/AppHeader';
 import useAppWebViewConfigStore from 'app/store/webViewConfig';
+import CookieManager from '@react-native-cookies/cookies';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'WebViewSetting'>;
@@ -93,6 +94,7 @@ const WebViewSetting = ({ navigation }: Props) => {
   //States
   const [modalVisibleUserAgent, setModalVisibleUserAgent] = useState(false);
   const [modalUserAgent, setModalUserAgent] = useState(userAgent);
+  const [clearDataAlertVisible, setClearDataAlertVisible] = useState(false);
 
   const apps: ISettingSection[] = useMemo(() => {
     const excludeIds =
@@ -283,10 +285,18 @@ const WebViewSetting = ({ navigation }: Props) => {
         items: [
           {
             id: 0,
-            iconName: 'backup-restore',
+            iconName: 'broom',
             iconType: 'material-community',
             title: t('webViewSetting.section2.row1.title'),
             description: t('webViewSetting.section2.row1.subTitle')!,
+            route: 'WebViewSetting',
+          },
+          {
+            id: 1,
+            iconName: 'backup-restore',
+            iconType: 'material-community',
+            title: t('webViewSetting.section2.row2.title'),
+            description: t('webViewSetting.section2.row2.subTitle')!,
             route: 'WebViewSetting',
           },
         ],
@@ -373,6 +383,9 @@ const WebViewSetting = ({ navigation }: Props) => {
           setAllowsProtectedMedia(!subItem.value);
           break;
         case index === 1 && subItem.id === 0:
+          setClearDataAlertVisible(true);
+          break;
+        case index === 1 && subItem.id === 1:
           reset();
           break;
         default:
@@ -399,6 +412,11 @@ const WebViewSetting = ({ navigation }: Props) => {
       userAgent,
     ],
   );
+
+  const onClearAllData = () => {
+    CookieManager.clearAll();
+    Platform.select({ android: CookieManager.removeSessionCookies() });
+  };
 
   return (
     <Components.AppBaseView
@@ -480,6 +498,15 @@ const WebViewSetting = ({ navigation }: Props) => {
         keyboardType={'default'}
         returnKeyType={'default'}
         style={[styles.inputMultilineStyle, { color: colors.onBackground }]}
+      />
+      <Components.AppActionDialog
+        title={t('webViewSetting.section2.row1.dialogTitle')}
+        description={t('webViewSetting.section2.row1.dialogSubTitle')}
+        visible={clearDataAlertVisible}
+        cancelText={t('general.cancel')}
+        confirmText={t('general.ok')}
+        onPressConfirm={onClearAllData}
+        onPressCancel={() => setClearDataAlertVisible(false)}
       />
     </Components.AppBaseView>
   );
