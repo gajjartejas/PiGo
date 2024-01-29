@@ -427,6 +427,8 @@ PODS:
   - React-jsinspector (0.72.6)
   - React-logger (0.72.6):
     - glog
+  - react-native-cookies (6.2.1):
+    - React-Core
   - react-native-in-app-review (4.3.3):
     - React-Core
   - react-native-lan-port-scanner (1.4.2):
@@ -615,6 +617,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
   - react-native-in-app-review (from `../node_modules/react-native-in-app-review`)
   - react-native-lan-port-scanner (from `../node_modules/react-native-lan-port-scanner`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
@@ -719,6 +722,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-cookies:
+    :path: "../node_modules/@react-native-cookies/cookies"
   react-native-in-app-review:
     :path: "../node_modules/react-native-in-app-review"
   react-native-lan-port-scanner:
@@ -833,6 +838,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 3bf18ff7cb03cd8dfdce08fbbc0d15058c1d71ae
   React-jsinspector: 194e32c6aab382d88713ad3dd0025c5f5c4ee072
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
+  react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
   react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
   react-native-lan-port-scanner: 7883b6f3c81007f2a9d36ba9bd38687ee9e7af3c
   react-native-mmkv: 9ae7ca3977e8ef48dbf7f066974eb844c20b5fd7

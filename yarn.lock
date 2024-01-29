@@ -1744,6 +1744,13 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-11.2.1.tgz"
   "version" "11.2.1"
 
+"@react-native-cookies/cookies@^6.2.1":
+  "integrity" "sha512-D17wCA0DXJkGJIxkL74Qs9sZ3sA+c+kCoGmXVknW7bVw/W+Vv1m/7mWTNi9DLBZSRddhzYw8SU0aJapIaM/g5w=="
+  "resolved" "https://registry.npmjs.org/@react-native-cookies/cookies/-/cookies-6.2.1.tgz"
+  "version" "6.2.1"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "@react-native-firebase/analytics@^18.0.0":
   "integrity" "sha512-ttnGpWthgbumGcG+gE5IhugJs1tesj8wZH8q3SwgLjunHUFIhBTd2ASEt+lghg1lYp2JIGz09k7s2TtAB4IzYQ=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-18.0.0.tgz"
@@ -5948,7 +5955,7 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@^0.72.0", "react-native@>=0.56", "react-native@>=0.57.0", "react-native@>=0.59", "react-native@>=0.60.0", "react-native@>=0.65.0", "react-native@>=0.70.0", "react-native@>=0.71.0":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@^0.72.0", "react-native@>= 0.60.2", "react-native@>=0.56", "react-native@>=0.57.0", "react-native@>=0.59", "react-native@>=0.60.0", "react-native@>=0.65.0", "react-native@>=0.70.0", "react-native@>=0.71.0":
   "integrity" "sha512-RafPY2gM7mcrFySS8TL8x+TIO3q7oAlHpzEmC7Im6pmXni6n1AuufGaVh0Narbr1daxstw7yW7T9BKW5dpVc2A=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.72.6.tgz"
   "version" "0.72.6"

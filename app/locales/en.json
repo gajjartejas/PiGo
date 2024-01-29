@@ -3,7 +3,9 @@
     "appname": "PiGo",
     "close": "CLOSE",
     "save": "SAVE",
-    "noInternet": "No internet connection!"
+    "noInternet": "No internet connection!",
+    "cancel": "CANCEL",
+    "ok": "OK"
   },
   "piAppsCategories": {
     "adsBlocker": "Ad and Tracker Blockers",
@@ -221,6 +223,12 @@
     "section2": {
       "header": "Other",
       "row1": {
+        "title": "Clear WebView Data",
+        "subTitle": "Free up space by clearing all WebView data",
+        "dialogTitle": "Clear webview data?",
+        "dialogSubTitle": "Are you sure you want to clear webview data?"
+      },
+      "row2": {
         "title": "Restore Default",
         "subTitle": "Restore default all webview settings."
       }
