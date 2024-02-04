@@ -1,4 +1,7 @@
 {
+  "ChangeLanguageScreen": {
+    "title": "Sprache ändern"
+  },
   "about": {
     "app": "Über PiGo",
     "github": "Tragen Sie auf GitHub bei",
@@ -105,7 +108,10 @@
         "title": "Keine Apps hinzugefügt!"
       }
     },
-    "fabAddMore": "Hinzufügen"
+    "fabAddMore": "Hinzufügen",
+    "selectIpAddress": {
+      "title": "Wählen Sie IP-Adresse"
+    }
   },
   "devicesList": {
     "createNewDevice": "Neuen Pi-Server hinzufügen",
@@ -120,7 +126,10 @@
   },
   "general": {
     "appname": "PiGo",
+    "cancel": "STORNIEREN",
     "close": "SCHLIESSEN",
+    "noInternet": "Keine Internetverbindung!",
+    "ok": "OK",
     "save": "SPEICHERN"
   },
   "librariesScreen": {
@@ -153,6 +162,7 @@
   },
   "piAppWebView": {
     "back": "Zurück",
+    "backPressHint": "Drücken Sie noch einmal, um zurückzugehen",
     "copyURL": "URL kopieren",
     "emptyData": {
       "button": "Aktualisierung",
@@ -162,10 +172,13 @@
     "forward": "Nach vorne",
     "info": "Die Info",
     "infoDialog": {
-      "description": "Geladene URL: {{url}}",
+      "description": "Geladene URL:\n\n{{url}}",
       "title": "Die Info"
     },
-    "refresh": "Aktualisierung"
+    "openWith": "Öffnen mit",
+    "refresh": "Aktualisierung",
+    "switchURL": "IP/URL wechseln",
+    "switchedURL": "Auf alternative URL umgestellt:\n\n{{URL}}."
   },
   "piAppsCategories": {
     "adsBlocker": "Werbe- und Tracker-Blocker",
@@ -215,7 +228,7 @@
       },
       "row2": {
         "dialogSubTitle": "Scannen Sie Threads pro Zeitüberschreitung, z. B. 150 Threads pro 1500 ms. Wenn der Pi-Server nicht gefunden wird, versuchen Sie, die Anzahl der Threads zu verringern.",
-        "dialogTitle": "Geben Sie Scan-Threads ein (1 - 999)",
+        "dialogTitle": "Scan-Threads eingeben (1-999)",
         "subTitle": "{{scanThreads}}",
         "title": "Threads scannen"
       }
@@ -238,6 +251,8 @@
     "faqSubTitle": "Beantworten Sie häufig gestellte Fragen",
     "faqTitle": "FAQ",
     "infoHeader": "Information",
+    "languageSubTitle": "{{language}}",
+    "languageTitle": "App-Sprache",
     "librariesSubTitle": "Liste der in diesem Projekt verwendeten Open-Source-Bibliotheken",
     "librariesTitle": "Bibliotheken",
     "piAppServersSubTitle": "Verwalten Sie die Liste der Standard-Pi-App-Server wie Pi-hole, Plex usw",
@@ -252,7 +267,9 @@
     "translateSubTitle": "Übersetzen Sie diese App in Ihre Sprache",
     "translateTitle": "Übersetzen Sie diese App",
     "translatorsSubTitle": "Personen, die bei der Lokalisierung dieser App geholfen haben",
-    "translatorsTitle": "Übersetzer"
+    "translatorsTitle": "Übersetzer",
+    "webViewSettingsSubTitle": "Verwalten Sie die Webansichtseinstellungen",
+    "webViewSettingsTitle": "Webview-Einstellungen"
   },
   "translatorsScreen": {
     "emptyList": "Seien Sie der Pionier – noch keine Mitwirkenden gefunden!",
@@ -267,5 +284,94 @@
     "inputPlaceholder4": "Kategorie",
     "inputPlaceholder5": "GitHub-Link",
     "inputPlaceholder6": "Beschreibung"
+  },
+  "webViewSetting": {
+    "section1": {
+      "header": "Allgemeine Einstellungen",
+      "row1": {
+        "subTitle": "Boolescher Wert, der bestimmt, ob HTML5-Audio und -Video erfordern, dass der Benutzer darauf tippt, bevor sie mit der Wiedergabe beginnen. \nDer Standardwert ist wahr. \n(Android API-Mindestversion 17).",
+        "title": "Die Medienwiedergabe erfordert eine Benutzeraktion"
+      },
+      "row10": {
+        "subTitle": "Boolescher Wert, der bestimmt, ob die Webansicht springt, wenn sie den Rand des Inhalts erreicht. \nDer Standardwert ist wahr.",
+        "title": "Springt"
+      },
+      "row11": {
+        "subTitle": "Steuert die Art des zu ladenden Inhalts. \nVerfügbar für iOS 13 und höher. \nStandardmäßig wird „Empfohlen“ verwendet, wodurch mobile Inhalte auf das iPhone geladen werden",
+        "title": "Inhaltsmodus"
+      },
+      "row12": {
+        "subTitle": "Legen Sie fest, ob Geolocation im WebView aktiviert ist. \nDer Standardwert ist false. \nWird nur in Android verwendet.",
+        "title": "Geolokalisierung aktiviert"
+      },
+      "row13": {
+        "subTitle": "Boolescher Wert, der festlegt, ob JavaScript, das im Kontext einer Dateischema-URL ausgeführt wird, auf Inhalte von anderen Dateischema-URLs zugreifen darf. \nDer Standardwert ist false.",
+        "title": "Dateizugriff über Datei-Ur-Ls zulassen"
+      },
+      "row14": {
+        "subTitle": "Wenn dies der Fall ist, können horizontale Wischgesten ausgeführt werden. \nDer Standardwert ist false.",
+        "title": "Ermöglicht Zurück-Vorwärts-Navigationsgesten"
+      },
+      "row15": {
+        "subTitle": "Boolescher Wert, der bestimmt, ob eine Pull-to-Refresh-Geste in der WebView verfügbar ist. \nDer Standardwert ist false. \nWenn „true“, werden Bounces automatisch auf „true“ gesetzt.",
+        "title": "Zum Aktualisieren ziehen aktiviert"
+      },
+      "row16": {
+        "subTitle": "Dunkles Theme konfigurieren",
+        "title": "Dunkel einschalten"
+      },
+      "row17": {
+        "subTitle": "Ob der Webview durch DRM geschützte Medien abspielen kann oder nicht. \nDer Standardwert ist falsch.",
+        "title": "Ermöglicht geschützte Medien"
+      },
+      "row2": {
+        "subTitle": "Boolescher Wert, der steuert, ob der Webinhalt so skaliert wird, dass er in die Ansicht passt, und es dem Benutzer ermöglicht, den Maßstab zu ändern. \nDer Standardwert ist wahr.",
+        "title": "Skaliert die Seite entsprechend der Größe"
+      },
+      "row3": {
+        "subTitle": "Boolescher Wert zur Steuerung, ob DOM-Speicher aktiviert ist. \nWird nur in Android verwendet.",
+        "title": "Dom-Speicher aktiviert"
+      },
+      "row4": {
+        "subTitle": "Boolescher Wert zum Aktivieren von JavaScript im WebView. \nDer Standardwert ist wahr.",
+        "title": "Java Script aktiviert"
+      },
+      "row5": {
+        "subTitle": "Boolescher Wert, um Cookies von Drittanbietern im WebView zu aktivieren. \nWird nur auf Android Lollipop und höher verwendet, da Cookies von Drittanbietern auf Android Kitkat und niedriger sowie iOS standardmäßig aktiviert sind. \nDer Standardwert ist wahr.",
+        "title": "Cookies von Drittanbietern aktiviert"
+      },
+      "row6": {
+        "dialogSubTitle": "Der User-Agent (UA)-String ist in den HTTP-Headern enthalten und soll Geräte identifizieren, die Online-Inhalte anfordern.",
+        "dialogTitle": "Geben Sie die Zeichenfolge des Benutzeragenten ein",
+        "subTitle": "Legt den Benutzeragenten für die WebView fest.",
+        "title": "User-Agent"
+      },
+      "row7": {
+        "subTitle": "Boolescher Wert, der bestimmt, ob Videos im Vollbildmodus abgespielt werden dürfen. \nDer Standardwert ist false.",
+        "title": "Ermöglicht Videos im Vollbildmodus"
+      },
+      "row8": {
+        "subTitle": "Boolescher Wert, der bestimmt, ob HTML5-Videos inline abgespielt werden oder den nativen Vollbild-Controller verwenden. \nDer Standardwert ist false.",
+        "title": "Ermöglicht die Inline-Medienwiedergabe"
+      },
+      "row9": {
+        "subTitle": "Ein boolescher Wert, der angibt, ob AirPlay zulässig ist. \nDer Standardwert ist false.",
+        "title": "Ermöglicht Air Play für die Medienwiedergabe"
+      }
+    },
+    "section2": {
+      "header": "Andere",
+      "row1": {
+        "dialogSubTitle": "Sind Sie sicher, dass Sie Webview-Daten löschen möchten?",
+        "dialogTitle": "Webview-Daten löschen?",
+        "subTitle": "Geben Sie Speicherplatz frei, indem Sie alle WebView-Daten löschen",
+        "title": "WebView-Daten löschen"
+      },
+      "row2": {
+        "subTitle": "Alle Standardeinstellungen für die Webansicht wiederherstellen.",
+        "title": "Standard wiederherstellen"
+      }
+    },
+    "title": "Webview-Einstellungen"
   }
 }

@@ -1,4 +1,7 @@
 {
+  "ChangeLanguageScreen": {
+    "title": "Mudar idioma"
+  },
   "about": {
     "app": "Sobre PiGo",
     "github": "Contribua no GitHub",
@@ -105,7 +108,10 @@
         "title": "Nenhum aplicativo adicionado!"
       }
     },
-    "fabAddMore": "Adicionar"
+    "fabAddMore": "Adicionar",
+    "selectIpAddress": {
+      "title": "Selecione o endereço IP"
+    }
   },
   "devicesList": {
     "createNewDevice": "Adicionar novo servidor Pi",
@@ -120,7 +126,10 @@
   },
   "general": {
     "appname": "PiGo",
+    "cancel": "CANCELAR",
     "close": "FECHAR",
+    "noInternet": "Sem conexão com a internet!",
+    "ok": "OK",
     "save": "SALVAR"
   },
   "librariesScreen": {
@@ -153,6 +162,7 @@
   },
   "piAppWebView": {
     "back": "Voltar",
+    "backPressHint": "Pressione mais uma vez para voltar",
     "copyURL": "Copiar URL",
     "emptyData": {
       "button": "Atualizar",
@@ -162,10 +172,13 @@
     "forward": "Avançar",
     "info": "Informações",
     "infoDialog": {
-      "description": "URL carregado: {{url}}",
+      "description": "URL carregado:\n\n{{url}}",
       "title": "Informações"
     },
-    "refresh": "Atualizar"
+    "openWith": "Abrir com",
+    "refresh": "Atualizar",
+    "switchURL": "Trocar IP/URL",
+    "switchedURL": "Mudou para URL alternativo:\n\n{{URL}}."
   },
   "piAppsCategories": {
     "adsBlocker": "Bloqueadores de anúncios e rastreadores",
@@ -215,7 +228,7 @@
       },
       "row2": {
         "dialogSubTitle": "Verifique os threads por tempo limite, ex: 150 threads por 1500 ms. Se o servidor Pi não for encontrado, tente diminuir os threads.",
-        "dialogTitle": "Insira os tópicos de verificação (1 - 999)",
+        "dialogTitle": "Insira os tópicos de verificação (1-999)",
         "subTitle": "{{scanThreads}}",
         "title": "Digitalizar tópicos"
       }
@@ -238,6 +251,8 @@
     "faqSubTitle": "Resposta às perguntas frequentes",
     "faqTitle": "Perguntas frequentes",
     "infoHeader": "Informação",
+    "languageSubTitle": "{{language}}",
+    "languageTitle": "Idioma do aplicativo",
     "librariesSubTitle": "Lista de bibliotecas de código aberto usadas neste projeto",
     "librariesTitle": "Bibliotecas",
     "piAppServersSubTitle": "Gerencie a lista de servidores de aplicativos Pi padrão, como Pi-hole, Plex, etc.",
@@ -252,7 +267,9 @@
     "translateSubTitle": "Traduza este aplicativo para o seu idioma",
     "translateTitle": "Traduzir este aplicativo",
     "translatorsSubTitle": "Pessoas que ajudaram a localizar este app",
-    "translatorsTitle": "Tradutores"
+    "translatorsTitle": "Tradutores",
+    "webViewSettingsSubTitle": "Gerenciar configurações de visualização na web",
+    "webViewSettingsTitle": "Configurações de visualização da Web"
   },
   "translatorsScreen": {
     "emptyList": "Seja o pioneiro - nenhum colaborador encontrado ainda!",
@@ -267,5 +284,94 @@
     "inputPlaceholder4": "Categoria",
     "inputPlaceholder5": "Link do GitHub",
     "inputPlaceholder6": "Descrição"
+  },
+  "webViewSetting": {
+    "section1": {
+      "header": "Configurações Gerais",
+      "row1": {
+        "subTitle": "Booleano que determina se o áudio e o vídeo HTML5 exigem que o usuário toque neles antes de começar a reproduzir. \nO valor padrão é verdadeiro. \n(API Android versão mínima 17).",
+        "title": "A reprodução de mídia requer ação do usuário"
+      },
+      "row10": {
+        "subTitle": "Valor booleano que determina se a visualização da Web salta quando atinge a borda do conteúdo. \nO valor padrão é verdadeiro.",
+        "title": "Saltos"
+      },
+      "row11": {
+        "subTitle": "Controla o tipo de conteúdo a ser carregado. \nDisponível no iOS 13 e posterior. \nO padrão é recomendado, que carrega conteúdo móvel no iPhone",
+        "title": "Modo de conteúdo"
+      },
+      "row12": {
+        "subTitle": "Defina se a geolocalização está habilitada no WebView. \nO valor padrão é falso. \nUsado apenas em Android.",
+        "title": "Geolocalização ativada"
+      },
+      "row13": {
+        "subTitle": "Booleano que define se o JavaScript executado no contexto de um URL de esquema de arquivo deve ter permissão para acessar o conteúdo de outros URLs de esquema de arquivo. \nO valor padrão é falso.",
+        "title": "Permitir acesso ao arquivo do arquivo Ur Ls"
+      },
+      "row14": {
+        "subTitle": "Se for verdade, isso poderá fazer gestos de deslizar horizontalmente. \nO valor padrão é falso.",
+        "title": "Permite gestos de navegação para trás e para frente"
+      },
+      "row15": {
+        "subTitle": "Valor booleano que determina se um gesto de puxar para atualizar está disponível no WebView. \nO valor padrão é falso. \nSe verdadeiro, define as rejeições automaticamente como verdadeiras.",
+        "title": "Puxar para atualizar ativado"
+      },
+      "row16": {
+        "subTitle": "Configurando o tema escuro",
+        "title": "Forçar escuridão ativada"
+      },
+      "row17": {
+        "subTitle": "Se o Webview pode ou não reproduzir mídia protegida por DRM. \nO padrão é falso.",
+        "title": "Permite mídia protegida"
+      },
+      "row2": {
+        "subTitle": "Booleano que controla se o conteúdo da web é dimensionado para se ajustar à visualização e permite que o usuário altere a escala. \nO valor padrão é verdadeiro.",
+        "title": "Dimensiona a página para caber"
+      },
+      "row3": {
+        "subTitle": "Valor booleano para controlar se o armazenamento DOM está habilitado. \nUsado apenas em Android.",
+        "title": "Armazenamento Dom ativado"
+      },
+      "row4": {
+        "subTitle": "Valor booleano para ativar o JavaScript no WebView. \nO valor padrão é verdadeiro.",
+        "title": "JavaScript ativado"
+      },
+      "row5": {
+        "subTitle": "Valor booleano para habilitar cookies de terceiros no WebView. \nUsado no Android Lollipop e superior apenas porque os cookies de terceiros são ativados por padrão no Android Kitkat e inferior e no iOS. \nO valor padrão é verdadeiro.",
+        "title": "Cookies de terceiros ativados"
+      },
+      "row6": {
+        "dialogSubTitle": "A string User-Agent (UA) está contida nos cabeçalhos HTTP e tem como objetivo identificar dispositivos que solicitam conteúdo online.",
+        "dialogTitle": "Insira a string do agente do usuário",
+        "subTitle": "Define o agente do usuário para o WebView.",
+        "title": "Agente de usuário"
+      },
+      "row7": {
+        "subTitle": "Booleano que determina se os vídeos podem ser reproduzidos em tela cheia. \nO valor padrão é falso.",
+        "title": "Permite vídeo em tela cheia"
+      },
+      "row8": {
+        "subTitle": "Booleano que determina se os vídeos HTML5 são reproduzidos in-line ou usam o controlador nativo de tela cheia. \nO valor padrão é falso.",
+        "title": "Permite reprodução de mídia inline"
+      },
+      "row9": {
+        "subTitle": "Um valor booliano que indica se o AirPlay é permitido. \nO valor padrão é falso.",
+        "title": "Permite Air Play para reprodução de mídia"
+      }
+    },
+    "section2": {
+      "header": "Outro",
+      "row1": {
+        "dialogSubTitle": "Tem certeza de que deseja limpar os dados do webview?",
+        "dialogTitle": "Limpar dados de visualização na web?",
+        "subTitle": "Libere espaço limpando todos os dados do WebView",
+        "title": "Limpar dados do WebView"
+      },
+      "row2": {
+        "subTitle": "Restaure todas as configurações padrão do webview.",
+        "title": "Restaurar padrão"
+      }
+    },
+    "title": "Configurações de visualização da Web"
   }
 }
