@@ -120,9 +120,9 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     urlLoadCount.current = allUrls.filter(v => !!v).length;
   }, [allUrls]);
 
-  const getURL = (url: string, path: string, port: number, secure: boolean) => {
+  const getURL = useCallback((url: string, path: string, port: number, secure: boolean) => {
     return (secure ? 'https://' : 'http://') + url + ':' + port + '/' + path.replace(/^\//, '');
-  };
+  }, []);
 
   const loadURL = useCallback(() => {
     if (!selectedDevice) {
@@ -137,7 +137,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     );
     console.log('serverURL', serverURL);
     setAppServerURL(serverURL);
-  }, [piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice]);
+  }, [getURL, piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice]);
 
   const fetchAlternateAddress = useCallback(async (): Promise<string | null> => {
     const abortController = new AbortController();
@@ -154,7 +154,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
       console.log('fetchAlternateAddress->error', e);
       return null;
     }
-  }, [allUrls, piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice?.selectedIp]);
+  }, [allUrls, getURL, piAppServer.path, piAppServer.port, piAppServer.secureConnection, selectedDevice?.selectedIp]);
 
   useEffect(() => {
     loadURL();
@@ -297,14 +297,17 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     }
   }, [appServerAltURL, appServerURL, error]);
 
-  const onPressConfirmIpAddress = (item: string) => {
-    switchDeviceIp(item);
-    setSubTitleDialogVisible(false);
-  };
+  const onPressConfirmIpAddress = useCallback(
+    (item: string) => {
+      switchDeviceIp(item);
+      setSubTitleDialogVisible(false);
+    },
+    [switchDeviceIp],
+  );
 
-  const onCloseSubTitleDialog = () => {
+  const onCloseSubTitleDialog = useCallback(() => {
     setSubTitleDialogVisible(false);
-  };
+  }, []);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {

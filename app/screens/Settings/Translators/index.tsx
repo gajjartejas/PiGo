@@ -35,7 +35,7 @@ const Translators = ({ navigation }: Props) => {
   let [finalLicense, setFinalLicense] = useState<ITranslator[]>([]);
 
   useEffect(() => {
-    let languages = [
+    const languages = [
       { id: 0, icon: Config.Images.icons.flag_ar, translators: [], language: 'العربية' },
       { id: 1, icon: Config.Images.icons.flag_cs, translators: [], language: 'čeština' },
       { id: 2, icon: Config.Images.icons.flag_da, translators: [], language: 'dansk' },

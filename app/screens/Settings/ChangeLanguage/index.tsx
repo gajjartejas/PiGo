@@ -70,11 +70,14 @@ const ChangeLanguage = ({ navigation }: Props) => {
     );
   };
 
-  const onPressItem = (item: IChangeLanguage, _index: number) => {
-    setSelectedLanguageCode(item.code);
-    i18n.changeLanguage(item.code).then(() => {});
-    navigation.pop();
-  };
+  const onPressItem = useCallback(
+    (item: IChangeLanguage, _index: number) => {
+      setSelectedLanguageCode(item.code);
+      i18n.changeLanguage(item.code).then(() => {});
+      navigation.pop();
+    },
+    [navigation, setSelectedLanguageCode],
+  );
 
   return (
     <Components.AppBaseView
