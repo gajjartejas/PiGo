@@ -49,6 +49,8 @@
     "commonHeader": "Common Settings",
     "appearanceTitle": "Appearance",
     "appearanceSubTitle": "Customization of appearance",
+    "languageTitle": "App Language",
+    "languageSubTitle": "{{language}}",
     "scanTitle": "Scan Settings",
     "scanSubTitle": "Auto scan(nearby scan) settings",
     "piAppServersTitle": "Default Pi App Servers",
@@ -93,6 +95,9 @@
     "title": "Translators",
     "emptyList": "Be the pioneer - no contributors found yet!",
     "emptyListAction": "Click here to contribute"
+  },
+  "ChangeLanguageScreen": {
+    "title": "Change Language"
   },
   "aboutScreen": {
     "title": "About PiGo",
