@@ -36,6 +36,7 @@ const Images = {
     flag_uk: require('app/assets/images/flags/uk.png'),
     flag_vi: require('app/assets/images/flags/vi.png'),
     flag_zh_cn: require('app/assets/images/flags/zh_cn.png'),
+    flag_fr: require('app/assets/images/flags/fr.png'),
   },
 };
 

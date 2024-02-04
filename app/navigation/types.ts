@@ -45,6 +45,7 @@ export interface AddPiAppServerParamParams {
 }
 export interface ScanDevicesParams {}
 export interface WebViewSettingParams {}
+export interface ChangeLanguageParams {}
 
 export type LoggedInTabNavigatorParams = {
   Loading: LoadingParams;
@@ -65,6 +66,7 @@ export type LoggedInTabNavigatorParams = {
   PiAppWebView: PiAppWebViewParams;
   ViewPiAppServer: ViewPiAppServerParams;
   WebViewSetting: WebViewSettingParams;
+  ChangeLanguage: ChangeLanguageParams;
 };
 
 export type HomeTabsNavigatorParams = {
