@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 
 //ThirdParty
@@ -38,44 +38,46 @@ const MoreApps = ({ navigation }: Props) => {
   const largeScreenMode = useLargeScreenMode();
 
   //States
-  const [apps] = useState<IMoreAppItem[]>([
-    {
-      id: 0,
-      icon: Config.Images.icons.app_icon,
-      title: t('moreApps.apps1Title'),
-      description: t('moreApps.apps1Desc'),
-      showLinks: true,
-      github: Config.Constants.REPO_URL,
-      playStore: Config.Constants.PLAY_STORE_URL,
-    },
-    {
-      id: 1,
-      icon: Config.Images.icons.ic_more_app_ohmc,
-      title: t('moreApps.apps2Title'),
-      description: t('moreApps.apps2Desc'),
-      showLinks: true,
-      github: Config.Constants.MORE_APPS_MIUI_ADS_HELPER_GITHUB,
-      playStore: Config.Constants.MORE_APPS_MIUI_ADS_HELPER_PLAY_STORE,
-    },
-    {
-      id: 2,
-      icon: Config.Images.icons.ic_more_app_miuiadshelper,
-      title: t('moreApps.apps3Title'),
-      description: t('moreApps.apps3Desc'),
-      showLinks: true,
-      github: Config.Constants.MORE_APPS_KANO_GITHUB,
-      playStore: Config.Constants.MORE_APPS_KANO_PLAY_STORE,
-    },
-    {
-      id: 3,
-      icon: Config.Images.icons.ic_more_app_kano,
-      title: t('moreApps.apps4Title'),
-      description: t('moreApps.apps4Desc'),
-      showLinks: true,
-      github: Config.Constants.MORE_APPS_KANO_GITHUB,
-      playStore: Config.Constants.MORE_APPS_KANO_PLAY_STORE,
-    },
-  ]);
+  const apps: IMoreAppItem[] = useMemo(() => {
+    return [
+      {
+        id: 0,
+        icon: Config.Images.icons.app_icon,
+        title: t('moreApps.apps1Title'),
+        description: t('moreApps.apps1Desc'),
+        showLinks: true,
+        github: Config.Constants.REPO_URL,
+        playStore: Config.Constants.PLAY_STORE_URL,
+      },
+      {
+        id: 1,
+        icon: Config.Images.icons.ic_more_app_ohmc,
+        title: t('moreApps.apps2Title'),
+        description: t('moreApps.apps2Desc'),
+        showLinks: true,
+        github: Config.Constants.MORE_APPS_MIUI_ADS_HELPER_GITHUB,
+        playStore: Config.Constants.MORE_APPS_MIUI_ADS_HELPER_PLAY_STORE,
+      },
+      {
+        id: 2,
+        icon: Config.Images.icons.ic_more_app_miuiadshelper,
+        title: t('moreApps.apps3Title'),
+        description: t('moreApps.apps3Desc'),
+        showLinks: true,
+        github: Config.Constants.MORE_APPS_KANO_GITHUB,
+        playStore: Config.Constants.MORE_APPS_KANO_PLAY_STORE,
+      },
+      {
+        id: 3,
+        icon: Config.Images.icons.ic_more_app_kano,
+        title: t('moreApps.apps4Title'),
+        description: t('moreApps.apps4Desc'),
+        showLinks: true,
+        github: Config.Constants.MORE_APPS_KANO_GITHUB,
+        playStore: Config.Constants.MORE_APPS_KANO_PLAY_STORE,
+      },
+    ];
+  }, [t]);
 
   const onGoBack = useCallback(() => {
     navigation.pop();

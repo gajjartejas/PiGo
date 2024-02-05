@@ -112,32 +112,32 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
   }, [navigation]);
 
   //Category
-  const onPressCategoryMenu = () => {
+  const onPressCategoryMenu = useCallback(() => {
     setCategoryDialogVisible(true);
-  };
+  }, []);
 
-  const onPressConfirmCategory = (v: string) => {
+  const onPressConfirmCategory = useCallback((v: string) => {
     setCategory(v);
     setCategoryDialogVisible(false);
-  };
+  }, []);
 
-  const hideCategoryDialog = () => {
+  const hideCategoryDialog = useCallback(() => {
     setCategoryDialogVisible(false);
-  };
+  }, []);
 
   //Connection Type
-  const onPressConnectionTypeMenu = () => {
+  const onPressConnectionTypeMenu = useCallback(() => {
     setConnectionTypeDialogVisible(true);
-  };
+  }, []);
 
-  const onPressConfirmConnectionType = (v: string) => {
+  const onPressConfirmConnectionType = useCallback((v: string) => {
     setSecureConnection(v === 'HTTPS');
     setConnectionTypeDialogVisible(false);
-  };
+  }, []);
 
-  const hideConnectionTypeDialog = () => {
+  const hideConnectionTypeDialog = useCallback(() => {
     setConnectionTypeDialogVisible(false);
-  };
+  }, []);
 
   const validName = useCallback(
     (field: string): string | null => {

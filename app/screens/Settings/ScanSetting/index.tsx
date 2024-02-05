@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, TextInput } from 'react-native';
 
 //ThirdParty
@@ -42,58 +42,60 @@ const ScanSetting = ({ navigation }: Props) => {
   const { colors } = useTheme();
 
   //States
-  const apps: ISettingSection[] = [
-    {
-      id: 0,
-      title: t('scanSetting.section1.header'),
-      items: [
-        {
-          id: 0,
-          iconName: 'network',
-          iconType: 'material-community',
-          title: t('scanSetting.section1.row1.title'),
-          description: t('scanSetting.section1.row1.subTitle', { ports: ports.join(', ') }),
-          route: '',
-        },
-      ],
-    },
-    {
-      id: 1,
-      title: t('scanSetting.section3.header'),
-      items: [
-        {
-          id: 0,
-          iconName: 'timer-sand-full',
-          iconType: 'material-community',
-          title: t('scanSetting.section3.row1.title'),
-          description: t('scanSetting.section3.row1.subTitle', { scanTimeoutInMs }),
-          route: '',
-        },
-        {
-          id: 1,
-          iconName: 'speedometer',
-          iconType: 'material-community',
-          title: t('scanSetting.section3.row2.title'),
-          description: t('scanSetting.section3.row2.subTitle', { scanThreads }),
-          route: '',
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: t('scanSetting.section4.header'),
-      items: [
-        {
-          id: 0,
-          iconName: 'backup-restore',
-          iconType: 'material-community',
-          title: t('scanSetting.section4.row1.title'),
-          description: t('scanSetting.section4.row1.subTitle'),
-          route: 'SelectAppearance',
-        },
-      ],
-    },
-  ];
+  const apps: ISettingSection[] = useMemo(() => {
+    return [
+      {
+        id: 0,
+        title: t('scanSetting.section1.header'),
+        items: [
+          {
+            id: 0,
+            iconName: 'network',
+            iconType: 'material-community',
+            title: t('scanSetting.section1.row1.title'),
+            description: t('scanSetting.section1.row1.subTitle', { ports: ports.join(', ') }),
+            route: '',
+          },
+        ],
+      },
+      {
+        id: 1,
+        title: t('scanSetting.section3.header'),
+        items: [
+          {
+            id: 0,
+            iconName: 'timer-sand-full',
+            iconType: 'material-community',
+            title: t('scanSetting.section3.row1.title'),
+            description: t('scanSetting.section3.row1.subTitle', { scanTimeoutInMs }),
+            route: '',
+          },
+          {
+            id: 1,
+            iconName: 'speedometer',
+            iconType: 'material-community',
+            title: t('scanSetting.section3.row2.title'),
+            description: t('scanSetting.section3.row2.subTitle', { scanThreads }),
+            route: '',
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: t('scanSetting.section4.header'),
+        items: [
+          {
+            id: 0,
+            iconName: 'backup-restore',
+            iconType: 'material-community',
+            title: t('scanSetting.section4.row1.title'),
+            description: t('scanSetting.section4.row1.subTitle'),
+            route: 'SelectAppearance',
+          },
+        ],
+      },
+    ];
+  }, [ports, scanThreads, scanTimeoutInMs, t]);
 
   const [modalVisibleUrlPorts, setModalVisiblePorts] = useState(false);
   const [modalVisibleScanTimeout, setModalVisibleScanTimeout] = useState(false);
@@ -107,9 +109,9 @@ const ScanSetting = ({ navigation }: Props) => {
     setModalPorts(ports.join(', '));
   }, [ports]);
 
-  const onGoBack = () => {
+  const onGoBack = useCallback(() => {
     navigation.pop();
-  };
+  }, [navigation]);
 
   const resetSettings = useCallback(() => {
     reset();

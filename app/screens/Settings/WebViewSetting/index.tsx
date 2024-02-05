@@ -413,10 +413,10 @@ const WebViewSetting = ({ navigation }: Props) => {
     ],
   );
 
-  const onClearAllData = () => {
+  const onClearAllData = useCallback(() => {
     CookieManager.clearAll();
     Platform.select({ android: CookieManager.removeSessionCookies() });
-  };
+  }, []);
 
   return (
     <Components.AppBaseView

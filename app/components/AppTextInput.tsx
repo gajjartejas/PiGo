@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useState } from 'react';
+import React, { forwardRef, memo, useCallback, useState } from 'react';
 import {
   Text,
   TextInputProps,
@@ -26,21 +26,27 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isBlured, setIsBlured] = useState(false);
 
-  const handleOnBlur = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsBlured(true);
-    setIsFocused(false);
-    if (onBlur) {
-      onBlur(event);
-    }
-  };
+  const handleOnBlur = useCallback(
+    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      setIsBlured(true);
+      setIsFocused(false);
+      if (onBlur) {
+        onBlur(event);
+      }
+    },
+    [onBlur],
+  );
 
-  const handleOnFocus = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocused(true);
-    setIsBlured(false);
-    if (onFocus) {
-      onFocus(event);
-    }
-  };
+  const handleOnFocus = useCallback(
+    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      setIsFocused(true);
+      setIsBlured(false);
+      if (onFocus) {
+        onFocus(event);
+      }
+    },
+    [onFocus],
+  );
 
   return (
     <View style={[styles.container, containerStyle]}>

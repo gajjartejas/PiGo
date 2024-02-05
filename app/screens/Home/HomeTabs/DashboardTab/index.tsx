@@ -201,19 +201,22 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     [closeMenu, navigation, selectedDevice],
   );
 
-  const onCloseSubTitleDialog = () => {
+  const onCloseSubTitleDialog = useCallback(() => {
     setSubTitleDialogVisible(false);
-  };
+  }, []);
 
-  const onShowSubTitleDialog = () => {
+  const onShowSubTitleDialog = useCallback(() => {
     setSubTitleDialogVisible(true);
-  };
+  }, []);
 
-  const onPressConfirmIpAddress = (item: string) => {
-    switchDeviceIp(item);
-    setSubTitleDialogVisible(false);
-    refRefreshTimeoutMs.current = 1000;
-  };
+  const onPressConfirmIpAddress = useCallback(
+    (item: string) => {
+      switchDeviceIp(item);
+      setSubTitleDialogVisible(false);
+      refRefreshTimeoutMs.current = 1000;
+    },
+    [switchDeviceIp],
+  );
 
   const bottomPadding = isConnected ? 16 : 40;
 
