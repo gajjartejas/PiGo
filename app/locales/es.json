@@ -1,4 +1,7 @@
 {
+  "ChangeLanguageScreen": {
+    "title": "Cambiar idioma"
+  },
   "about": {
     "app": "Acerca de PiGo",
     "github": "Contribuir en GitHub",
@@ -105,7 +108,10 @@
         "title": "¡No se agregaron aplicaciones!"
       }
     },
-    "fabAddMore": "Agregar"
+    "fabAddMore": "Agregar",
+    "selectIpAddress": {
+      "title": "Seleccione la dirección IP"
+    }
   },
   "devicesList": {
     "createNewDevice": "Agregar nuevo servidor Pi",
@@ -120,7 +126,10 @@
   },
   "general": {
     "appname": "PiGo",
+    "cancel": "CANCELAR",
     "close": "CERCA",
+    "noInternet": "¡Sin conexión a Internet!",
+    "ok": "DE ACUERDO",
     "save": "AHORRAR"
   },
   "librariesScreen": {
@@ -153,6 +162,7 @@
   },
   "piAppWebView": {
     "back": "Atrás",
+    "backPressHint": "Presione una vez más para regresar",
     "copyURL": "Copiar URL",
     "emptyData": {
       "button": "Actualizar",
@@ -162,10 +172,13 @@
     "forward": "Adelante",
     "info": "Información",
     "infoDialog": {
-      "description": "URL cargada: {{url}}",
+      "description": "URL cargada:\n\n{{url}}",
       "title": "Información"
     },
-    "refresh": "Actualizar"
+    "openWith": "Abrir con",
+    "refresh": "Actualizar",
+    "switchURL": "Cambiar IP/URL",
+    "switchedURL": "Cambiado a URL alternativa:\n\n{{URL}}."
   },
   "piAppsCategories": {
     "adsBlocker": "Bloqueadores de anuncios y rastreadores",
@@ -178,7 +191,7 @@
     "other": "Otro",
     "photoGallery": "Galería de fotos",
     "printingManagement": "Gestión de impresión",
-    "selfHostedServerOS": "SO de servidor autohospedado",
+    "selfHostedServerOS": "Sistema operativo de servidor autohospedado",
     "surveillanceAndSecurity": "Vigilancia y Seguridad",
     "systemMonitoring": "Monitoreo del sistema",
     "torrentClients": "Clientes de torrents"
@@ -215,7 +228,7 @@
       },
       "row2": {
         "dialogSubTitle": "Escanee subprocesos por tiempo de espera, por ejemplo: 150 subprocesos cada 1500 ms. Si no se encuentra el servidor Pi, intente disminuir los subprocesos.",
-        "dialogTitle": "Ingresar hilos de escaneo (1 - 999)",
+        "dialogTitle": "Ingresar hilos de escaneo (1-999)",
         "subTitle": "{{scanThreads}}",
         "title": "Escanear hilos"
       }
@@ -238,6 +251,8 @@
     "faqSubTitle": "Respuesta a preguntas frecuentes",
     "faqTitle": "Preguntas más frecuentes",
     "infoHeader": "Información",
+    "languageSubTitle": "{{language}}",
+    "languageTitle": "Idioma de la aplicación",
     "librariesSubTitle": "Lista de bibliotecas de código abierto utilizadas en este proyecto",
     "librariesTitle": "Bibliotecas",
     "piAppServersSubTitle": "Administre la lista de servidores de aplicaciones Pi predeterminados como Pi-hole, Plex, etc.",
@@ -252,7 +267,9 @@
     "translateSubTitle": "Traduce esta aplicación en tu idioma",
     "translateTitle": "Traducir esta aplicación",
     "translatorsSubTitle": "Personas que ayudaron a localizar esta aplicación",
-    "translatorsTitle": "Traductores"
+    "translatorsTitle": "Traductores",
+    "webViewSettingsSubTitle": "Administrar la configuración de la vista web",
+    "webViewSettingsTitle": "Configuración de vista web"
   },
   "translatorsScreen": {
     "emptyList": "Sea el pionero: ¡aún no se han encontrado contribuyentes!",
@@ -267,5 +284,94 @@
     "inputPlaceholder4": "Categoría",
     "inputPlaceholder5": "Enlace de GitHub",
     "inputPlaceholder6": "Descripción"
+  },
+  "webViewSetting": {
+    "section1": {
+      "header": "Configuración general",
+      "row1": {
+        "subTitle": "Booleano que determina si el audio y el vídeo HTML5 requieren que el usuario los toque antes de comenzar a reproducirse. \nEl valor por defecto es verdadero. \n(API de Android versión mínima 17).",
+        "title": "La reproducción multimedia requiere la acción del usuario"
+      },
+      "row10": {
+        "subTitle": "Valor booleano que determina si la vista web rebota cuando llega al borde del contenido. \nEl valor por defecto es verdadero.",
+        "title": "Rebota"
+      },
+      "row11": {
+        "subTitle": "Controla el tipo de contenido a cargar. \nDisponible en iOS 13 y posteriores. \nEl valor predeterminado es recomendado, que carga contenido móvil en iPhone",
+        "title": "Modo de contenido"
+      },
+      "row12": {
+        "subTitle": "Establezca si la geolocalización está habilitada en WebView. \nEl valor predeterminado es falso. \nUsado solo en Android.",
+        "title": "Geolocalización habilitada"
+      },
+      "row13": {
+        "subTitle": "Booleano que establece si JavaScript que se ejecuta en el contexto de una URL de esquema de archivos debe poder acceder al contenido de otras URL de esquemas de archivos. \nEl valor predeterminado es falso.",
+        "title": "Permitir acceso a archivos desde File Ur Ls"
+      },
+      "row14": {
+        "subTitle": "Si es cierto, esto permitirá realizar gestos de deslizamiento horizontal. \nEl valor predeterminado es falso.",
+        "title": "Permite gestos de navegación hacia adelante y hacia atrás"
+      },
+      "row15": {
+        "subTitle": "Valor booleano que determina si un gesto de extracción para actualizar está disponible en WebView. \nEl valor predeterminado es falso. \nSi es verdadero, establece los rebotes automáticamente en verdadero.",
+        "title": "Tirar para actualizar habilitado"
+      },
+      "row16": {
+        "subTitle": "Configurar el tema oscuro",
+        "title": "Forzar oscuridad"
+      },
+      "row17": {
+        "subTitle": "Si Webview puede reproducir medios protegidos por DRM o no. \nEl valor predeterminado es falso.",
+        "title": "Permite medios protegidos"
+      },
+      "row2": {
+        "subTitle": "Booleano que controla si el contenido web se escala para ajustarse a la vista y permite al usuario cambiar la escala. \nEl valor por defecto es verdadero.",
+        "title": "Escala la página para ajustarla"
+      },
+      "row3": {
+        "subTitle": "Valor booleano para controlar si el almacenamiento DOM está habilitado. \nUsado solo en Android.",
+        "title": "Almacenamiento Dom habilitado"
+      },
+      "row4": {
+        "subTitle": "Valor booleano para habilitar JavaScript en WebView. \nEl valor por defecto es verdadero.",
+        "title": "Secuencia de comandos Java habilitada"
+      },
+      "row5": {
+        "subTitle": "Valor booleano para habilitar cookies de terceros en WebView. \nSe utilizan en Android Lollipop y versiones posteriores solo porque las cookies de terceros están habilitadas de forma predeterminada en Android Kitkat y versiones inferiores y en iOS. \nEl valor por defecto es verdadero.",
+        "title": "Cookies de terceros habilitadas"
+      },
+      "row6": {
+        "dialogSubTitle": "La cadena User-Agent (UA) está contenida en los encabezados HTTP y está destinada a identificar los dispositivos que solicitan contenido en línea.",
+        "dialogTitle": "Ingrese la cadena del agente de usuario",
+        "subTitle": "Establece el agente de usuario para WebView.",
+        "title": "Agente de usuario"
+      },
+      "row7": {
+        "subTitle": "Booleano que determina si se permite reproducir vídeos en pantalla completa. \nEl valor predeterminado es falso.",
+        "title": "Permite vídeo en pantalla completa"
+      },
+      "row8": {
+        "subTitle": "Booleano que determina si los vídeos HTML5 se reproducen en línea o utilizan el controlador nativo de pantalla completa. \nEl valor predeterminado es falso.",
+        "title": "Permite la reproducción de medios en línea"
+      },
+      "row9": {
+        "subTitle": "Un valor booleano que indica si se permite AirPlay. \nEl valor predeterminado es falso.",
+        "title": "Permite Air Play para reproducción multimedia"
+      }
+    },
+    "section2": {
+      "header": "Otro",
+      "row1": {
+        "dialogSubTitle": "¿Está seguro de que desea borrar los datos de la vista web?",
+        "dialogTitle": "¿Borrar datos de vista web?",
+        "subTitle": "Libere espacio borrando todos los datos de WebView",
+        "title": "Borrar datos de WebView"
+      },
+      "row2": {
+        "subTitle": "Restaure todas las configuraciones predeterminadas de vista web.",
+        "title": "Restaurar valor predeterminado"
+      }
+    },
+    "title": "Configuración de vista web"
   }
 }
