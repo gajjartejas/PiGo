@@ -7,6 +7,8 @@ import AppearancePreferences = Appearance.AppearancePreferences;
 import useThemeConfigStore, { IAppearanceType } from 'app/store/themeConfig';
 import useAppWebViewConfigStore from 'app/store/webViewConfig';
 import DeviceInfo from 'react-native-device-info';
+import i18n from 'app/locales';
+import useAppLangConfigStore from 'app/store/appLangConfig';
 
 //Interface
 export type Props = {
@@ -18,6 +20,11 @@ const AppManager = ({ children }: Props) => {
   const appearance = useThemeConfigStore(store => store.appearance);
   const userAgent = useAppWebViewConfigStore(store => store.userAgent);
   const setUserAgent = useAppWebViewConfigStore(store => store.setUserAgent);
+  const selectedLanguageCode = useAppLangConfigStore(store => store.selectedLanguageCode);
+
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguageCode).then(() => {});
+  }, [selectedLanguageCode]);
 
   useEffect(() => {
     if (userAgent === undefined) {

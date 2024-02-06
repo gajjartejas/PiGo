@@ -3,7 +3,9 @@
 
 # Introduction
 
-Welcome to PiGo – the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go. PiGo: Your free and open gateway to seamless server navigation.
+Welcome to PiGo – the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go. 
+
+PiGo: Your free and open gateway to seamless server navigation.
 
 ## Installation
 
@@ -15,19 +17,36 @@ Get the app from Google Play:
 
 ### Screenshots
 
-|                                                |                                                    |                                          |                                          |                                           |
-|:----------------------------------------------:|:--------------------------------------------------:|:----------------------------------------:|:----------------------------------------:|:-----------------------------------------:|
-| ![Accounts List](docs/images/screenshot-1.png) | ![Transactions List](docs/images/screenshot-2.png) | ![Reports](docs/images/screenshot-3.png) | ![Reports](docs/images/screenshot-4.png) | ![Reports](docs/images/screenshot-5.png)  |
-| ![Accounts List](docs/images/screenshot-6.png) | ![Transactions List](docs/images/screenshot-7.png) | ![Reports](docs/images/screenshot-8.png) | ![Reports](docs/images/screenshot-9.png) | ![Reports](docs/images/screenshot-10.png) |
+|                                                |                                                    |                                          |                                          |
+| :--------------------------------------------: | :------------------------------------------------: | :--------------------------------------: | :--------------------------------------: |
+| ![Accounts List](docs/images/screenshot-1.png) | ![Transactions List](docs/images/screenshot-2.png) | ![Reports](docs/images/screenshot-3.png) | ![Reports](docs/images/screenshot-4.png) |
+| ![Accounts List](docs/images/screenshot-5.png) | ![Transactions List](docs/images/screenshot-6.png) | ![Reports](docs/images/screenshot-7.png) | ![Reports](docs/images/screenshot-8.png) |
 
 The application supports Android 5.0 (API 21) and above.
 
 ## Features include:
 
-- Auto scan live Raspberry PI web server.
-- Add manually/Scan automatically Raspberry remote web server using IP address and port.
-- Dark theme support.
-- Multi-language support.
+Home Page Features:
+  - List of Pi Servers: Display all Pi servers on the home page.
+
+Pi Server Management:
+  - Add, Update, Delete: Allow users to manage Pi servers by adding, updating, and deleting them as needed.
+  - Auto Scan: Provide the option to automatically discover Pi app servers locally.
+  - Add Pi Server: Enable users to add multiple Pi servers with support for both IPv4 and IPv6 addresses/URLs.
+
+Pi Apps Management:
+  - Predefined Pi Apps: Allow users to add predefined Pi apps to their Pi servers.
+  - View Pi Apps: Access Pi apps in the webview with features like refresh, forward, backward, and URL switching support.
+  - Default Pi App Server: Manage the default Pi app server with options to add, update, and delete servers.
+
+Additional Settings:
+  - Auto Scan Settings: Configure settings for auto-scanning Pi app servers.
+  - Webview Settings: Adjust settings such as user-agent, JavaScript enable/disable, and clear website data.
+
+User Experience:
+  - Dark Theme Support: Offer a dark theme for improved visibility and reduced eye strain.
+  - Multi-Language Support: Provide language options for users to navigate the app in their preferred language.
+  - Tablet/iPad and Phone support.
 
 ## Building
 
@@ -54,7 +73,10 @@ If you want to build from source, just do
 
 ## Todo
 
-1. List all remote web servers within the network. - Done
+1. Auto refresh webview.
+2. Print support and save as PDF support.
+3. Push notification support.
+4. Background notification support.
 
 ## Contributing
 
