@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, AppState } from 'react-native';
 
 //ThirdParty
 import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
@@ -25,17 +25,18 @@ import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import Icon from 'react-native-easy-icon';
 
-const TIMOUT_REQ_MS = __DEV__ ? 2000 : 10000;
-
 //Params
 type DashboardTabNavigationProp = CompositeNavigationProp<
   MaterialBottomTabNavigationProp<HomeTabsNavigatorParams, 'DashboardTab'>,
   NativeStackNavigationProp<LoggedInTabNavigatorParams>
 >;
+
+const REFRESH_TIMEOUT = 10000;
 const DashboardTab = ({}: DashboardTabNavigationProp) => {
   //Refs
   const refDeviceInfoRequestInProgress = useRef(false);
   const refRefreshTimeoutMs = useRef(1000);
+  const refAbortController = useRef<AbortController>(new AbortController());
 
   //Actions
 
@@ -63,6 +64,25 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
   const [isConnected, setIsConnected] = useState(true);
   const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
+
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+        console.log('App has come to the foreground!');
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   useEventEmitter<IPiAppServer>('on_select_piAppServer', eventData => {
     addPiAppServerToSelectedDevice({ ...eventData, id: uuid.v4().toString() });
@@ -111,11 +131,30 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
       return;
     }
 
+    if (!isConnected) {
+      refRefreshTimeoutMs.current = 2000;
+    }
+
+    if (!appStateVisible) {
+      refRefreshTimeoutMs.current = 1000;
+      return;
+    }
+
+    console.log('useEffect -> refreshing....');
+
+    const timeoutId = setTimeout(() => {
+      console.log('useEffect -> aborted.........');
+      refAbortController.current.abort();
+      refAbortController.current = new AbortController();
+    }, 5000);
+
     let to = setInterval(async () => {
+      console.log('setInterval');
+      console.log('refDeviceInfoRequestInProgress', refDeviceInfoRequestInProgress.current);
       if (refDeviceInfoRequestInProgress.current) {
         return;
       }
-      refRefreshTimeoutMs.current = __DEV__ ? 5000 : 30000;
+      refRefreshTimeoutMs.current = REFRESH_TIMEOUT;
       refDeviceInfoRequestInProgress.current = true;
       try {
         const result: any = await Promise.allSettled(
@@ -123,20 +162,19 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
             const serverURLs = [selectedDevice.selectedIp].map(m => {
               return (v.secureConnection ? 'https://' : 'http://') + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
             });
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), TIMOUT_REQ_MS);
+            console.log('getLiveURL serverURLs', serverURLs);
             try {
-              const response = await getLiveURL(serverURLs, controller, TIMOUT_REQ_MS);
-              console.log('response', response);
-              clearTimeout(timeoutId);
+              const response = await getLiveURL(serverURLs, refAbortController.current);
+              console.log('response:', response);
               return { status: 'fulfilled', reachable: !!response };
             } catch (error) {
-              clearTimeout(timeoutId);
+              console.log(`rejected: ${serverURLs}`, error);
               return { status: 'rejected', reason: error };
             }
           }),
         );
 
+        console.log('result', JSON.stringify(result));
         for (let i = 0; i < selectedDevice.piAppServers.length; i++) {
           selectedDevice.piAppServers[i] = {
             ...selectedDevice.piAppServers[i],
@@ -153,8 +191,9 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
     return () => {
       refDeviceInfoRequestInProgress.current = false;
       clearInterval(to);
+      clearTimeout(timeoutId);
     };
-  }, [isConnected, isFocused, selectDevice, selectedDevice, urls]);
+  }, [isFocused, selectDevice, selectedDevice, urls, isConnected, appStateVisible]);
 
   const onPressSelectPiAppServer = useCallback(() => {
     navigation.navigate('PiAppServers', { mode: 'select' });
