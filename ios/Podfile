@@ -31,8 +31,6 @@ target 'PiGo' do
   use_frameworks! :linkage => :static
   $RNFirebaseAsStaticFramework = true
 
-#   pod 'NMSSH', :git => 'https://github.com/speam/NMSSH.git'
-
   # Flags change depending on the env values.
   flags = get_default_flags()
 
