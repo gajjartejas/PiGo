@@ -124,6 +124,7 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - NMSSH (2.2.9)
   - PromisesObjC (2.2.0)
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
@@ -584,6 +585,9 @@ PODS:
   - RNScreens (3.27.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
+  - RNSSHClient (1.5.9):
+    - NMSSH (= 2.2.9)
+    - React
   - RNVectorIcons (10.0.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -651,6 +655,7 @@ DEPENDENCIES:
   - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSSHClient (from `../node_modules/@dylankenneally/react-native-ssh-sftp`)"
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TcpSockets (from `../node_modules/react-native-tcp`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -674,6 +679,7 @@ SPEC REPOS:
     - MMKV
     - MMKVCore
     - nanopb
+    - NMSSH
     - PromisesObjC
     - PromisesSwift
     - SocketRocket
@@ -790,6 +796,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localize"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSSHClient:
+    :path: "../node_modules/@dylankenneally/react-native-ssh-sftp"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   TcpSockets:
@@ -821,6 +829,7 @@ SPEC CHECKSUMS:
   MMKV: 5a07930c70c70b86cd87761a42c8f3836fb681d7
   MMKVCore: e50135dbd33235b6ab390635991bab437ab873c0
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  NMSSH: eb4a63d52631d3ffe348181793bb19434b01c32a
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -872,11 +881,12 @@ SPEC CHECKSUMS:
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNLocalize: 5944c97d2fe8150913a51ddd5eab4e23a82bd80d
   RNScreens: 3e56c56bd35436215a56f48a753e30e8ce018a09
+  RNSSHClient: 3664fad4694ecf950ac6bce92529782f3fb16dd2
   RNVectorIcons: 6731bd488db95f4197433b30d81d03dc228b367e
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TcpSockets: a8eb6b5867fe643e6cfed5db2e4de62f4d1e8fd0
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
 
-PODFILE CHECKSUM: 98eddc4e87a2c6d0d7fdcfa265f1848c87dfb902
+PODFILE CHECKSUM: a81e77fee8269a6277b33e6629a34b97d0b2a71c
 
 COCOAPODS: 1.12.0

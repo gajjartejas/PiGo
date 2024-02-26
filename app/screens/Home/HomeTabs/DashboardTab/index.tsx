@@ -24,6 +24,7 @@ import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import Icon from 'react-native-easy-icon';
+import SSHClient from '@dylankenneally/react-native-ssh-sftp';
 
 //Params
 type DashboardTabNavigationProp = CompositeNavigationProp<
@@ -196,8 +197,44 @@ const DashboardTab = ({}: DashboardTabNavigationProp) => {
   }, [isFocused, selectDevice, selectedDevice, urls, isConnected, appStateVisible]);
 
   const onPressSelectPiAppServer = useCallback(() => {
-    navigation.navigate('PiAppServers', { mode: 'select' });
+    // navigation.navigate('PiAppServers', { mode: 'select' });
+    sshTest();
   }, [navigation]);
+
+  async function sshTest() {
+    let host = '192.168.1.112'; // example: '123.321.123.321';
+    let user = 'tejas'; // example: 'root';
+    let password = '1234'; // example: 'password123!';
+
+    let _log = 'about to connect to ' + host + ' as ' + user;
+    let log = (s: any) => {
+      console.log(s);
+      _log += '\n' + s;
+    };
+
+    try {
+      // @ts-ignore - the last parameter is optional
+      let client = await SSHClient.connectWithPassword(host, 22, user, password);
+      log('connected');
+      log(JSON.stringify(client, null, 2));
+
+      let command = 'uptime';
+      log(`about to execute '${command}'`);
+
+      let output = await client.execute(command);
+      log('done, result is:');
+      log(output);
+
+      log('about to disconnect');
+      client.disconnect();
+      log('disconnected');
+    } catch (err) {
+      log('error');
+      log(err);
+    } finally {
+      return _log;
+    }
+  }
 
   const renderNoDataButtons = useCallback(() => {
     return (
