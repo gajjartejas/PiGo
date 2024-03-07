@@ -9,9 +9,7 @@ export interface LicenseTypes {}
 export interface AboutParams {}
 export interface SelectAppearanceParams {}
 export interface TranslatorsParams {}
-export interface DashboardTab {
-  userId: string;
-}
+export interface PiAppServers {}
 export interface PurchaseScreen {
   fromTheme: boolean;
 }
@@ -19,18 +17,18 @@ export interface PurchaseScreen {
 export interface HomeTabsParams {}
 
 export interface MoreTabParams {}
-export interface DashboardTabParams {}
+export interface PiAppServersParams {}
 export interface ConnectToDeviceListsTabParams {}
 export interface ScanSettingParams {}
 export interface AddDeviceParams {
   device?: IDevice;
   mode?: 'create' | 'edit' | 'connect';
 }
-export interface PiAppServersParams {
+export interface ManagePiAppServersParams {
   mode?: 'view' | 'select';
 }
-export interface DevicesParams {
-  mode?: 'view' | 'select';
+export interface ManageDevicesParams {
+  mode?: 'view' | 'select' | 'connect-pi-server';
 }
 export interface PiAppWebViewParams {
   piAppServer: IPiAppServer;
@@ -59,18 +57,20 @@ export type LoggedInTabNavigatorParams = {
   Purchase: PurchaseScreen;
   ScanSetting: ScanSettingParams;
   AddDevice: AddDeviceParams;
-  PiAppServers: PiAppServersParams;
-  Devices: DevicesParams;
+  ManagePiAppServers: ManagePiAppServersParams;
+  ManageDevices: ManageDevicesParams;
   AddPiAppServer: AddPiAppServerParamParams;
   ScanDevices: ScanDevicesParams;
   PiAppWebView: PiAppWebViewParams;
   ViewPiAppServer: ViewPiAppServerParams;
   WebViewSetting: WebViewSettingParams;
   ChangeLanguage: ChangeLanguageParams;
+  PiAppServers: PiAppServersParams;
 };
 
 export type HomeTabsNavigatorParams = {
-  DashboardTab: DashboardTabParams;
+  ManageDevices: ManageDevicesParams;
+  PiAppServers: PiAppServersParams;
   ConnectToDeviceList: ConnectToDeviceListsTabParams;
   MoreTab: MoreTabParams;
 };

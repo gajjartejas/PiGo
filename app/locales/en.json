@@ -53,7 +53,7 @@
     "languageSubTitle": "{{language}}",
     "scanTitle": "Scan Settings",
     "scanSubTitle": "Auto scan(nearby scan) settings",
-    "piAppServersTitle": "Default Pi App Servers",
+    "piAppServersTitle": "Pi App Servers",
     "piAppServersSubTitle": "Manage list of default Pi app servers like Pi-hole, Plex, etc",
     "recentConnectionsTitle": "Pi Servers",
     "recentConnectionsSubTitle": "Manage added Pi servers",

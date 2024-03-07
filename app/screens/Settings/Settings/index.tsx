@@ -69,7 +69,7 @@ const Settings = ({ navigation }: Props) => {
             iconType: 'font-awesome5',
             title: t('settings.piAppServersTitle'),
             description: t('settings.piAppServersSubTitle'),
-            route: 'PiAppServers',
+            route: 'ManagePiAppServers',
           },
           {
             id: 4,
@@ -77,7 +77,7 @@ const Settings = ({ navigation }: Props) => {
             iconType: 'material-community',
             title: t('settings.recentConnectionsTitle'),
             description: t('settings.recentConnectionsSubTitle'),
-            route: 'Devices',
+            route: 'ManageDevices',
           },
           {
             id: 5,

@@ -7,27 +7,25 @@ import Icon from 'react-native-easy-icon';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 //Screens
-import MoreTab from 'app/screens/Home/HomeTabs/MoreTab';
+import MoreTab from 'app/screens/Home/MoreTab';
 import MoreApps from 'app/screens/Settings/MoreApps';
 import Settings from 'app/screens/Settings/Settings';
 import About from 'app/screens/Settings/About';
 import SelectAppearance from 'app/screens/Settings/SelectAppearance';
 import License from 'app/screens/Settings/License';
 import Translators from 'app/screens/Settings/Translators';
-import ConnectToDeviceList from 'app/screens/Home/ConnectToDeviceList';
 
 //App Modules
 import { HomeTabsNavigatorParams, LoggedInTabNavigatorParams } from 'app/navigation/types';
-import Loading from 'app/screens/Auth/Loading';
+import Loading from 'app/screens/Loading';
 import { AppTheme } from 'app/models/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScanSetting from 'app/screens/Settings/ScanSetting';
 import AddDevice from 'app/screens/Home/AddDevice';
-import PiAppServers from 'app/screens/Home/PiAppServers';
+import ManagePiAppServers from 'app/screens/Home/ManagePiAppServers';
 import AddPiAppServer from 'app/screens/Home/AddPiAppServer';
-import Devices from 'app/screens/Home/Devices';
-import useAppConfigStore from 'app/store/appConfig';
-import DashboardTab from 'app/screens/Home/HomeTabs/DashboardTab';
+import ManageDevices from 'app/screens/Home/ManageDevices';
+import PiAppServers from 'app/screens/Home/PiAppServers';
 import ScanDevices from 'app/screens/Home/ScanDevices';
 import PiAppWebView from 'app/screens/Home/PiAppWebView';
 import ViewPiAppServer from 'app/screens/Home/ViewPiAppServer';
@@ -35,16 +33,6 @@ import WebViewSetting from 'app/screens/Settings/WebViewSetting';
 import ChangeLanguage from 'app/screens/Settings/ChangeLanguage';
 
 const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
-
-function HomeOrList(props: any) {
-  const selectedDevice = useAppConfigStore(store => store.selectedDevice);
-  return (
-    <>
-      {!!selectedDevice && <DashboardTab {...props} />}
-      {!selectedDevice && <ConnectToDeviceList {...props} />}
-    </>
-  );
-}
 
 function HomeTabs() {
   //Constants
@@ -58,8 +46,9 @@ function HomeTabs() {
       activeColor={colors.secondaryContainer}
       barStyle={{ backgroundColor: colors.background, height: insets.bottom + 60 }}>
       <Tab.Screen
-        name="DashboardTab"
-        component={HomeOrList}
+        name="ManageDevices"
+        component={ManageDevices}
+        initialParams={{ mode: 'connect-pi-server' }}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
@@ -106,14 +95,15 @@ const LoggedInTabNavigator = () => {
       <LoggedInStack.Screen name="Translators" component={Translators} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanSetting" component={ScanSetting} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="AddDevice" component={AddDevice} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="PiAppServers" component={PiAppServers} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="ManagePiAppServers" component={ManagePiAppServers} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="AddPiAppServer" component={AddPiAppServer} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="Devices" component={Devices} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="ManageDevices" component={ManageDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="PiAppWebView" component={PiAppWebView} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ViewPiAppServer" component={ViewPiAppServer} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="WebViewSetting" component={WebViewSetting} options={{ headerShown: false }} />
       <LoggedInStack.Screen name="ChangeLanguage" component={ChangeLanguage} options={{ headerShown: false }} />
+      <LoggedInStack.Screen name="PiAppServers" component={PiAppServers} options={{ headerShown: false }} />
     </LoggedInStack.Navigator>
   );
 };

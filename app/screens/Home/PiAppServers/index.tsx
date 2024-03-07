@@ -1,178 +1,298 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { View, TextInput, SectionList } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, ScrollView, Text, TouchableOpacity, AppState } from 'react-native';
 
 //ThirdParty
-import { Button, FAB, IconButton, List } from 'react-native-paper';
+import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useIsFocused } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
+import NetInfo from '@react-native-community/netinfo';
 
 //App modules
+import Components from 'app/components';
 import styles from './styles';
 
 //Redux
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
-import AppHeader from 'app/components/AppHeader';
-import IPiAppServer from 'app/models/models/piAppServer';
 import useAppConfigStore from 'app/store/appConfig';
-import Components from 'app/components';
+import AppHeader from 'app/components/AppHeader';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
+import IPiAppServer from 'app/models/models/piAppServer';
+import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import PiAppServer from 'app/models/models/piAppServer';
-
-interface GroupedPiAppServers {
-  title: string;
-  data: PiAppServer[];
-}
-
-export function useSearch(array: GroupedPiAppServers[], searchTerm: string): GroupedPiAppServers[] {
-  if (!searchTerm || searchTerm.trim().length < 1) {
-    return array;
-  }
-  return array
-    .map(entry => {
-      let filteredData = entry.data.filter(
-        v =>
-          entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          v.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-      return {
-        title: entry.title,
-        data: filteredData,
-      };
-    })
-    .filter(v => v.data.length > 0);
-}
+import Icon from 'react-native-easy-icon';
+//import SSHClient from '@dylankenneally/react-native-ssh-sftp';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppServers'>;
 
-const PiAppServers = ({ navigation, route }: Props) => {
+const REFRESH_TIMEOUT = 10000;
+const PiAppServers = ({ navigation }: Props) => {
   //Refs
+  const refDeviceInfoRequestInProgress = useRef(false);
+  const refRefreshTimeoutMs = useRef(1000);
+  const refAbortController = useRef<AbortController>(new AbortController());
+
+  //Actions
 
   //Constants
   const { colors } = useTheme();
-  const piAppServers = useAppConfigStore(store => store.piAppServers);
-  const deletePiAppServer = useAppConfigStore(store => store.deletePiAppServer);
-  const insets = useSafeAreaInsets();
-  const mode = route.params && route.params.mode ? route.params.mode : 'create';
-  const onSelectPiAppServerEmitter = useEventEmitter<IPiAppServer>('on_select_piAppServer');
   const { t } = useTranslation();
+  const selectedDevice = useAppConfigStore(store => store.selectedDevice);
+  const switchDeviceIp = useAppConfigStore(store => store.switchDeviceIp);
+  const disconnect = useAppConfigStore(store => store.disconnect);
+  const addPiAppServerToSelectedDevice = useAppConfigStore(store => store.addPiAppServerToSelectedDevice);
+  const deletePiAppServerToSelectedDevice = useAppConfigStore(store => store.deletePiAppServerToSelectedDevice);
+  const selectDevice = useAppConfigStore(store => store.selectDevice);
+  const isFocused = useIsFocused();
   const largeScreenMode = useLargeScreenMode();
+  const urls: string[] = useMemo(() => {
+    return selectedDevice
+      ? [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3].filter(m => !!m).map(m => m!)
+      : [];
+  }, [selectedDevice]);
 
   //States
-  const [searchText, setSearchText] = useState('');
+  const [title, setTitle] = useState('');
+  const [subTitle, setSubTitle] = useState('');
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
-  const [visibleSectionIndex, setVisibleSectionIndex] = React.useState<number | null>(null);
+  const [isConnected, setIsConnected] = useState(true);
+  const [subTitleDialogVisible, setSubTitleDialogVisible] = useState(false);
 
-  const groupedPiAppServers: GroupedPiAppServers[] = useMemo(() => {
-    return piAppServers.reduce((accumulator: GroupedPiAppServers[], appServer: PiAppServer) => {
-      const category = appServer.category;
-      const existingCategory = accumulator.find(group => group.title === category);
-      if (existingCategory) {
-        existingCategory.data.push(appServer);
-      } else {
-        accumulator.push({
-          title: category,
-          data: [appServer],
-        });
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+        console.log('App has come to the foreground!');
       }
 
-      return accumulator;
-    }, []);
-  }, [piAppServers]);
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+    });
 
-  const filteredArray = useSearch(groupedPiAppServers, searchText);
-
-  const openMenu = useCallback((item: IPiAppServer, subIndex: number, index: number) => {
-    setVisibleSectionIndex(subIndex);
-    setVisibleIndex(index);
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
-  const closeMenu = useCallback(() => {
-    setVisibleIndex(null);
-    setVisibleSectionIndex(null);
-  }, []);
+  useEventEmitter<IPiAppServer>('on_select_piAppServer', eventData => {
+    addPiAppServerToSelectedDevice({ ...eventData, id: uuid.v4().toString() });
+  });
+
+  useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+    let to: any | null = null;
+    let remove = NetInfo.addEventListener(state => {
+      to && clearTimeout(to);
+      to = setTimeout(async () => {
+        console.log('NetInfoState', JSON.stringify(state.isConnected));
+        setIsConnected(state.isConnected || false);
+      }, 5000);
+    });
+    return () => {
+      to && clearTimeout(to);
+      remove();
+    };
+  }, [isFocused]);
+
+  useEffect(() => {
+    if (!selectedDevice) {
+      return;
+    }
+    setTitle(selectedDevice.name);
+    setSubTitle(selectedDevice.selectedIp);
+  }, [selectedDevice]);
 
   const onGoBack = useCallback(() => {
+    disconnect();
     navigation.pop();
-  }, [navigation]);
+  }, [disconnect, navigation]);
 
-  const onPressPiAppServer = useCallback(
-    (item: IPiAppServer, _sectionIndex: number, _index: number) => {
-      if (mode === 'select') {
-        onSelectPiAppServerEmitter(item);
-        navigation.goBack();
-      } else {
-        navigation.navigate('AddPiAppServer', { piAppServer: item });
+  const onPressSetting = useCallback(() => {
+    if (!selectedDevice) {
+      return;
+    }
+    navigation.navigate('AddDevice', { device: selectedDevice, mode: 'edit' });
+  }, [navigation, selectedDevice]);
+
+  useEffect(() => {
+    if (!selectedDevice || !isFocused) {
+      refRefreshTimeoutMs.current = 1000;
+      return;
+    }
+
+    if (!isConnected) {
+      refRefreshTimeoutMs.current = 2000;
+    }
+
+    if (!appStateVisible) {
+      refRefreshTimeoutMs.current = 1000;
+      return;
+    }
+
+    console.log('useEffect -> refreshing....');
+
+    const timeoutId = setTimeout(() => {
+      console.log('useEffect -> aborted.........');
+      refAbortController.current.abort();
+      refAbortController.current = new AbortController();
+    }, 5000);
+
+    let to = setInterval(async () => {
+      console.log('setInterval');
+      console.log('refDeviceInfoRequestInProgress', refDeviceInfoRequestInProgress.current);
+      if (refDeviceInfoRequestInProgress.current) {
+        return;
       }
-    },
-    [mode, navigation, onSelectPiAppServerEmitter],
-  );
+      refRefreshTimeoutMs.current = REFRESH_TIMEOUT;
+      refDeviceInfoRequestInProgress.current = true;
+      try {
+        const result: any = await Promise.allSettled(
+          selectedDevice.piAppServers.map(async v => {
+            const serverURLs = [selectedDevice.selectedIp].map(m => {
+              return (v.secureConnection ? 'https://' : 'http://') + m + ':' + v.port + '/' + v.path.replace(/^\//, '');
+            });
+            console.log('getLiveURL serverURLs', serverURLs);
+            try {
+              const response = await getLiveURL(serverURLs, refAbortController.current);
+              console.log('response:', response);
+              return { status: 'fulfilled', reachable: !!response };
+            } catch (error) {
+              console.log(`rejected: ${serverURLs}`, error);
+              return { status: 'rejected', reason: error };
+            }
+          }),
+        );
 
-  const onPressAddNewPiAppServer = useCallback(() => {
-    navigation.navigate('AddPiAppServer', {});
+        console.log('result', JSON.stringify(result));
+        for (let i = 0; i < selectedDevice.piAppServers.length; i++) {
+          selectedDevice.piAppServers[i] = {
+            ...selectedDevice.piAppServers[i],
+            reachable: result[i].status === 'fulfilled' && result[i].value.reachable,
+          };
+        }
+        selectDevice({ ...selectedDevice });
+      } catch (error) {
+        console.log('useEffect->refresh->error', error);
+      }
+      refDeviceInfoRequestInProgress.current = false;
+    }, refRefreshTimeoutMs.current);
+
+    return () => {
+      refDeviceInfoRequestInProgress.current = false;
+      clearInterval(to);
+      clearTimeout(timeoutId);
+    };
+  }, [isFocused, selectDevice, selectedDevice, urls, isConnected, appStateVisible]);
+
+  const onPressSelectPiAppServer = useCallback(() => {
+    navigation.navigate('ManagePiAppServers', { mode: 'select' });
+    // sshTest();
   }, [navigation]);
 
-  const onRedirectToCreatePiAppServer = useCallback(() => {
-    navigation.navigate('AddPiAppServer', {});
-  }, [navigation]);
+  /*
+  async function sshTest() {
+    let host = '192.168.1.112'; // example: '123.321.123.321';
+    let user = 'tejas'; // example: 'root';
+    let password = '1234'; // example: 'password123!';
 
-  const onPressEditMenu = useCallback(
-    (item: IPiAppServer, _subIndex: number, _index: number) => {
-      closeMenu();
-      navigation.navigate('AddPiAppServer', { piAppServer: item });
-    },
-    [closeMenu, navigation],
-  );
+    let _log = 'about to connect to ' + host + ' as ' + user;
+    let log = (s: any) => {
+      console.log(s);
+      _log += '\n' + s;
+    };
 
-  const onPressDeleteMenu = useCallback(
-    (item: IPiAppServer, _subIndex: number, _index: number) => {
-      deletePiAppServer(item.id);
-      closeMenu();
-    },
-    [closeMenu, deletePiAppServer],
-  );
+    try {
+      // @ts-ignore - the last parameter is optional
+      let client = await SSHClient.connectWithPassword(host, 22, user, password);
+      log('connected');
+      log(JSON.stringify(client, null, 2));
 
-  const onPressInfoMenu = useCallback(
-    (item: IPiAppServer, _subIndex: number, _index: number) => {
-      navigation.navigate('ViewPiAppServer', { piAppServer: item });
-      closeMenu();
-    },
-    [closeMenu, navigation],
-  );
+      let command = 'uptime';
+      log(`about to execute '${command}'`);
+
+      let output = await client.execute(command);
+      log('done, result is:');
+      log(output);
+
+      log('about to disconnect');
+      client.disconnect();
+      log('disconnected');
+    } catch (err) {
+      log('error');
+      log(err);
+    } finally {
+      return _log;
+    }
+  }
+*/
 
   const renderNoDataButtons = useCallback(() => {
     return (
       <View style={styles.noDataButtonsContainer}>
-        <Button onPress={onRedirectToCreatePiAppServer}>{t('piAppServersList.createNewPiAppServer')}</Button>
+        <Button onPress={onPressSelectPiAppServer}>{t('dashboard.emptyData.item3.button')}</Button>
       </View>
     );
-  }, [onRedirectToCreatePiAppServer, t]);
+  }, [onPressSelectPiAppServer, t]);
 
-  const onPressClear = () => {
-    setSearchText('');
+  const closeMenu = useCallback(() => {
+    setVisibleIndex(null);
+  }, []);
+
+  const openMenu = useCallback((index: number) => {
+    setVisibleIndex(index);
+  }, []);
+
+  const onPressDeleteMenu = (item: IPiAppServer, _idx: number) => {
+    setVisibleIndex(null);
+    deletePiAppServerToSelectedDevice(item.id);
   };
 
-  const renderItem = ({ item, index, section }: { item: PiAppServer; index: number; section: GroupedPiAppServers }) => {
-    const sectionIndex = groupedPiAppServers.findIndex(v => v.title === section.title);
-    return (
-      <Components.PiAppServerRow
-        onPressPiAppServer={onPressPiAppServer}
-        openMenu={openMenu}
-        onPressEditMenu={onPressEditMenu}
-        onPressDeleteMenu={onPressDeleteMenu}
-        onPressInfoMenu={onPressInfoMenu}
-        closeMenu={closeMenu}
-        index={index}
-        sectionIndex={sectionIndex}
-        visibleIndex={visibleIndex}
-        visibleSectionIndex={visibleSectionIndex}
-        item={item}
-      />
-    );
+  const onPressEditMenu = (item: IPiAppServer, _idx: number) => {
+    setVisibleIndex(null);
+    navigation.navigate('AddPiAppServer', { mode: 'edit_device_piAppServer', piAppServer: item });
   };
+
+  const onPressPiAppServer = (item: IPiAppServer, _idx: number) => {
+    navigation.navigate('PiAppWebView', { piAppServer: item });
+  };
+
+  const onPressInfoMenu = useCallback(
+    (item: IPiAppServer, _index: number) => {
+      if (!selectedDevice) {
+        return;
+      }
+      navigation.navigate('ViewPiAppServer', { piAppServer: item, device: selectedDevice });
+      closeMenu();
+    },
+    [closeMenu, navigation, selectedDevice],
+  );
+
+  const onCloseSubTitleDialog = useCallback(() => {
+    setSubTitleDialogVisible(false);
+  }, []);
+
+  const onShowSubTitleDialog = useCallback(() => {
+    setSubTitleDialogVisible(true);
+  }, []);
+
+  const onPressConfirmIpAddress = useCallback(
+    (item: string) => {
+      switchDeviceIp(item);
+      setSubTitleDialogVisible(false);
+      refRefreshTimeoutMs.current = 1000;
+    },
+    [switchDeviceIp],
+  );
+
+  const bottomPadding = isConnected ? 16 : 40;
 
   return (
     <Components.AppBaseView
@@ -181,66 +301,110 @@ const PiAppServers = ({ navigation, route }: Props) => {
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
-        title={mode === 'select' ? t('piAppServersList.selectTitle') : t('piAppServersList.listTitle')}
+        title={title}
         style={{ backgroundColor: colors.background }}
+        RightViewComponent={
+          <IconButton
+            style={styles.navigationButton}
+            icon="tune-vertical"
+            iconColor={colors.onBackground}
+            size={20}
+            onPress={onPressSetting}
+          />
+        }
+        SubTitleComponent={
+          <TouchableOpacity activeOpacity={0.7} onPress={onShowSubTitleDialog} style={styles.subTitleButton}>
+            <Icon type="material-community" name="chevron-down" color={`${colors.onBackground}88`} size={24} />
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+              style={[styles.subTitleTextStyle, { color: colors.onBackground }]}>
+              {subTitle}
+            </Text>
+          </TouchableOpacity>
+        }
       />
-
-      <View style={[styles.subView, largeScreenMode && styles.cardTablet]}>
-        <View style={[styles.searchContainer, { backgroundColor: colors.surfaceVariant }]}>
-          <View style={[styles.leftSearchButton, { backgroundColor: colors.surfaceVariant }]}>
-            <IconButton icon={'magnify'} iconColor={`${colors.onBackground}50`} size={22} />
-          </View>
-          <TextInput
-            value={searchText}
-            onChangeText={v => setSearchText(v)}
-            placeholder={t('piAppServersList.searchText')!}
-            style={[styles.searchTextInputText, { color: colors.onBackground }]}
-          />
-          {searchText.length > 0 && (
-            <View style={[styles.rightSearchButton, { backgroundColor: colors.surface }]}>
-              <IconButton
-                icon={'close-circle'}
-                iconColor={`${colors.onBackground}50`}
-                size={22}
-                onPress={onPressClear}
-              />
-            </View>
-          )}
+      {selectedDevice && selectedDevice.piAppServers.length > 0 && (
+        <View style={[styles.subView, largeScreenMode && styles.cardTablet, { backgroundColor: colors.background }]}>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView}>
+            {selectedDevice.piAppServers.map((item, idx) => {
+              return (
+                <List.Item
+                  key={item.id}
+                  onPress={() => onPressPiAppServer(item, idx)}
+                  title={item.name}
+                  description={`${item.path}:${item.port}`}
+                  left={props => (
+                    <List.Icon
+                      {...props}
+                      color={item.reachable ? '#00D100' : '#ff0000'}
+                      icon={item.reachable ? 'web' : 'web-off'}
+                    />
+                  )}
+                  right={props => (
+                    <Menu
+                      visible={visibleIndex === idx}
+                      onDismiss={closeMenu}
+                      anchor={<IconButton {...props} size={16} icon={'dots-vertical'} onPress={() => openMenu(idx)} />}>
+                      <Menu.Item
+                        leadingIcon="pencil"
+                        onPress={() => {
+                          onPressEditMenu(item, idx);
+                        }}
+                        title={t('piAppServersList.edit')}
+                      />
+                      <Menu.Item
+                        leadingIcon="delete"
+                        onPress={() => {
+                          onPressDeleteMenu(item, idx);
+                        }}
+                        title={t('piAppServersList.delete')}
+                      />
+                      <Menu.Item
+                        leadingIcon="information"
+                        onPress={() => {
+                          onPressInfoMenu(item, idx);
+                        }}
+                        title={t('piAppServersList.info')}
+                      />
+                    </Menu>
+                  )}
+                />
+              );
+            })}
+          </ScrollView>
         </View>
-        {piAppServers && piAppServers.length > 0 && (
-          <SectionList
-            contentContainerStyle={styles.scrollViewContainer}
-            style={styles.scrollView}
-            sections={filteredArray}
-            keyExtractor={item => item.id}
-            renderItem={renderItem}
-            renderSectionHeader={({ section: { title } }) => (
-              <List.Subheader style={{ backgroundColor: colors.background, color: `${colors.onBackground}80` }}>
-                {t(title)}
-              </List.Subheader>
-            )}
-          />
-        )}
+      )}
 
-        {piAppServers.length < 1 && (
-          <Components.AppEmptyDataView
-            iconType={'font-awesome5'}
-            iconName="raspberry-pi"
-            style={{}}
-            header={t('piAppServersList.emptyData.title')}
-            subHeader={t('piAppServersList.emptyData.message')}
-            renderContent={renderNoDataButtons}
-          />
-        )}
-      </View>
+      {(!selectedDevice || selectedDevice.piAppServers.length < 1) && (
+        <Components.AppEmptyDataView
+          iconType={'font-awesome5'}
+          iconName="raspberry-pi"
+          style={styles.emptyView}
+          header={t('dashboard.emptyData.item3.title')}
+          subHeader={t('dashboard.emptyData.item3.message')}
+          renderContent={renderNoDataButtons}
+        />
+      )}
 
       <FAB
-        label={t('piAppServersList.fabAddMore')!}
+        label={t('dashboard.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
-        onPress={onPressAddNewPiAppServer}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: bottomPadding }]}
+        onPress={onPressSelectPiAppServer}
       />
+
+      <Components.AppRadioSelectDialog
+        visible={subTitleDialogVisible}
+        title={t('dashboard.selectIpAddress.title')}
+        items={urls}
+        onPressConfirm={onPressConfirmIpAddress}
+        onPressCancel={onCloseSubTitleDialog}
+        selectedItem={selectedDevice ? selectedDevice.selectedIp : '-'}
+      />
+
+      {!isConnected && <Components.AppNoConnection />}
     </Components.AppBaseView>
   );
 };
