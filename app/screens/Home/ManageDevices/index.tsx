@@ -20,9 +20,9 @@ import { useTranslation } from 'react-i18next';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 
 //Params
-type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'Devices'>;
+type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ManageDevices'>;
 
-const Devices = ({ navigation }: Props) => {
+const ManageDevices = ({ navigation, route }: Props) => {
   //Refs
 
   //Constants
@@ -32,6 +32,9 @@ const Devices = ({ navigation }: Props) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const largeScreenMode = useLargeScreenMode();
+  const mode = route.params.mode;
+  const selectDevice = useAppConfigStore(store => store.selectDevice);
+  const showBackButton = mode !== 'connect-pi-server';
 
   //States
   const [visibleIndex, setVisibleIndex] = React.useState<number | null>(null);
@@ -42,9 +45,14 @@ const Devices = ({ navigation }: Props) => {
 
   const onPressDevice = useCallback(
     (item: IDevice, _index: number) => {
-      navigation.navigate('AddDevice', { device: item, mode: 'edit' });
+      if (mode === 'connect-pi-server') {
+        selectDevice(item);
+        navigation.navigate('PiAppServers', {});
+      } else {
+        navigation.navigate('AddDevice', { device: item, mode: 'edit' });
+      }
     },
-    [navigation],
+    [mode, navigation, selectDevice],
   );
 
   const openMenu = useCallback((index: number) => {
@@ -90,7 +98,7 @@ const Devices = ({ navigation }: Props) => {
       edges={['left', 'right', 'top']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
-        showBackButton={true}
+        showBackButton={showBackButton}
         onPressBackButton={onGoBack}
         title={t('devicesList.title')}
         style={{ backgroundColor: colors.background }}
@@ -152,11 +160,11 @@ const Devices = ({ navigation }: Props) => {
         label={t('devicesList.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 4 }]}
         onPress={onPressAddNewDevice}
       />
     </Components.AppBaseView>
   );
 };
 
-export default Devices;
+export default ManageDevices;

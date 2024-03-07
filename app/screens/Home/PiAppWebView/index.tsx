@@ -147,7 +147,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         .map(v => {
           return getURL(v!, piAppServer.path, piAppServer.port, piAppServer.secureConnection);
         });
-      const value = await getLiveURL(serverURLs, abortController, 10000);
+      const value = await getLiveURL(serverURLs, abortController);
       console.log('fetchAlternateAddress->address', value);
       return value;
     } catch (e) {
