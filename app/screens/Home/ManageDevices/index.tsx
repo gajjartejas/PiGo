@@ -160,7 +160,7 @@ const ManageDevices = ({ navigation, route }: Props) => {
         label={t('devicesList.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 4 }]}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom  }]}
         onPress={onPressAddNewDevice}
       />
     </Components.AppBaseView>
