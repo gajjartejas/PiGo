@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, Image, View } from 'react-native';
+import { FlatList, Image } from 'react-native';
 
 //ThirdParty
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -38,10 +38,10 @@ const ChangeLanguage = ({ navigation }: Props) => {
   const setSelectedLanguageCode = useAppLangConfigStore(store => store.setSelectedLanguageCode);
 
   //States
-  let [finalLicense, setFinalLicense] = useState<IChangeLanguage[]>([]);
+  const [finalLicense, setFinalLicense] = useState<IChangeLanguage[]>([]);
 
   useEffect(() => {
-    let languages = SUPPORTED_LANGUAGES.map(v => {
+    const languages = SUPPORTED_LANGUAGES.map(v => {
       return {
         ...v,
         selected: v.code === selectedLanguageCode,
@@ -58,7 +58,7 @@ const ChangeLanguage = ({ navigation }: Props) => {
   const renderItem = ({ item, index }: { item: IChangeLanguage; index: number }) => {
     return (
       <List.Item
-        style={[styles.listItemContainer, { backgroundColor: colors.surface }]}
+        style={[styles.listItemContainer, { backgroundColor: `${colors.onBackground}20` }]}
         titleStyle={{ color: colors.onSurface }}
         descriptionStyle={{ color: `${colors.onSurface}88` }}
         onPress={() => onPressItem(item, index)}
@@ -81,16 +81,16 @@ const ChangeLanguage = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top', 'bottom']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
         onPressBackButton={onGoBack}
-        title={t('ChangeLanguageScreen.title')}
+        title={t('changeLanguageScreen.title')}
         style={{ backgroundColor: colors.background }}
       />
 
-      <View style={styles.safeArea}>
+      <Components.AppBaseView edges={[]} style={styles.safeArea}>
         <FlatList
           contentContainerStyle={[largeScreenMode && styles.cardTablet]}
           style={styles.flatlist}
@@ -99,7 +99,7 @@ const ChangeLanguage = ({ navigation }: Props) => {
           renderItem={renderItem}
           keyExtractor={(item, _index) => item.id.toString()}
         />
-      </View>
+      </Components.AppBaseView>
     </Components.AppBaseView>
   );
 };

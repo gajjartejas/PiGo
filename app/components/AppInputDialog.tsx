@@ -1,14 +1,12 @@
 import React, { memo, useEffect } from 'react';
-import { View, StyleSheet, TextInputProps } from 'react-native';
+import { View, StyleSheet, TextInputProps, TextInput } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
 import { Text, Button, useTheme, Portal } from 'react-native-paper';
 import Modal from 'react-native-modal';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import AppTextInput from 'app/components/AppTextInput';
 
-//Interface
 interface IAppInputDialogProps extends TextInputProps {
   modalVisible: boolean;
   header: string;
@@ -52,7 +50,7 @@ const AppInputDialog = React.forwardRef((props: IAppInputDialogProps, ref: any) 
         <View style={[styles.centeredView, largeScreenMode && styles.cardTablet]}>
           <View style={[styles.modalView, { backgroundColor: `${theme.colors.background}` }]}>
             <Text style={[styles.textSize, { color: theme.colors.primary }]}>{props.header}</Text>
-            <AppTextInput
+            <TextInput
               ref={ref}
               autoCapitalize="none"
               style={[

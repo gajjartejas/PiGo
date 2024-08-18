@@ -23,6 +23,7 @@ import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
 import Icon from 'react-native-easy-icon';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 //import SSHClient from '@dylankenneally/react-native-ssh-sftp';
 
 //Params
@@ -53,6 +54,7 @@ const PiAppServers = ({ navigation }: Props) => {
       ? [selectedDevice.ip1, selectedDevice.ip2, selectedDevice.ip3].filter(m => !!m).map(m => m!)
       : [];
   }, [selectedDevice]);
+  const insets = useSafeAreaInsets();
 
   //States
   const [title, setTitle] = useState('');
@@ -292,7 +294,7 @@ const PiAppServers = ({ navigation }: Props) => {
     [switchDeviceIp],
   );
 
-  const bottomPadding = isConnected ? 16 : 40;
+  const bottomPadding = insets.bottom + (isConnected ? 16 : 40);
 
   return (
     <Components.AppBaseView
