@@ -3,7 +3,7 @@
 
 # Introduction
 
-Welcome to PiGo – the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go. 
+Welcome to PiGo – the open-source, free mobile companion for Raspberry Pi enthusiasts. Effortlessly explore and manage multiple Pi servers on the go.
 
 PiGo: Your free and open gateway to seamless server navigation.
 
@@ -27,26 +27,26 @@ The application supports Android 5.0 (API 21) and above.
 ## Features include:
 
 Home Page Features:
-  - List of Pi Servers: Display all Pi servers on the home page.
+- List of Pi Servers: Display all Pi servers on the home page.
 
 Pi Server Management:
-  - Add, Update, Delete: Allow users to manage Pi servers by adding, updating, and deleting them as needed.
-  - Auto Scan: Provide the option to automatically discover Pi app servers locally.
-  - Add Pi Server: Enable users to add multiple Pi servers with support for both IPv4 and IPv6 addresses/URLs.
+- Add, Update, Delete: Allow users to manage Pi servers by adding, updating, and deleting them as needed.
+- Auto Scan: Provide the option to automatically discover Pi app servers locally.
+- Add Pi Server: Enable users to add multiple Pi servers with support for both IPv4 and IPv6 addresses/URLs.
 
 Pi Apps Management:
-  - Predefined Pi Apps: Allow users to add predefined Pi apps to their Pi servers.
-  - View Pi Apps: Access Pi apps in the webview with features like refresh, forward, backward, and URL switching support.
-  - Default Pi App Server: Manage the default Pi app server with options to add, update, and delete servers.
+- Predefined Pi Apps: Allow users to add predefined Pi apps to their Pi servers.
+- View Pi Apps: Access Pi apps in the webview with features like refresh, forward, backward, and URL switching support.
+- Default Pi App Server: Manage the default Pi app server with options to add, update, and delete servers.
 
 Additional Settings:
-  - Auto Scan Settings: Configure settings for auto-scanning Pi app servers.
-  - Webview Settings: Adjust settings such as user-agent, JavaScript enable/disable, and clear website data.
+- Auto Scan Settings: Configure settings for auto-scanning Pi app servers.
+- Webview Settings: Adjust settings such as user-agent, JavaScript enable/disable, and clear website data.
 
 User Experience:
-  - Dark Theme Support: Offer a dark theme for improved visibility and reduced eye strain.
-  - Multi-Language Support: Provide language options for users to navigate the app in their preferred language.
-  - Tablet/iPad and Phone support.
+- Dark Theme Support: Offer a dark theme for improved visibility and reduced eye strain.
+- Multi-Language Support: Provide language options for users to navigate the app in their preferred language.
+- Tablet/iPad and Phone support.
 
 ## Building
 
