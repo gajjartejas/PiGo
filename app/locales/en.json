@@ -8,7 +8,7 @@
     "ok": "OK"
   },
   "about": {
-    "version": "Version: {{version}}",
+    "version": "Version: {{id0001}}",
     "sendFeedback": "Send Feedback",
     "rateApp": "Rate App",
     "moreApps": "More Apps",
@@ -39,7 +39,7 @@
       "header": "Default Scan Config",
       "row1": {
         "title": "Ports",
-        "subTitle": "{{ports}}",
+        "subTitle": "{{id2001}}",
         "dialogTitle": "Enter Ports (Comma Separated)",
         "dialogSubTitle": "Add ports of possible Pi server's ports, this will help to identify your Pi on the local network. (eg: 80 default, 32400 for plex, etc`)"
       }
@@ -48,13 +48,13 @@
       "header": "Advanced",
       "row1": {
         "title": "Scan Timeout",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2002}} ms",
         "dialogTitle": "Enter Scan Timeout (1 - 10000)",
         "dialogSubTitle": "Scan timeout per threads, ex: 150 threads per 1500 ms, If Pi server is not found try to increase the timeout."
       },
       "row2": {
         "title": "Scan Threads",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2003}}",
         "dialogTitle": "Enter Scan Threads (1-999)",
         "dialogSubTitle": "Scan threads per timeouts,  ex: 150 threads per 1500 ms, If Pi server not found try to decrease threads."
       }
@@ -218,12 +218,10 @@
     "inputPlaceholder6": "Enter GitHub Link (Optional)",
     "inputPlaceholder7": "Enter Description (Optional)",
     "selectCategoryDialog": {
-      "title": "Select Category",
-      "ok": "OK"
+      "title": "Select Category"
     },
     "selectConnectionTypeDialog": {
-      "title": "Select Connection Type",
-      "ok": "OK"
+      "title": "Select Connection Type"
     },
     "updateButton": "UPDATE",
     "saveButton": "SAVE"
@@ -264,15 +262,7 @@
     "refresh": "REFRESH"
   },
   "connectToDeviceList": {
-    "savedConnections": "Saved Pi Servers",
-    "addManually": "Add Pi server",
-    "devicesSettings": "Manage Pi server",
-    "emptyData": {
-      "emptyDeviceTitle": "No Pi server found!",
-      "emptyDeviceSubtitle": "Please add a new Pi server",
-      "button": "Add Pi Server"
-    },
-    "fabAddMore": "New"
+    "emptyData": {}
   },
   "piAppWebView": {
     "refresh": "Refresh",
@@ -289,9 +279,9 @@
     },
     "infoDialog": {
       "title": "Info",
-      "description": "URL Loaded:\n{{url}}"
+      "description": "URL Loaded:\n{{id3001}}"
     },
-    "switchedURL": "Switched to alternative URL:\n{{URL}}.",
+    "switchedURL": "Switched to alternative URL:\n{{id3001}}.",
     "backPressHint": "Press one more time to go back"
   },
   "settings": {
@@ -300,7 +290,7 @@
     "appearanceTitle": "Appearance",
     "appearanceSubTitle": "Customization of appearance",
     "languageTitle": "App Language",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "scanTitle": "Scan Settings",
     "scanSubTitle": "Auto scan(nearby scan) settings",
     "piAppServersTitle": "Pi App Servers",

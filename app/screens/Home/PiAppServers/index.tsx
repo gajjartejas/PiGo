@@ -294,11 +294,17 @@ const PiAppServers = ({ navigation }: Props) => {
     [switchDeviceIp],
   );
 
-  const bottomPadding = insets.bottom + (isConnected ? 16 : 40);
+  const bottomInsets = useMemo(() => {
+    return insets.bottom <= 0 ? 16 : insets.bottom;
+  }, [insets.bottom]);
+
+  const bottomPadding = useMemo(() => {
+    return bottomInsets + (isConnected ? 16 : 40);
+  }, [bottomInsets, isConnected]);
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}

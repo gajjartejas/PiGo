@@ -174,9 +174,13 @@ const ManagePiAppServers = ({ navigation, route }: Props) => {
     );
   };
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 16;
+  }, [insets.bottom]);
+
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -238,7 +242,7 @@ const ManagePiAppServers = ({ navigation, route }: Props) => {
         label={t('piAppServersList.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom + 16 }]}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: bottomInsets }]}
         onPress={onPressAddNewPiAppServer}
       />
     </Components.AppBaseView>

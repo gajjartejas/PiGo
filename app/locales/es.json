@@ -1,19 +1,16 @@
 {
-  "changeLanguageScreen": {
-    "title": "Cambiar idioma"
-  },
   "about": {
     "app": "Acerca de PiGo",
     "github": "Contribuir en GitHub",
     "moreApps": "Más aplicaciones",
-    "rateApp": "Calificar aplicacion",
+    "rateApp": "Calificar aplicación",
     "sendFeedback": "Enviar comentarios",
-    "sendFeedbackDetail": "Puede enviar sus valiosos comentarios al canal de Telegram o enviar un correo directamente.",
+    "sendFeedbackDetail": "Puede enviar sus valiosos comentarios a la edición de GitHub.",
     "setting": "Ajustes",
-    "version": "Versión: {{version}}"
+    "version": "Versión: {{id0001}}"
   },
   "aboutScreen": {
-    "developerTitle": "Desarrollador",
+    "developerTitle": "Revelador",
     "githubSubTitle": "Perfil de desarrollador y lista de proyectos de código abierto",
     "githubTitle": "GitHub",
     "infoAuthorNameTitle": "Tejas Gajjar",
@@ -22,7 +19,7 @@
     "instagramSubTitle": "Mi hobby y mis gadgets.",
     "instagramTitle": "Instagram",
     "portfolioSubTitle": "Toda la información sobre el desarrollador.",
-    "portfolioTitle": "portafolio",
+    "portfolioTitle": "Cartera",
     "telegramSubTitle": "Discusión sobre errores, mejoras, solicitud de funciones y noticias de desarrollo.",
     "telegramTitle": "Únete a Telegrama",
     "title": "Acerca de PiGo",
@@ -45,24 +42,22 @@
     "updateDevice": "Actualizar el servidor Pi"
   },
   "addPiAppServer": {
-    "inputPlaceholder1": "Ingrese su nombre",
+    "inputPlaceholder1": "Introduzca el nombre",
     "inputPlaceholder2": "Ingresar ruta",
     "inputPlaceholder3": "Ingresar puerto",
     "inputPlaceholder4": "Ingrese el tipo de conexión",
-    "inputPlaceholder5": "selecciona una categoría",
+    "inputPlaceholder5": "Seleccionar categoría",
     "inputPlaceholder6": "Ingrese al enlace de GitHub (opcional)",
     "inputPlaceholder7": "Ingrese la descripción (opcional)",
     "invalidCategory": "Categoría no válida",
     "invalidIpAddress": "URL no válida o IPv4/IPv6",
-    "invalidName": "Nombre inválido",
-    "invalidURLAddress": "URL invalida",
+    "invalidName": "Nombre no válido",
+    "invalidURLAddress": "URL no válida",
     "saveButton": "AHORRAR",
     "selectCategoryDialog": {
-      "ok": "DE ACUERDO",
-      "title": "selecciona una categoría"
+      "title": "Seleccionar categoría"
     },
     "selectConnectionTypeDialog": {
-      "ok": "DE ACUERDO",
       "title": "Seleccione el tipo de conexión"
     },
     "titleAddPiAppServer": "Agregar el servidor de aplicaciones Pi",
@@ -71,7 +66,7 @@
   },
   "appearanceSettings": {
     "accentColorSubTitle": "Color utilizado para teñir elementos de la interfaz de usuario.",
-    "accentColorTitle": "Acentuar el color",
+    "accentColorTitle": "Color de acento",
     "interfaceHeader": "Interfaz",
     "otherHeader": "Otro",
     "otherSubTitle": "Restaurar la configuración predeterminada del tema",
@@ -79,21 +74,13 @@
     "themeOption": "Tema",
     "themeOption1": "Luz",
     "themeOption2": "Oscuro",
-    "themeOption3": "Sistema por defecto",
+    "themeOption3": "Valor predeterminado del sistema",
     "themeSubTitle": "Tema principal de la aplicación.",
     "themeTitle": "Tema",
     "title": "Apariencia"
   },
-  "connectToDeviceList": {
-    "addManually": "Agregar servidor Pi",
-    "devicesSettings": "Administrar el servidor Pi",
-    "emptyData": {
-      "button": "Agregar servidor Pi",
-      "emptyDeviceSubtitle": "Agregue un nuevo servidor Pi",
-      "emptyDeviceTitle": "¡No se encontró ningún servidor Pi!"
-    },
-    "fabAddMore": "Nuevo",
-    "savedConnections": "Servidores Pi guardados"
+  "changeLanguageScreen": {
+    "title": "Cambiar idioma"
   },
   "dashboard": {
     "card": {
@@ -136,14 +123,14 @@
     "title": "Bibliotecas"
   },
   "moreApps": {
-    "apps1Desc": "PiGo: el compañero móvil gratuito y de código abierto para los entusiastas de Raspberry Pi. \nExplore y administre sin esfuerzo múltiples servidores Pi mientras viaja.",
-    "apps1Title": "PiGo: explore sus servidores Pi mientras viaja",
-    "apps2Desc": "`OHM-Client` es una aplicación cliente de monitor de hardware abierta no oficial para Android e iOS escrita en nativo de reacción. \nCon esta aplicación puede monitorear el servidor web del monitor de hardware abierto.",
-    "apps2Title": "Cliente OHM",
-    "apps3Desc": "Esta aplicación le permite habilitar/deshabilitar anuncios o recomendaciones para varias aplicaciones en dispositivos Xiaomi (MIUI).",
-    "apps3Title": "MIUI - Ayudante de anuncios",
-    "apps4Desc": "Una forma interactiva de aprender gujarati kakko, barakhadi y números.",
-    "apps4Title": "cano",
+    "apps1Desc": "Esta aplicación le permite habilitar/deshabilitar anuncios o recomendaciones para varias aplicaciones en dispositivos Xiaomi (MIUI).",
+    "apps1Title": "MIUI - Ayudante de anuncios",
+    "apps2Desc": "Una forma interactiva de aprender gujarati kakko, barakhadi y números.",
+    "apps2Title": "cano",
+    "apps3Desc": "PiGo: el compañero móvil gratuito y de código abierto para los entusiastas de Raspberry Pi. \nExplore y administre sin esfuerzo múltiples servidores Pi mientras viaja.",
+    "apps3Title": "PiGo: explore sus servidores Pi mientras viaja",
+    "apps4Desc": "`OHM-Client` es una aplicación cliente de monitor de hardware abierta no oficial para Android e iOS escrita en nativo de reacción. \nCon esta aplicación puede monitorear el servidor web del monitor de hardware abierto.",
+    "apps4Title": "Cliente OHM",
     "appsTitle": "Más aplicaciones"
   },
   "piAppServersList": {
@@ -165,24 +152,24 @@
     "backPressHint": "Presione una vez más para regresar",
     "copyURL": "Copiar URL",
     "emptyData": {
-      "button": "Actualizar",
+      "button": "Refrescar",
       "message": "Por favor intenta actualizar",
       "title": "¡Servidor no disponible!"
     },
     "forward": "Adelante",
     "info": "Información",
     "infoDialog": {
-      "description": "URL cargada:\n\n{{url}}",
+      "description": "URL cargada:\n\n{{id3001}}",
       "title": "Información"
     },
     "openWith": "Abrir con",
-    "refresh": "Actualizar",
+    "refresh": "Refrescar",
     "switchURL": "Cambiar IP/URL",
-    "switchedURL": "Cambiado a URL alternativa:\n\n{{URL}}."
+    "switchedURL": "Cambiado a URL alternativa:\n\n{{id3001}}."
   },
   "piAppsCategories": {
     "adsBlocker": "Bloqueadores de anuncios y rastreadores",
-    "homeAutomation": "Automatización del hogar",
+    "homeAutomation": "Domótica",
     "informationDisplay": "Pantalla de información",
     "kvm": "Soluciones KVM (teclado, vídeo, ratón)",
     "mediaCenters": "Centros de medios",
@@ -200,11 +187,11 @@
     "emptyData": {
       "help": "Ayuda",
       "or": "O",
-      "rescan": "Escanea otra vez",
+      "rescan": "Escanear de nuevo",
       "subtitle": "Por favor intente escanear nuevamente",
       "title": "¡No se encontró ningún servidor Pi cercano!"
     },
-    "refresh": "ACTUALIZAR",
+    "refresh": "REFRESCAR",
     "subTitle": "Servidores Pi cercanos",
     "title": "Servidores Pi cercanos"
   },
@@ -214,7 +201,7 @@
       "row1": {
         "dialogSubTitle": "Agregue puertos de posibles puertos del servidor Pi, esto ayudará a identificar su Pi en la red local. \n(por ejemplo: 80 predeterminado, 32400 para plex, etc`)",
         "dialogTitle": "Ingresar puertos (separados por comas)",
-        "subTitle": "{{ports}}",
+        "subTitle": "{{id2001}}",
         "title": "Puertos"
       }
     },
@@ -223,13 +210,13 @@
       "row1": {
         "dialogSubTitle": "Tiempo de espera de escaneo por subproceso, por ejemplo: 150 subprocesos por 1500 ms. Si no se encuentra el servidor Pi, intente aumentar el tiempo de espera.",
         "dialogTitle": "Ingrese el tiempo de espera de escaneo (1 - 10000)",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2002}} ms",
         "title": "Tiempo de espera de escaneo"
       },
       "row2": {
         "dialogSubTitle": "Escanee subprocesos por tiempo de espera, por ejemplo: 150 subprocesos cada 1500 ms. Si no se encuentra el servidor Pi, intente disminuir los subprocesos.",
-        "dialogTitle": "Ingresar hilos de escaneo (1-999)",
-        "subTitle": "{{scanThreads}}",
+        "dialogTitle": "Ingrese a los hilos de escaneo (1-999)",
+        "subTitle": "{{id2003}}",
         "title": "Escanear hilos"
       }
     },
@@ -249,14 +236,14 @@
     "changelogTitle": "Registro de cambios",
     "commonHeader": "Configuraciones comunes",
     "faqSubTitle": "Respuesta a preguntas frecuentes",
-    "faqTitle": "Preguntas más frecuentes",
+    "faqTitle": "Preguntas frecuentes",
     "infoHeader": "Información",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "Idioma de la aplicación",
     "librariesSubTitle": "Lista de bibliotecas de código abierto utilizadas en este proyecto",
     "librariesTitle": "Bibliotecas",
     "piAppServersSubTitle": "Administre la lista de servidores de aplicaciones Pi predeterminados como Pi-hole, Plex, etc.",
-    "piAppServersTitle": "Servidores de aplicaciones Pi predeterminados",
+    "piAppServersTitle": "Servidores de aplicaciones Pi",
     "privacySubTitle": "Política de uso de información y permisos",
     "privacyTitle": "Política de privacidad",
     "recentConnectionsSubTitle": "Administrar servidores Pi agregados",
@@ -287,13 +274,13 @@
   },
   "webViewSetting": {
     "section1": {
-      "header": "Configuración general",
+      "header": "Configuraciones generales",
       "row1": {
-        "subTitle": "Booleano que determina si el audio y el vídeo HTML5 requieren que el usuario los toque antes de comenzar a reproducirse. \nEl valor por defecto es verdadero. \n(API de Android versión mínima 17).",
+        "subTitle": "Booleano que determina si el audio y el vídeo HTML5 requieren que el usuario los toque antes de comenzar a reproducirse. \nEl valor predeterminado es verdadero. \n(API de Android versión mínima 17).",
         "title": "La reproducción multimedia requiere la acción del usuario"
       },
       "row10": {
-        "subTitle": "Valor booleano que determina si la vista web rebota cuando llega al borde del contenido. \nEl valor por defecto es verdadero.",
+        "subTitle": "Valor booleano que determina si la vista web rebota cuando llega al borde del contenido. \nEl valor predeterminado es verdadero.",
         "title": "Rebota"
       },
       "row11": {
@@ -318,14 +305,14 @@
       },
       "row16": {
         "subTitle": "Configurar el tema oscuro",
-        "title": "Forzar oscuridad"
+        "title": "Forzar oscuridad activada"
       },
       "row17": {
         "subTitle": "Si Webview puede reproducir medios protegidos por DRM o no. \nEl valor predeterminado es falso.",
         "title": "Permite medios protegidos"
       },
       "row2": {
-        "subTitle": "Booleano que controla si el contenido web se escala para ajustarse a la vista y permite al usuario cambiar la escala. \nEl valor por defecto es verdadero.",
+        "subTitle": "Booleano que controla si el contenido web se escala para ajustarse a la vista y permite al usuario cambiar la escala. \nEl valor predeterminado es verdadero.",
         "title": "Escala la página para ajustarla"
       },
       "row3": {
@@ -333,11 +320,11 @@
         "title": "Almacenamiento Dom habilitado"
       },
       "row4": {
-        "subTitle": "Valor booleano para habilitar JavaScript en WebView. \nEl valor por defecto es verdadero.",
+        "subTitle": "Valor booleano para habilitar JavaScript en WebView. \nEl valor predeterminado es verdadero.",
         "title": "Secuencia de comandos Java habilitada"
       },
       "row5": {
-        "subTitle": "Valor booleano para habilitar cookies de terceros en WebView. \nSe utilizan en Android Lollipop y versiones posteriores solo porque las cookies de terceros están habilitadas de forma predeterminada en Android Kitkat y versiones inferiores y en iOS. \nEl valor por defecto es verdadero.",
+        "subTitle": "Valor booleano para habilitar cookies de terceros en WebView. \nSe utilizan en Android Lollipop y versiones posteriores solo porque las cookies de terceros están habilitadas de forma predeterminada en Android Kitkat y versiones inferiores y en iOS. \nEl valor predeterminado es verdadero.",
         "title": "Cookies de terceros habilitadas"
       },
       "row6": {

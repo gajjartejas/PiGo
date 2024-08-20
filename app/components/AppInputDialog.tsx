@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   inputStyle: {
+    borderBottomWidth: 1,
     width: '100%',
     height: 50,
   },

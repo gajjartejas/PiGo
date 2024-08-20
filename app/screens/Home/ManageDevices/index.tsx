@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 
 //ThirdParty
@@ -93,9 +93,13 @@ const ManageDevices = ({ navigation, route }: Props) => {
     );
   }, [onRedirectToCreateDevice, t]);
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 16;
+  }, [insets.bottom]);
+
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={showBackButton}
@@ -160,7 +164,7 @@ const ManageDevices = ({ navigation, route }: Props) => {
         label={t('devicesList.fabAddMore')!}
         icon="plus"
         color={colors.onPrimary}
-        style={[styles.fab, { backgroundColor: colors.primary, bottom: insets.bottom  }]}
+        style={[styles.fab, { backgroundColor: colors.primary, bottom: bottomInsets }]}
         onPress={onPressAddNewDevice}
       />
     </Components.AppBaseView>

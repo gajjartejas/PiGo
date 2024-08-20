@@ -1,16 +1,13 @@
 {
-  "changeLanguageScreen": {
-    "title": "Mudar idioma"
-  },
   "about": {
     "app": "Sobre PiGo",
     "github": "Contribua no GitHub",
     "moreApps": "Mais aplicativos",
     "rateApp": "Avaliar aplicativo",
     "sendFeedback": "Enviar comentários",
-    "sendFeedbackDetail": "Você pode enviar seus valiosos comentários para o canal Telegram ou enviar e-mail diretamente.",
+    "sendFeedbackDetail": "Você pode enviar seus comentários valiosos para o problema do GitHub.",
     "setting": "Configurações",
-    "version": "Versão: {{version}}"
+    "version": "Versão: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Desenvolvedor",
@@ -45,24 +42,22 @@
     "updateDevice": "Atualizar servidor Pi"
   },
   "addPiAppServer": {
-    "inputPlaceholder1": "Insira o nome",
+    "inputPlaceholder1": "Digite o nome",
     "inputPlaceholder2": "Insira o caminho",
     "inputPlaceholder3": "Entrar na porta",
     "inputPlaceholder4": "Insira o tipo de conexão",
-    "inputPlaceholder5": "Selecione a Categoria",
+    "inputPlaceholder5": "Selecione a categoria",
     "inputPlaceholder6": "Insira o link do GitHub (opcional)",
     "inputPlaceholder7": "Insira a descrição (opcional)",
     "invalidCategory": "Categoria inválida",
     "invalidIpAddress": "URL inválido ou IPv4/IPv6",
     "invalidName": "Nome inválido",
-    "invalidURLAddress": "URL inválida",
+    "invalidURLAddress": "URL inválido",
     "saveButton": "SALVAR",
     "selectCategoryDialog": {
-      "ok": "OK",
-      "title": "Selecione a Categoria"
+      "title": "Selecione a categoria"
     },
     "selectConnectionTypeDialog": {
-      "ok": "OK",
       "title": "Selecione o tipo de conexão"
     },
     "titleAddPiAppServer": "Adicionar servidor de aplicativos Pi",
@@ -79,21 +74,13 @@
     "themeOption": "Tema",
     "themeOption1": "Luz",
     "themeOption2": "Escuro",
-    "themeOption3": "Sistema padrão",
+    "themeOption3": "Padrão do sistema",
     "themeSubTitle": "Tema principal do aplicativo",
     "themeTitle": "Tema",
     "title": "Aparência"
   },
-  "connectToDeviceList": {
-    "addManually": "Adicionar servidor Pi",
-    "devicesSettings": "Gerenciar servidor Pi",
-    "emptyData": {
-      "button": "Adicionar servidor Pi",
-      "emptyDeviceSubtitle": "Adicione um novo servidor Pi",
-      "emptyDeviceTitle": "Nenhum servidor Pi encontrado!"
-    },
-    "fabAddMore": "Novo",
-    "savedConnections": "Servidores Pi salvos"
+  "changeLanguageScreen": {
+    "title": "Alterar idioma"
   },
   "dashboard": {
     "card": {
@@ -120,7 +107,7 @@
     "emptyDeviceSubtitle": "Adicione um novo servidor Pi.",
     "emptyDeviceTitle": "Nenhum Raspberry Pi encontrado!",
     "emptyName": "Sem nome",
-    "fabAddMore": "Adicione mais",
+    "fabAddMore": "Adicionar mais",
     "subTitle": "Servidores Pi",
     "title": "Servidores Pi"
   },
@@ -136,14 +123,14 @@
     "title": "Bibliotecas"
   },
   "moreApps": {
-    "apps1Desc": "PiGo - o companheiro móvel gratuito e de código aberto para entusiastas do Raspberry Pi. \nExplore e gerencie facilmente vários servidores Pi em qualquer lugar.",
-    "apps1Title": "PiGo - Explore seus servidores Pi em qualquer lugar",
-    "apps2Desc": "`OHM-Client` é um aplicativo cliente de monitor de hardware aberto não oficial para Android e iOS escrito em react-native. \nUsando este aplicativo você pode monitorar o servidor web do monitor de hardware aberto.",
-    "apps2Title": "Cliente OHM",
-    "apps3Desc": "Este aplicativo permite ativar/desativar anúncios ou recomendações para vários aplicativos em dispositivos Xiaomi (MIUI).",
-    "apps3Title": "MIUI – Ajudante de anúncios",
-    "apps4Desc": "Uma maneira interativa de aprender Gujarati kakko, barakhadi e números.",
-    "apps4Title": "Kano",
+    "apps1Desc": "Este aplicativo permite ativar/desativar anúncios ou recomendações para vários aplicativos em dispositivos Xiaomi (MIUI).",
+    "apps1Title": "MIUI – Ajudante de anúncios",
+    "apps2Desc": "Uma maneira interativa de aprender Gujarati kakko, barakhadi e números.",
+    "apps2Title": "Kano",
+    "apps3Desc": "PiGo - o companheiro móvel gratuito e de código aberto para entusiastas do Raspberry Pi. \nExplore e gerencie facilmente vários servidores Pi em qualquer lugar.",
+    "apps3Title": "PiGo - Explore seus servidores Pi em qualquer lugar",
+    "apps4Desc": "`OHM-Client` é um aplicativo cliente de monitor de hardware aberto não oficial para Android e iOS escrito em react-native. \nUsando este aplicativo você pode monitorar o servidor web do monitor de hardware aberto.",
+    "apps4Title": "Cliente OHM",
     "appsTitle": "Mais aplicativos"
   },
   "piAppServersList": {
@@ -154,7 +141,7 @@
       "message": "Crie um novo Pi App Server.",
       "title": "Nenhum servidor de aplicativo Pi encontrado!"
     },
-    "fabAddMore": "Adicione mais",
+    "fabAddMore": "Adicionar mais",
     "info": "Informações",
     "listTitle": "Servidores de aplicativos Pi",
     "searchText": "Procurar",
@@ -172,13 +159,13 @@
     "forward": "Avançar",
     "info": "Informações",
     "infoDialog": {
-      "description": "URL carregado:\n\n{{url}}",
+      "description": "URL carregado:\n\n{{id3001}}",
       "title": "Informações"
     },
     "openWith": "Abrir com",
     "refresh": "Atualizar",
     "switchURL": "Trocar IP/URL",
-    "switchedURL": "Mudou para URL alternativo:\n\n{{URL}}."
+    "switchedURL": "Mudou para URL alternativo:\n\n{{id3001}}."
   },
   "piAppsCategories": {
     "adsBlocker": "Bloqueadores de anúncios e rastreadores",
@@ -214,7 +201,7 @@
       "row1": {
         "dialogSubTitle": "Adicione portas de possíveis portas do servidor Pi, isso ajudará a identificar seu Pi na rede local. \n(por exemplo: 80 padrão, 32400 para plex, etc`)",
         "dialogTitle": "Insira as portas (separadas por vírgula)",
-        "subTitle": "{{ports}}",
+        "subTitle": "{{id2001}}",
         "title": "Portas"
       }
     },
@@ -223,20 +210,20 @@
       "row1": {
         "dialogSubTitle": "Tempo limite de varredura por threads, ex: 150 threads por 1500 ms. Se o servidor Pi não for encontrado, tente aumentar o tempo limite.",
         "dialogTitle": "Insira o tempo limite de verificação (1 - 10.000)",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2002}} ms",
         "title": "Tempo limite de verificação"
       },
       "row2": {
         "dialogSubTitle": "Verifique os threads por tempo limite, ex: 150 threads por 1500 ms. Se o servidor Pi não for encontrado, tente diminuir os threads.",
         "dialogTitle": "Insira os tópicos de verificação (1-999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2003}}",
         "title": "Digitalizar tópicos"
       }
     },
     "section4": {
       "header": "Outro",
       "row1": {
-        "subTitle": "Restaurar a configuração original",
+        "subTitle": "Restaurar configurações padrão",
         "title": "Restaurar padrão"
       }
     },
@@ -247,16 +234,16 @@
     "appearanceTitle": "Aparência",
     "changelogSubTitle": "Lista de alterações feitas em todas as atualizações",
     "changelogTitle": "Registro de alterações",
-    "commonHeader": "Configurações padrão",
+    "commonHeader": "Configurações comuns",
     "faqSubTitle": "Resposta às perguntas frequentes",
     "faqTitle": "Perguntas frequentes",
     "infoHeader": "Informação",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "Idioma do aplicativo",
     "librariesSubTitle": "Lista de bibliotecas de código aberto usadas neste projeto",
     "librariesTitle": "Bibliotecas",
     "piAppServersSubTitle": "Gerencie a lista de servidores de aplicativos Pi padrão, como Pi-hole, Plex, etc.",
-    "piAppServersTitle": "Servidores de aplicativos Pi padrão",
+    "piAppServersTitle": "Servidores de aplicativos Pi",
     "privacySubTitle": "Política de uso de informações e permissões",
     "privacyTitle": "Política de Privacidade",
     "recentConnectionsSubTitle": "Gerenciar servidores Pi adicionados",
@@ -313,7 +300,7 @@
         "title": "Permite gestos de navegação para trás e para frente"
       },
       "row15": {
-        "subTitle": "Valor booleano que determina se um gesto de puxar para atualizar está disponível no WebView. \nO valor padrão é falso. \nSe verdadeiro, define as rejeições automaticamente como verdadeiras.",
+        "subTitle": "Valor booliano que determina se um gesto de puxar para atualizar está disponível no WebView. \nO valor padrão é falso. \nSe verdadeiro, define as rejeições automaticamente como verdadeiras.",
         "title": "Puxar para atualizar ativado"
       },
       "row16": {
@@ -344,7 +331,7 @@
         "dialogSubTitle": "A string User-Agent (UA) está contida nos cabeçalhos HTTP e tem como objetivo identificar dispositivos que solicitam conteúdo online.",
         "dialogTitle": "Insira a string do agente do usuário",
         "subTitle": "Define o agente do usuário para o WebView.",
-        "title": "Agente de usuário"
+        "title": "Agente do usuário"
       },
       "row7": {
         "subTitle": "Booleano que determina se os vídeos podem ser reproduzidos em tela cheia. \nO valor padrão é falso.",
