@@ -53,7 +53,7 @@ const ScanSetting = ({ navigation }: Props) => {
             iconName: 'network',
             iconType: 'material-community',
             title: t('scanSetting.section1.row1.title'),
-            description: t('scanSetting.section1.row1.subTitle', { ports: ports.join(', ') }),
+            description: t('scanSetting.section1.row1.subTitle', { id2001: ports.join(', ') }),
             route: '',
           },
         ],
@@ -67,7 +67,7 @@ const ScanSetting = ({ navigation }: Props) => {
             iconName: 'timer-sand-full',
             iconType: 'material-community',
             title: t('scanSetting.section3.row1.title'),
-            description: t('scanSetting.section3.row1.subTitle', { scanTimeoutInMs }),
+            description: t('scanSetting.section3.row1.subTitle', { id2002: scanTimeoutInMs }),
             route: '',
           },
           {
@@ -75,7 +75,7 @@ const ScanSetting = ({ navigation }: Props) => {
             iconName: 'speedometer',
             iconType: 'material-community',
             title: t('scanSetting.section3.row2.title'),
-            description: t('scanSetting.section3.row2.subTitle', { scanThreads }),
+            description: t('scanSetting.section3.row2.subTitle', { id2003: scanThreads }),
             route: '',
           },
         ],
@@ -140,7 +140,7 @@ const ScanSetting = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -149,7 +149,7 @@ const ScanSetting = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
 
-      <Components.AppBaseView scroll edges={['bottom', 'left', 'right']} style={styles.safeArea}>
+      <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
         <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
           {apps.map((item, index) => {
             return (
@@ -188,10 +188,10 @@ const ScanSetting = ({ navigation }: Props) => {
         modalVisible={modalVisibleUrlPorts}
         header={t('scanSetting.section1.row1.dialogTitle')}
         hint={t('scanSetting.section1.row1.dialogSubTitle')}
-        onPressClose={async () => {
+        onPressClose={() => {
           setModalVisiblePorts(false);
         }}
-        onPressSave={async () => {
+        onPressSave={() => {
           setModalVisiblePorts(false);
           const p = modalPorts.split(',').reduce((ac: number[], v: string) => {
             if (!isNaN(Number(v))) {
@@ -216,10 +216,10 @@ const ScanSetting = ({ navigation }: Props) => {
         modalVisible={modalVisibleScanTimeout}
         header={t('scanSetting.section3.row1.dialogTitle')}
         hint={t('scanSetting.section3.row1.dialogSubTitle')}
-        onPressClose={async () => {
+        onPressClose={() => {
           setModalVisibleScanTimeout(false);
         }}
-        onPressSave={async () => {
+        onPressSave={() => {
           setModalVisibleScanTimeout(false);
           if (!isNaN(Number(modalScanTimeout))) {
             setScanTimeoutInMs(parseInt(modalScanTimeout, 10));
@@ -239,10 +239,10 @@ const ScanSetting = ({ navigation }: Props) => {
         modalVisible={modalVisibleScanThreads}
         header={t('scanSetting.section3.row2.dialogTitle')}
         hint={t('scanSetting.section3.row2.dialogSubTitle')}
-        onPressClose={async () => {
+        onPressClose={() => {
           setModalVisibleScanThreads(false);
         }}
-        onPressSave={async () => {
+        onPressSave={() => {
           setModalVisibleScanThreads(false);
           if (!isNaN(Number(modalScanThreads))) {
             setScanThreads(parseInt(modalScanThreads, 10));

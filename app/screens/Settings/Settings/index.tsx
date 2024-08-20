@@ -43,7 +43,7 @@ const Settings = ({ navigation }: Props) => {
             iconType: 'material',
             title: t('settings.languageTitle'),
             description: t('settings.languageSubTitle', {
-              language: selectedLanguageName,
+              id10001: selectedLanguageName,
             })!,
             route: 'ChangeLanguage',
           },
@@ -179,7 +179,7 @@ const Settings = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}

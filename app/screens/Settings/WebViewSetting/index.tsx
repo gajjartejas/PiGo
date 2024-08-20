@@ -420,7 +420,7 @@ const WebViewSetting = ({ navigation }: Props) => {
 
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top', 'bottom']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}

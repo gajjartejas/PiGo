@@ -171,9 +171,13 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
     return validName(name) !== null || validPort(port) !== null || validCategory(category) !== null;
   }, [category, name, port, validCategory, validName, validPort]);
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 16;
+  }, [insets.bottom]);
+
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -279,7 +283,7 @@ const AddPiAppServer = ({ navigation, route }: Props) => {
         <Button
           disabled={validInputs}
           mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: insets.bottom + 8 }]}
+          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: bottomInsets }]}
           onPress={onPressSave}>
           {piAppServer ? t('addPiAppServer.updateButton') : t('addPiAppServer.saveButton')}
         </Button>

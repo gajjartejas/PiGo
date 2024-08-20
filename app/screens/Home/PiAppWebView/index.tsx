@@ -334,8 +334,14 @@ const PiAppWebView = ({ navigation, route }: Props) => {
     return () => backHandler.remove();
   }, [backPressCount, canGoBw, navigation, t]);
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 12;
+  }, [insets.bottom]);
+
   return (
-    <AppBaseView edges={['left', 'right', 'top']} style={[styles.container, { backgroundColor: colors.background }]}>
+    <AppBaseView
+      edges={['left', 'right', 'top', 'bottom']}
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.subView]}>
         {!error && !!appServerURL && (
           <WebView
@@ -410,7 +416,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         style={[
           styles.docker,
           {
-            bottom: insets.bottom + 12,
+            bottom: bottomInsets,
             backgroundColor: colors.background,
             borderColor: `${colors.primary}50`,
             transform: [{ translateY }],
@@ -458,7 +464,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
           onDismiss={() => setInfoDialogVisible(false)}>
           <Dialog.Title>{t('piAppWebView.infoDialog.title')}</Dialog.Title>
           <Dialog.Content>
-            <Text variant="bodyMedium">{t('piAppWebView.infoDialog.description', { url: appServerURL })}</Text>
+            <Text variant="bodyMedium">{t('piAppWebView.infoDialog.description', { id3001: appServerURL })}</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => setInfoDialogVisible(false)}>Done</Button>
@@ -471,7 +477,7 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         onDismiss={() => {
           setSnackbarVisible(false);
         }}>
-        {t('piAppWebView.switchedURL', { URL: appServerAltURL })}
+        {t('piAppWebView.switchedURL', { id3001: appServerAltURL })}
       </Snackbar>
 
       <Components.AppRadioSelectDialog

@@ -99,7 +99,7 @@ const AddDevice = ({ navigation, route }: Props) => {
       ip1: ipAddress1.trim(),
       ip2: ipAddress2.trim(),
       ip3: ipAddress3.trim(),
-      selectedIp: device ? device.selectedIp : ipAddress1.trim(),
+      selectedIp: ipAddress1.trim(),
       piAppServers: device?.piAppServers ?? [],
     };
 
@@ -134,9 +134,13 @@ const AddDevice = ({ navigation, route }: Props) => {
     return validIPAddress(ipAddress1) !== null || validateName(connectionName) !== null;
   }, [connectionName, ipAddress1, validIPAddress, validateName]);
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 16;
+  }, [insets.bottom]);
+
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -221,7 +225,7 @@ const AddDevice = ({ navigation, route }: Props) => {
         <Button
           disabled={validInputs}
           mode={'contained'}
-          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: insets.bottom + 8 }]}
+          style={[styles.button, largeScreenMode && styles.cardTablet, { marginBottom: bottomInsets }]}
           onPress={onPressSave}>
           {buttonTitle}
         </Button>

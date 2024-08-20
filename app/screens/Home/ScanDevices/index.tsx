@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 //ThirdParty
@@ -140,9 +140,13 @@ const ScanDevices = ({ navigation }: Props) => {
     navigation.pop();
   }, [navigation]);
 
+  const bottomInsets = useMemo(() => {
+    return insets.bottom > 0 ? insets.bottom : 16;
+  }, [insets.bottom]);
+
   return (
     <Components.AppBaseView
-      edges={['left', 'right', 'top']}
+      edges={['bottom', 'left', 'right']}
       style={[styles.container, { backgroundColor: colors.background }]}>
       <AppHeader
         showBackButton={true}
@@ -193,7 +197,7 @@ const ScanDevices = ({ navigation }: Props) => {
         {!scanningFinished && <Components.AppLoadingPlaceHolder />}
 
         {scanningFinished && scannedDevices.length > 0 && (
-          <Button style={{ marginBottom: insets.bottom }} icon={'refresh'} mode={'text'} onPress={startScan}>
+          <Button style={{ marginBottom: bottomInsets }} icon={'refresh'} mode={'text'} onPress={startScan}>
             {t('scanDevices.refresh')}
           </Button>
         )}

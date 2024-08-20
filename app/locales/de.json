@@ -1,23 +1,20 @@
 {
-  "changeLanguageScreen": {
-    "title": "Sprache ändern"
-  },
   "about": {
     "app": "Über PiGo",
     "github": "Tragen Sie auf GitHub bei",
-    "moreApps": "Mehr Apps",
-    "rateApp": "Bewertungs App",
-    "sendFeedback": "Feedback abschicken",
-    "sendFeedbackDetail": "Sie können Ihr wertvolles Feedback an den Telegram-Kanal senden oder direkt eine E-Mail senden.",
+    "moreApps": "Weitere Apps",
+    "rateApp": "App bewerten",
+    "sendFeedback": "Feedback senden",
+    "sendFeedbackDetail": "Sie können Ihr wertvolles Feedback an das GitHub-Problem senden.",
     "setting": "Einstellungen",
-    "version": "Version: {{version}}"
+    "version": "Version: {{id0001}}"
   },
   "aboutScreen": {
     "developerTitle": "Entwickler",
     "githubSubTitle": "Entwicklerprofil und Liste der Open-Source-Projekte",
     "githubTitle": "GitHub",
     "infoAuthorNameTitle": "Tejas Gajjar",
-    "infoDescTitle": "PiGo – der quelloffene, kostenlose mobile Begleiter für Raspberry-Pi-Enthusiasten. \nErkunden und verwalten Sie mühelos mehrere Pi-Server von unterwegs.",
+    "infoDescTitle": "PiGo – der kostenlose Open-Source-Mobilbegleiter für Raspberry-Pi-Enthusiasten. \nErkunden und verwalten Sie mühelos mehrere Pi-Server von unterwegs.",
     "infoHeader": "Information",
     "instagramSubTitle": "Mein Hobby und meine Gadgets",
     "instagramTitle": "Instagram",
@@ -45,24 +42,22 @@
     "updateDevice": "Pi-Server aktualisieren"
   },
   "addPiAppServer": {
-    "inputPlaceholder1": "Name eingeben",
+    "inputPlaceholder1": "Geben Sie den Namen ein",
     "inputPlaceholder2": "Geben Sie den Pfad ein",
     "inputPlaceholder3": "Geben Sie den Port ein",
     "inputPlaceholder4": "Geben Sie den Verbindungstyp ein",
-    "inputPlaceholder5": "Kategorie wählen",
+    "inputPlaceholder5": "Kategorie auswählen",
     "inputPlaceholder6": "GitHub-Link eingeben (optional)",
     "inputPlaceholder7": "Beschreibung eingeben (optional)",
     "invalidCategory": "Ungültige Kategorie",
     "invalidIpAddress": "Ungültige URL oder IPv4/IPv6",
     "invalidName": "Ungültiger Name",
-    "invalidURLAddress": "ungültige URL",
+    "invalidURLAddress": "Ungültige URL",
     "saveButton": "SPEICHERN",
     "selectCategoryDialog": {
-      "ok": "OK",
-      "title": "Kategorie wählen"
+      "title": "Kategorie auswählen"
     },
     "selectConnectionTypeDialog": {
-      "ok": "OK",
       "title": "Wählen Sie Verbindungstyp"
     },
     "titleAddPiAppServer": "Pi App Server hinzufügen",
@@ -79,27 +74,19 @@
     "themeOption": "Thema",
     "themeOption1": "Licht",
     "themeOption2": "Dunkel",
-    "themeOption3": "Systemfehler",
+    "themeOption3": "Systemstandard",
     "themeSubTitle": "Hauptthema der App",
     "themeTitle": "Thema",
     "title": "Aussehen"
   },
-  "connectToDeviceList": {
-    "addManually": "Pi-Server hinzufügen",
-    "devicesSettings": "Pi-Server verwalten",
-    "emptyData": {
-      "button": "Pi-Server hinzufügen",
-      "emptyDeviceSubtitle": "Bitte fügen Sie einen neuen Pi-Server hinzu",
-      "emptyDeviceTitle": "Kein Pi-Server gefunden!"
-    },
-    "fabAddMore": "Neu",
-    "savedConnections": "Gespeicherte Pi-Server"
+  "changeLanguageScreen": {
+    "title": "Sprache ändern"
   },
   "dashboard": {
     "card": {
       "current": "Aktuell",
       "max": "Max",
-      "min": "Mindest"
+      "min": "Min"
     },
     "emptyData": {
       "item3": {
@@ -136,15 +123,15 @@
     "title": "Bibliotheken"
   },
   "moreApps": {
-    "apps1Desc": "PiGo – der quelloffene, kostenlose mobile Begleiter für Raspberry-Pi-Enthusiasten. \nErkunden und verwalten Sie mühelos mehrere Pi-Server von unterwegs.",
-    "apps1Title": "PiGo – Entdecken Sie Ihre Pi-Server unterwegs",
-    "apps2Desc": "„OHM-Client“ ist eine inoffizielle offene Hardware-Monitor-Client-App für Android und iOS, die in React-Native geschrieben ist. \nMit dieser App können Sie offene Hardware-Monitor-Webserver überwachen.",
-    "apps2Title": "OHM-Client",
-    "apps3Desc": "Mit dieser Anwendung können Sie Anzeigen oder Empfehlungen für verschiedene Apps auf Xiaomi-Geräten (MIUI) aktivieren/deaktivieren.",
-    "apps3Title": "MIUI – Werbehelfer",
-    "apps4Desc": "Eine interaktive Möglichkeit, Gujarati Kakko, Barakhadi und Zahlen zu lernen.",
-    "apps4Title": "Kano",
-    "appsTitle": "Mehr Apps"
+    "apps1Desc": "Mit dieser Anwendung können Sie Anzeigen oder Empfehlungen für verschiedene Apps auf Xiaomi-Geräten (MIUI) aktivieren/deaktivieren.",
+    "apps1Title": "MIUI – Werbehelfer",
+    "apps2Desc": "Eine interaktive Möglichkeit, Gujarati Kakko, Barakhadi und Zahlen zu lernen.",
+    "apps2Title": "Kano",
+    "apps3Desc": "PiGo – der quelloffene, kostenlose mobile Begleiter für Raspberry-Pi-Enthusiasten. \nErkunden und verwalten Sie mühelos mehrere Pi-Server von unterwegs.",
+    "apps3Title": "PiGo – Entdecken Sie Ihre Pi-Server unterwegs",
+    "apps4Desc": "„OHM-Client“ ist eine inoffizielle offene Hardware-Monitor-Client-App für Android und iOS, die in React-Native geschrieben ist. \nMit dieser App können Sie offene Hardware-Monitor-Webserver überwachen.",
+    "apps4Title": "OHM-Client",
+    "appsTitle": "Weitere Apps"
   },
   "piAppServersList": {
     "createNewPiAppServer": "Neue Pi-App-Server hinzufügen",
@@ -155,7 +142,7 @@
       "title": "Kein Pi-App-Server gefunden!"
     },
     "fabAddMore": "Weitere hinzufügen",
-    "info": "Die Info",
+    "info": "Info",
     "listTitle": "Pi-App-Server",
     "searchText": "Suchen",
     "selectTitle": "Wählen Sie Pi App Server aus"
@@ -165,31 +152,31 @@
     "backPressHint": "Drücken Sie noch einmal, um zurückzugehen",
     "copyURL": "URL kopieren",
     "emptyData": {
-      "button": "Aktualisierung",
+      "button": "Aktualisieren",
       "message": "Bitte versuchen Sie es zu aktualisieren",
       "title": "Server nicht verfügbar!"
     },
     "forward": "Nach vorne",
-    "info": "Die Info",
+    "info": "Info",
     "infoDialog": {
-      "description": "Geladene URL:\n\n{{url}}",
-      "title": "Die Info"
+      "description": "Geladene URL:\n\n{{id3001}}",
+      "title": "Info"
     },
     "openWith": "Öffnen mit",
-    "refresh": "Aktualisierung",
+    "refresh": "Aktualisieren",
     "switchURL": "IP/URL wechseln",
-    "switchedURL": "Auf alternative URL umgestellt:\n\n{{URL}}."
+    "switchedURL": "Auf alternative URL umgestellt:\n\n{{id3001}}."
   },
   "piAppsCategories": {
     "adsBlocker": "Werbe- und Tracker-Blocker",
-    "homeAutomation": "Heimautomatisierung",
+    "homeAutomation": "Hausautomation",
     "informationDisplay": "Informationsanzeige",
     "kvm": "KVM-Lösungen (Tastatur, Video, Maus).",
     "mediaCenters": "Medienzentren",
     "networkAnalysis": "Netzwerkanalyse",
     "networkRouting": "Netzwerk-Routing",
     "other": "Andere",
-    "photoGallery": "Fotogallerie",
+    "photoGallery": "Fotogalerie",
     "printingManagement": "Druckmanagement",
     "selfHostedServerOS": "Selbstgehostetes Server-Betriebssystem",
     "surveillanceAndSecurity": "Überwachung und Sicherheit",
@@ -204,7 +191,7 @@
       "subtitle": "Versuchen Sie bitte erneut zu scannen",
       "title": "Kein Pi-Server in der Nähe gefunden!"
     },
-    "refresh": "AKTUALISIERUNG",
+    "refresh": "AKTUALISIEREN",
     "subTitle": "In der Nähe befindliche Pi-Server",
     "title": "In der Nähe befindliche Pi-Server"
   },
@@ -214,7 +201,7 @@
       "row1": {
         "dialogSubTitle": "Fügen Sie Ports möglicher Pi-Server-Ports hinzu. Dies hilft, Ihren Pi im lokalen Netzwerk zu identifizieren. \n(z. B. 80 Standard, 32400 für Plex usw.)",
         "dialogTitle": "Ports eingeben (durch Kommas getrennt)",
-        "subTitle": "{{ports}}",
+        "subTitle": "{{id2001}}",
         "title": "Häfen"
       }
     },
@@ -223,13 +210,13 @@
       "row1": {
         "dialogSubTitle": "Scan-Timeout pro Thread, z. B. 150 Threads pro 1500 ms. Wenn der Pi-Server nicht gefunden wird, versuchen Sie, das Timeout zu erhöhen.",
         "dialogTitle": "Geben Sie das Scan-Timeout ein (1 - 10000).",
-        "subTitle": "{{scanTimeoutInMs}} ms",
+        "subTitle": "{{id2002}} ms",
         "title": "Scan-Timeout"
       },
       "row2": {
         "dialogSubTitle": "Scannen Sie Threads pro Zeitüberschreitung, z. B. 150 Threads pro 1500 ms. Wenn der Pi-Server nicht gefunden wird, versuchen Sie, die Anzahl der Threads zu verringern.",
         "dialogTitle": "Scan-Threads eingeben (1-999)",
-        "subTitle": "{{scanThreads}}",
+        "subTitle": "{{id2003}}",
         "title": "Threads scannen"
       }
     },
@@ -251,12 +238,12 @@
     "faqSubTitle": "Beantworten Sie häufig gestellte Fragen",
     "faqTitle": "FAQ",
     "infoHeader": "Information",
-    "languageSubTitle": "{{language}}",
+    "languageSubTitle": "{{id10001}}",
     "languageTitle": "App-Sprache",
     "librariesSubTitle": "Liste der in diesem Projekt verwendeten Open-Source-Bibliotheken",
     "librariesTitle": "Bibliotheken",
     "piAppServersSubTitle": "Verwalten Sie die Liste der Standard-Pi-App-Server wie Pi-hole, Plex usw",
-    "piAppServersTitle": "Standard-Pi-App-Server",
+    "piAppServersTitle": "Pi-App-Server",
     "privacySubTitle": "Nutzungsrichtlinie für Informationen und Berechtigungen",
     "privacyTitle": "Datenschutzrichtlinie",
     "recentConnectionsSubTitle": "Verwalten Sie hinzugefügte Pi-Server",
@@ -344,7 +331,7 @@
         "dialogSubTitle": "Der User-Agent (UA)-String ist in den HTTP-Headern enthalten und soll Geräte identifizieren, die Online-Inhalte anfordern.",
         "dialogTitle": "Geben Sie die Zeichenfolge des Benutzeragenten ein",
         "subTitle": "Legt den Benutzeragenten für die WebView fest.",
-        "title": "User-Agent"
+        "title": "Benutzeragent"
       },
       "row7": {
         "subTitle": "Boolescher Wert, der bestimmt, ob Videos im Vollbildmodus abgespielt werden dürfen. \nDer Standardwert ist false.",
