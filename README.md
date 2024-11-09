@@ -19,8 +19,8 @@ Get the app from Google Play:
 
 |                                                |                                                    |                                          |                                          |
 | :--------------------------------------------: | :------------------------------------------------: | :--------------------------------------: | :--------------------------------------: |
-| ![Accounts List](docs/images/screenshot-1.png) | ![Transactions List](docs/images/screenshot-2.png) | ![Reports](docs/images/screenshot-3.png) | ![Reports](docs/images/screenshot-4.png) |
-| ![Accounts List](docs/images/screenshot-5.png) | ![Transactions List](docs/images/screenshot-6.png) | ![Reports](docs/images/screenshot-7.png) | ![Reports](docs/images/screenshot-8.png) |
+| ![Accounts List](docs/images/home-devices-list.png) | ![Transactions List](docs/images/device-apps.png) | ![Reports](docs/images/app-info-pi-hole.png) | ![Reports](docs/images/app-info-rpi-monitor.png) |
+| ![Accounts List](docs/images/settings-list.png) | ![Transactions List](docs/images/app-servers-list.png) | ![Reports](docs/images/update-app-server.png) | ![Reports](docs/images/update-device.png) |
 
 The application supports Android 5.0 (API 21) and above.
 

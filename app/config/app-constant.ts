@@ -13,7 +13,7 @@ const Constant = {
 
   ABOUT_NEW_GITHUB_ISSUE: `${GITHUB_PROJECT_LINK}/issues/new`,
   ABOUT_TELEGRAM_LINK: 'https://t.me/tejasapps',
-  ABOUT_SUPPORT_EMAIL: 'gajjartejas26@gmail.com',
+  ABOUT_GITHUB_DISCUSSION: `${GITHUB_PROJECT_LINK}/discussions/new`,
 
   MORE_APPS_1_GITHUB: 'https://github.com/gajjartejas/MIUIAdsHelper',
   MORE_APPS_1_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.miuiadshelper',
@@ -22,7 +22,7 @@ const Constant = {
   MORE_APPS_2_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.kano',
 
   MORE_APPS_3_GITHUB: 'https://github.com/gajjartejas/PiGo',
-  MORE_APPS_3_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.miuiadshelper',
+  MORE_APPS_3_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.pigo',
 
   MORE_APPS_4_GITHUB: 'https://github.com/gajjartejas/OHM-Client',
   MORE_APPS_4_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.tejasgajjar.ohmc',

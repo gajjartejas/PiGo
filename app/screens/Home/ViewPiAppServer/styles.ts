@@ -40,9 +40,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   inputMultilineStyle: {
+    height: 'auto',
     minHeight: 60,
-    maxHeight: 300,
-    flex: 1,
     marginTop: 12,
   },
   inputStyleBottom: {

@@ -146,6 +146,7 @@ const ViewPiAppServer = ({ navigation, route }: Props) => {
               />
 
               <Components.AppTextInput
+                multiline={true}
                 autoCapitalize="none"
                 value={gitHubLink.trim().length > 0 ? gitHubLink : '-'}
                 onChangeText={setGitHubLink}
