@@ -51,7 +51,8 @@ User Experience:
 ## Building
 
 ### Basic setup
-
+>  Note: You can't Publish any Source code without permission.
+> 
 If you want to build from source, just do
 
     git clone https://github.com/gajjartejas/PiGo.git
