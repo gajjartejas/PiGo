@@ -17,39 +17,45 @@ Get the app from Google Play:
 
 ### Screenshots
 
-|                                                |                                                    |                                          |                                          |
-| :--------------------------------------------: | :------------------------------------------------: | :--------------------------------------: | :--------------------------------------: |
-| ![Accounts List](docs/images/home-devices-list.png) | ![Transactions List](docs/images/device-apps.png) | ![Reports](docs/images/app-info-pi-hole.png) | ![Reports](docs/images/app-info-rpi-monitor.png) |
-| ![Accounts List](docs/images/settings-list.png) | ![Transactions List](docs/images/app-servers-list.png) | ![Reports](docs/images/update-app-server.png) | ![Reports](docs/images/update-device.png) |
+|                                                                                  |                                                                                     |                                                                            |                                                                               |
+| :------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
+| ![Accounts List](metadata/en-US/images/phoneScreenshots/1-home-devices-list.png) |   ![Transactions List](metadata/en-US/images/phoneScreenshots/2-device-apps.png)    | ![Reports](metadata/en-US/images/phoneScreenshots/3-app-info-pi-hole.png)  | ![Reports](metadata/en-US/images/phoneScreenshots/4-app-info-rpi-monitor.png) |
+|   ![Accounts List](metadata/en-US/images/phoneScreenshots/5-settings-list.png)   | ![Transactions List](metadata/en-US/images/phoneScreenshots/6-app-servers-list.png) | ![Reports](metadata/en-US/images/phoneScreenshots/7-update-app-server.png) |    ![Reports](metadata/en-US/images/phoneScreenshots/8-update-device.png)     |
 
 The application supports Android 5.0 (API 21) and above.
 
 ## Features include:
 
 Home Page Features:
+
 - List of Pi Servers: Display all Pi servers on the home page.
 
 Pi Server Management:
+
 - Add, Update, Delete: Allow users to manage Pi servers by adding, updating, and deleting them as needed.
 - Auto Scan: Provide the option to automatically discover Pi app servers locally.
 - Add Pi Server: Enable users to add multiple Pi servers with support for both IPv4 and IPv6 addresses/URLs.
 
 Pi Apps Management:
+
 - Predefined Pi Apps: Allow users to add predefined Pi apps to their Pi servers.
 - View Pi Apps: Access Pi apps in the webview with features like refresh, forward, backward, and URL switching support.
 - Default Pi App Server: Manage the default Pi app server with options to add, update, and delete servers.
 
 Additional Settings:
+
 - Auto Scan Settings: Configure settings for auto-scanning Pi app servers.
 - Webview Settings: Adjust settings such as user-agent, JavaScript enable/disable, and clear website data.
 
 User Experience:
+
 - Dark Theme Support: Offer a dark theme for improved visibility and reduced eye strain.
 - Multi-Language Support: Provide language options for users to navigate the app in their preferred language.
 - Tablet/iPad and Phone support.
 
 ## Building
->  Note: You can't Publish any Source code without permission.
+
+> Note: You can't Publish any Source code without permission.
 
 ### Basic setup
 
