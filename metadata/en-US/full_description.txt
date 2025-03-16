@@ -1,0 +1,34 @@
+PiGo: Explore Pi On the Go
+
+Unlock the full potential of your Raspberry Pi with PiGo, the ultimate mobile companion designed for Raspberry Pi enthusiasts. PiGo empowers you to seamlessly manage and access various services and applications hosted on your Raspberry Pi servers from anywhere, anytime.
+
+Features:
+
+Effortless Pi Server Management:
+PiGo simplifies the management of your Raspberry Pi servers. Add, update, or delete multiple Pi servers effortlessly, ensuring you have access to all your essential services with just a tap.
+
+Intuitive Pi App Integration:
+Customize your Pi servers with ease by adding predefined Pi apps directly from PiGo. From media servers like Plex to network-wide ad blockers such as Pi-hole, PiGo supports a wide range of applications to suit your needs.
+
+Webview for Seamless Access:
+Access your favorite Pi apps conveniently within PiGo's built-in webview. Enjoy features like refresh, forward, backward, and URL switching support, ensuring a smooth browsing experience.
+
+Local Discovery and Auto-Scan:
+PiGo offers local discovery and auto-scan capabilities, making it easy to find and connect to Pi app servers on your local network. Effortlessly explore and connect to new servers without manual configuration.
+
+Advanced Settings for Customization:
+Tailor your browsing experience with PiGo's advanced settings. Configure webview settings, including user-agent, JavaScript enable/disable, and clear website data, to suit your preferences.
+
+Dark Theme Support:
+Protect your eyes and enhance visibility during nighttime usage with PiGo's dark theme support. Switch between light and dark themes effortlessly for optimal comfort.
+
+Multi-Language Support:
+PiGo supports multiple languages, allowing users from around the world to navigate the app in their preferred language. Enjoy a seamless and personalized experience regardless of your language preference.
+
+We hope you enjoy our apps
+If you have any bugs or suggestions, please contact us at
+gajjartejas26@gmail.com
+
+GitHub: https://github.com/gajjartejas/PiGo
+
+This open-source app is written in React native.
