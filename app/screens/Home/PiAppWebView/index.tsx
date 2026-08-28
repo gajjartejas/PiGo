@@ -4,7 +4,7 @@ import { Animated, BackHandler, ToastAndroid, View } from 'react-native';
 //ThirdParty
 import { Button, Dialog, Text, IconButton, Menu, ProgressBar, useTheme, Portal, Snackbar } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import WebView from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,10 +26,11 @@ import useAppWebViewConfigStore from 'app/store/webViewConfig';
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'PiAppWebView'>;
 
 const THRESHOLD_DIFF_Y = 100;
+const WebViewComponent: any = WebView;
 
 const PiAppWebView = ({ navigation, route }: Props) => {
   //Refs
-  const webViewRef = useRef<WebView | null>(null);
+  const webViewRef = useRef<any>(null);
   const refCurrentURL = useRef<string | null>(null);
   const refCurrentY = useRef(0);
   const refDiffY = useRef(0);
@@ -74,43 +75,41 @@ const PiAppWebView = ({ navigation, route }: Props) => {
   const [canGoFw, setCanGoFw] = useState(false);
   const [canGoBw, setCanGoBw] = useState(false);
 
-  const [
-    mediaPlaybackRequiresUserAction,
-    scalesPageToFit,
-    domStorageEnabled,
-    javaScriptEnabled,
-    thirdPartyCookiesEnabled,
-    userAgent,
-    allowsFullScreenVideo,
-    allowsInlineMediaPlayback,
-    allowsAirPlayForMediaPlayback,
-    bounces,
-    contentMode,
-    geolocationEnabled,
-    allowFileAccessFromFileUrls,
-    allowsBackForwardNavigationGestures,
-    pullToRefreshEnabled,
-    forceDarkOn,
-    allowsProtectedMedia,
-  ] = useAppWebViewConfigStore(store => [
-    store.mediaPlaybackRequiresUserAction,
-    store.scalesPageToFit,
-    store.domStorageEnabled,
-    store.javaScriptEnabled,
-    store.thirdPartyCookiesEnabled,
-    store.userAgent,
-    store.allowsFullScreenVideo,
-    store.allowsInlineMediaPlayback,
-    store.allowsAirPlayForMediaPlayback,
-    store.bounces,
-    store.contentMode,
-    store.geolocationEnabled,
-    store.allowFileAccessFromFileUrls,
-    store.allowsBackForwardNavigationGestures,
-    store.pullToRefreshEnabled,
-    store.forceDarkOn,
-    store.allowsProtectedMedia,
-  ]);
+  const mediaPlaybackRequiresUserAction = useAppWebViewConfigStore(store => store.mediaPlaybackRequiresUserAction);
+
+  const scalesPageToFit = useAppWebViewConfigStore(store => store.scalesPageToFit);
+
+  const domStorageEnabled = useAppWebViewConfigStore(store => store.domStorageEnabled);
+
+  const javaScriptEnabled = useAppWebViewConfigStore(store => store.javaScriptEnabled);
+
+  const thirdPartyCookiesEnabled = useAppWebViewConfigStore(store => store.thirdPartyCookiesEnabled);
+
+  const userAgent = useAppWebViewConfigStore(store => store.userAgent);
+
+  const allowsFullScreenVideo = useAppWebViewConfigStore(store => store.allowsFullScreenVideo);
+
+  const allowsInlineMediaPlayback = useAppWebViewConfigStore(store => store.allowsInlineMediaPlayback);
+
+  const allowsAirPlayForMediaPlayback = useAppWebViewConfigStore(store => store.allowsAirPlayForMediaPlayback);
+
+  const bounces = useAppWebViewConfigStore(store => store.bounces);
+
+  const contentMode = useAppWebViewConfigStore(store => store.contentMode);
+
+  const geolocationEnabled = useAppWebViewConfigStore(store => store.geolocationEnabled);
+
+  const allowFileAccessFromFileUrls = useAppWebViewConfigStore(store => store.allowFileAccessFromFileUrls);
+
+  const allowsBackForwardNavigationGestures = useAppWebViewConfigStore(
+    store => store.allowsBackForwardNavigationGestures,
+  );
+
+  const pullToRefreshEnabled = useAppWebViewConfigStore(store => store.pullToRefreshEnabled);
+
+  const forceDarkOn = useAppWebViewConfigStore(store => store.forceDarkOn);
+
+  const allowsProtectedMedia = useAppWebViewConfigStore(store => store.allowsProtectedMedia);
 
   const allUrls = useMemo(() => {
     return [selectedDevice?.ip1, selectedDevice?.ip2, selectedDevice?.ip3].filter(v => !!v);
@@ -344,16 +343,16 @@ const PiAppWebView = ({ navigation, route }: Props) => {
       style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.subView]}>
         {!error && !!appServerURL && (
-          <WebView
+          <WebViewComponent
             key={webViewKey}
             ref={webViewRef}
             source={{ uri: appServerURL }}
             style={{ ...styles.webview, backgroundColor: colors.background }}
             originWhitelist={['*']}
-            onLoadProgress={({ nativeEvent }) => {
+            onLoadProgress={({ nativeEvent }: any) => {
               setProgress(nativeEvent.progress);
             }}
-            onNavigationStateChange={state => {
+            onNavigationStateChange={(state: any) => {
               refCurrentURL.current = state.url;
               setShowProgress(true);
               setCanGoFw(state.canGoForward);
@@ -400,8 +399,8 @@ const PiAppWebView = ({ navigation, route }: Props) => {
         )}
         {error && retryAttempt > 2 && (
           <Components.AppEmptyDataView
-            iconType={'material-community'}
-            iconName="web-off"
+            iconType={'material'}
+            iconName="cloud-off-outline"
             style={styles.webview}
             header={t('piAppWebView.emptyData.title')}
             subHeader={

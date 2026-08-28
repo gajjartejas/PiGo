@@ -192,6 +192,9 @@
       "title": "¡No se encontró ningún servidor Pi cercano!"
     },
     "refresh": "REFRESCAR",
+    "scanning": "Escaneando red...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Descubiertos: {{count}}",
     "subTitle": "Servidores Pi cercanos",
     "title": "Servidores Pi cercanos"
   },

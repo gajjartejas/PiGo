@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Keyboard, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
 
 //ThirdParty
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -28,13 +27,13 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddPiAppServer'
 
 const AddPiAppServer = ({ navigation, route }: Props) => {
   //Refs
-  const nameRef = useRef<TextInput | null>(null);
-  const pathRef = useRef<TextInput | null>(null);
-  const portRef = useRef<TextInput | null>(null);
-  const secureConnectionRef = useRef<TextInput | null>(null);
-  const categoryRef = useRef<TextInput | null>(null);
-  const githubLinkRef = useRef<TextInput | null>(null);
-  const descriptionRef = useRef<TextInput | null>(null);
+  const nameRef = useRef<any>(null);
+  const pathRef = useRef<any>(null);
+  const portRef = useRef<any>(null);
+  const secureConnectionRef = useRef<any>(null);
+  const categoryRef = useRef<any>(null);
+  const githubLinkRef = useRef<any>(null);
+  const descriptionRef = useRef<any>(null);
 
   //Constants
   const { colors } = useTheme();

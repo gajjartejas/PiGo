@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View, ScrollView, Text, TouchableOpacity, AppState } from 'react-native';
 
 //ThirdParty
-import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
+import { Button, FAB, IconButton, List, Menu, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useIsFocused } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -22,8 +21,8 @@ import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import IPiAppServer from 'app/models/models/piAppServer';
 import getLiveURL from 'app/utils/getLiveURL';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import Icon from 'react-native-easy-icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CommonIcon from 'app/components/CommonIcon.tsx';
 //import SSHClient from '@dylankenneally/react-native-ssh-sftp';
 
 //Params
@@ -68,7 +67,7 @@ const PiAppServers = ({ navigation }: Props) => {
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
-      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+      if (appState.current?.match(/inactive|background/) && nextAppState === 'active') {
         console.log('App has come to the foreground!');
       }
 
@@ -322,7 +321,7 @@ const PiAppServers = ({ navigation }: Props) => {
         }
         SubTitleComponent={
           <TouchableOpacity activeOpacity={0.7} onPress={onShowSubTitleDialog} style={styles.subTitleButton}>
-            <Icon type="material-community" name="chevron-down" color={`${colors.onBackground}88`} size={24} />
+            <CommonIcon type="material" name="chevron-down" color={`${colors.onBackground}88`} size={24} />
             <Text
               numberOfLines={1}
               ellipsizeMode={'tail'}
@@ -386,7 +385,7 @@ const PiAppServers = ({ navigation }: Props) => {
 
       {(!selectedDevice || selectedDevice.piAppServers.length < 1) && (
         <Components.AppEmptyDataView
-          iconType={'font-awesome5'}
+          iconType={'material'}
           iconName="raspberry-pi"
           style={styles.emptyView}
           header={t('dashboard.emptyData.item3.title')}

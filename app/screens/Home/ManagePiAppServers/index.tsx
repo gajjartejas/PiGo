@@ -2,9 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { View, TextInput, SectionList } from 'react-native';
 
 //ThirdParty
-import { Button, FAB, IconButton, List } from 'react-native-paper';
+import { Button, FAB, IconButton, List, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,11 +18,10 @@ import useAppConfigStore from 'app/store/appConfig';
 import Components from 'app/components';
 import useEventEmitter from 'app/hooks/useDeviceEventEmitter';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
-import PiAppServer from 'app/models/models/piAppServer';
 
 interface GroupedPiAppServers {
   title: string;
-  data: PiAppServer[];
+  data: IPiAppServer[];
 }
 
 export function useSearch(array: GroupedPiAppServers[], searchTerm: string): GroupedPiAppServers[] {
@@ -67,7 +65,7 @@ const ManagePiAppServers = ({ navigation, route }: Props) => {
   const [visibleSectionIndex, setVisibleSectionIndex] = React.useState<number | null>(null);
 
   const groupedPiAppServers: GroupedPiAppServers[] = useMemo(() => {
-    return piAppServers.reduce((accumulator: GroupedPiAppServers[], appServer: PiAppServer) => {
+    return piAppServers.reduce((accumulator: GroupedPiAppServers[], appServer: IPiAppServer) => {
       const category = appServer.category;
       const existingCategory = accumulator.find(group => group.title === category);
       if (existingCategory) {
@@ -155,7 +153,7 @@ const ManagePiAppServers = ({ navigation, route }: Props) => {
     setSearchText('');
   };
 
-  const renderItem = ({ item, index, section }: { item: PiAppServer; index: number; section: GroupedPiAppServers }) => {
+  const renderItem = ({ item, index, section }: { item: IPiAppServer; index: number; section: GroupedPiAppServers }) => {
     const sectionIndex = groupedPiAppServers.findIndex(v => v.title === section.title);
     return (
       <Components.PiAppServerRow
@@ -228,7 +226,8 @@ const ManagePiAppServers = ({ navigation, route }: Props) => {
 
         {piAppServers.length < 1 && (
           <Components.AppEmptyDataView
-            iconType={'font-awesome5'}
+            iconType={'fontawesome6'}
+            iconStyle={'brand'}
             iconName="raspberry-pi"
             style={{}}
             header={t('piAppServersList.emptyData.title')}

@@ -191,9 +191,12 @@
       "subtitle": "Пожалуйста, попробуйте сканировать еще раз",
       "title": "Ближайший сервер Pi не найден!"
     },
-    "refresh": "ОБНОВИТЬ",
-    "subTitle": "Ближайшие Pi-серверы",
-    "title": "Ближайшие Pi-серверы"
+    "refresh": "ОБНОВЛЯТЬ",
+    "scanning": "Сканирование сети...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Обнаружено: {{count}}",
+    "subTitle": "Ближайшие серверы Pi",
+    "title": "Ближайшие серверы Pi"
   },
   "scanSetting": {
     "section1": {

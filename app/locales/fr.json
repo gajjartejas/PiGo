@@ -192,6 +192,9 @@
       "title": "Aucun serveur Pi à proximité trouvé !"
     },
     "refresh": "RAFRAÎCHIR",
+    "scanning": "Analyse du réseau...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Découverts: {{count}}",
     "subTitle": "Serveurs Pi à proximité",
     "title": "Serveurs Pi à proximité"
   },

@@ -3,13 +3,14 @@ import { ScrollView, View } from 'react-native';
 
 //ThirdParty
 import { useTranslation } from 'react-i18next';
-import { Button, IconButton, List, Text, useTheme } from 'react-native-paper';
+import { ActivityIndicator, Button, IconButton, List, ProgressBar, Surface, Text, useTheme } from 'react-native-paper';
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import LanPortScanner, { CancelScan, LSScanConfig } from 'react-native-lan-port-scanner';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 //App modules
 import Components from 'app/components';
+import CommonIcon from 'app/components/CommonIcon';
 import styles from './styles';
 import Config from 'app/config';
 import Utils from 'app/utils';
@@ -26,10 +27,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ScanDevices'>;
 
+interface IScanProgress {
+  progress: number;
+  percent: number;
+  totalHosts: number;
+  hostScanned: number;
+}
+
 const ScanDevices = ({ navigation }: Props) => {
   //Refs
   const cancelScanRef = useRef<CancelScan | null>(null);
-  //Actions
+  const lastProgressUpdateRef = useRef<number>(0);
 
   //Constants
   const { t } = useTranslation();
@@ -44,70 +52,126 @@ const ScanDevices = ({ navigation }: Props) => {
   //States
   const [scanningFinished, setScanningFinished] = useState(false);
   const [scannedDevices, setScannedDevices] = useState<IDevice[]>([]);
+  const [scanProgress, setScanProgress] = useState<IScanProgress>({
+    progress: 0,
+    percent: 0,
+    totalHosts: 0,
+    hostScanned: 0,
+  });
 
   const startScan = useCallback(async () => {
     setScannedDevices([]);
     setScanningFinished(false);
+    setScanProgress({
+      progress: 0,
+      percent: 0,
+      totalHosts: 0,
+      hostScanned: 0,
+    });
+    lastProgressUpdateRef.current = 0;
+
     if (cancelScanRef.current !== null) {
       cancelScanRef.current();
     }
 
-    const networkInfo = await LanPortScanner.getNetworkInfo();
-    const config: LSScanConfig = {
-      networkInfo: networkInfo,
-      ports: ports,
-      timeout: scanTimeoutInMs,
-      threads: scanThreads,
-      logging: false,
-    };
-    cancelScanRef.current = LanPortScanner.startScan(
-      config,
-      (_totalHosts: number, _hostScanned: number) => {},
-      result => {
-        if (result) {
-          setScannedDevices(d => {
-            const updatedDevices = d.map(device => {
-              if (device.ip1 === result.ip) {
-                return {
-                  ...device,
-                  scanPorts: [...device.scanPorts, result.port],
-                  ip1: result.ip,
-                  ip2: null,
-                  ip3: null,
-                  selectedIp: result.ip,
-                };
-              }
-              return device;
+    try {
+      console.log('[ScanDevices] Fetching network info...');
+      const networkInfo = await LanPortScanner.getNetworkInfo();
+      console.log('[ScanDevices] Received network info:', JSON.stringify(networkInfo));
+
+      const config: LSScanConfig = {
+        networkInfo: networkInfo,
+        ports: ports,
+        timeout: scanTimeoutInMs,
+        threads: scanThreads,
+        logging: __DEV__,
+      };
+      console.log('[ScanDevices] Starting scan with config:', JSON.stringify(config));
+
+      cancelScanRef.current = LanPortScanner.startScan(
+        config,
+        (totalHosts: number, hostScanned: number) => {
+          const now = Date.now();
+          const ratio = totalHosts > 0 ? hostScanned / totalHosts : 0;
+          const pct = Math.round(ratio * 100);
+
+          if (hostScanned === 1 || hostScanned === totalHosts || hostScanned % 50 === 0) {
+            console.log(`[ScanDevices] Scan Progress: ${hostScanned}/${totalHosts} (${pct}%)`);
+          }
+
+          if (now - lastProgressUpdateRef.current > 80 || hostScanned === totalHosts) {
+            lastProgressUpdateRef.current = now;
+            setScanProgress({
+              progress: Math.min(1, Math.max(0, ratio)),
+              percent: Math.min(100, pct),
+              totalHosts,
+              hostScanned,
             });
-            return updatedDevices.some(device => device.ip1 === result.ip)
-              ? updatedDevices
-              : [
-                  ...updatedDevices,
-                  {
-                    id: uuid.v4().toString(),
-                    name: '',
+          }
+        },
+        result => {
+          if (result) {
+            console.log('[ScanDevices] Host found:', JSON.stringify(result));
+            setScannedDevices(d => {
+              const updatedDevices = d.map(device => {
+                if (device.ip1 === result.ip) {
+                  return {
+                    ...device,
+                    scanPorts: [...device.scanPorts, result.port],
                     ip1: result.ip,
                     ip2: null,
                     ip3: null,
                     selectedIp: result.ip,
-                    scanPorts: [result.port],
-                    piAppServers: [],
-                    ...result,
-                  },
-                ];
-          });
-        }
-      },
-      () => {
-        setScanningFinished(true);
-      },
-    );
+                  };
+                }
+                return device;
+              });
+              return updatedDevices.some(device => device.ip1 === result.ip)
+                ? updatedDevices
+                : [
+                    ...updatedDevices,
+                    {
+                      id: uuid.v4().toString(),
+                      name: '',
+                      ip1: result.ip,
+                      ip2: null,
+                      ip3: null,
+                      selectedIp: result.ip,
+                      scanPorts: [result.port],
+                      piAppServers: [],
+                      ...result,
+                    },
+                  ];
+            });
+          }
+        },
+        results => {
+          console.log('[ScanDevices] Scan completed onFinish called. Total results:', results?.length, JSON.stringify(results));
+          setScanProgress(prev => ({
+            ...prev,
+            progress: 1,
+            percent: 100,
+            hostScanned: prev.totalHosts,
+          }));
+          setScanningFinished(true);
+        },
+      );
+    } catch (error) {
+      console.error('[ScanDevices] Scan error caught in try/catch:', error);
+      setScanningFinished(true);
+    }
   }, [ports, scanThreads, scanTimeoutInMs]);
 
   useEffect(() => {
     (async () => {
       await startScan();
     })();
+
+    return () => {
+      if (cancelScanRef.current !== null) {
+        cancelScanRef.current();
+      }
+    };
   }, [startScan]);
 
   const onPressDevice = useCallback(
@@ -137,6 +201,9 @@ const ScanDevices = ({ navigation }: Props) => {
   }, [navigation]);
 
   const onGoBack = useCallback(() => {
+    if (cancelScanRef.current !== null) {
+      cancelScanRef.current();
+    }
     navigation.pop();
   }, [navigation]);
 
@@ -164,10 +231,76 @@ const ScanDevices = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
       <View style={[styles.safeArea, largeScreenMode && styles.cardTablet, { backgroundColor: colors.background }]}>
-        {scanningFinished && scannedDevices.length > 0 && (
+        {!scanningFinished && (
+          <Surface
+            elevation={1}
+            style={[
+              styles.progressCard,
+              {
+                backgroundColor: colors.surface,
+                borderColor: `${colors.onSurface}18`,
+              },
+            ]}>
+            <View style={styles.progressHeader}>
+              <View style={styles.progressTitleContainer}>
+                <ActivityIndicator animating={true} color={colors.primary} size={16} />
+                <Text style={[styles.progressStatusText, { color: colors.onSurface }]}>
+                  {t('scanDevices.scanning')}
+                </Text>
+              </View>
+              <Text style={[styles.progressPercentageText, { color: colors.onSurface }]}>
+                {scanProgress.percent}%
+              </Text>
+            </View>
+
+            <ProgressBar
+              progress={scanProgress.progress}
+              color={colors.primary}
+              style={[styles.progressBar, { backgroundColor: `${colors.onSurface}15` }]}
+            />
+
+            <View style={styles.progressFooter}>
+              <Text style={[styles.progressFooterText, { color: `${colors.onSurface}88` }]}>
+                {scanProgress.totalHosts > 0
+                  ? t('scanDevices.scannedRatio', {
+                      scanned: scanProgress.hostScanned,
+                      total: scanProgress.totalHosts,
+                    })
+                  : ''}
+              </Text>
+              <View
+                style={[
+                  styles.discoveredBadge,
+                  {
+                    backgroundColor: scannedDevices.length > 0 ? '#00D10020' : `${colors.onSurface}10`,
+                    borderColor: scannedDevices.length > 0 ? '#00D10060' : `${colors.onSurface}20`,
+                  },
+                ]}>
+                <CommonIcon
+                  type="material"
+                  name={scannedDevices.length > 0 ? 'antenna' : 'radar'}
+                  size={14}
+                  color={scannedDevices.length > 0 ? '#00D100' : `${colors.onSurface}88`}
+                />
+                <Text
+                  style={[
+                    styles.discoveredBadgeText,
+                    { color: scannedDevices.length > 0 ? '#00D100' : `${colors.onSurface}88` },
+                  ]}>
+                  {t('scanDevices.discoveredCount', { count: scannedDevices.length })}
+                </Text>
+              </View>
+            </View>
+          </Surface>
+        )}
+
+        {scannedDevices.length > 0 && (
           <ScrollView style={styles.scrollView}>
             <List.Section>
-              <List.Subheader>{t(t('scanDevices.subTitle'))}</List.Subheader>
+              <List.Subheader style={{ color: `${colors.onBackground}99` }}>
+                {t('scanDevices.subTitle')}
+                {scanningFinished ? ` (${scannedDevices.length})` : ''}
+              </List.Subheader>
               {scannedDevices.map((device, idx) => {
                 return (
                   <List.Item
@@ -184,9 +317,16 @@ const ScanDevices = ({ navigation }: Props) => {
           </ScrollView>
         )}
 
+        {!scanningFinished && scannedDevices.length < 1 && (
+          <View style={styles.scanningEmptyContainer}>
+            <Components.AppLoadingPlaceHolder />
+          </View>
+        )}
+
         {scanningFinished && scannedDevices.length < 1 && (
           <Components.AppEmptyDataView
-            iconType={'font-awesome5'}
+            iconType={'fontawesome6'}
+            iconStyle={'brand'}
             iconName="raspberry-pi"
             style={{}}
             header={t('scanDevices.emptyData.title')}
@@ -194,9 +334,8 @@ const ScanDevices = ({ navigation }: Props) => {
             renderContent={renderNoNearbyDeviceButtons}
           />
         )}
-        {!scanningFinished && <Components.AppLoadingPlaceHolder />}
 
-        {scanningFinished && scannedDevices.length > 0 && (
+        {scanningFinished && (
           <Button style={{ marginBottom: bottomInsets }} icon={'refresh'} mode={'text'} onPress={startScan}>
             {t('scanDevices.refresh')}
           </Button>

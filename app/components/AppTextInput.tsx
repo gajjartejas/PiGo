@@ -5,12 +5,11 @@ import {
   View,
   StyleSheet,
   ViewStyle,
-  TextInputFocusEventData,
   TextInput,
   TouchableOpacity,
+  NativeSyntheticEvent,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 
 interface IAppTextInputProps extends TextInputProps {
   errorText?: string | null;
@@ -20,14 +19,14 @@ interface IAppTextInputProps extends TextInputProps {
   onPress?: () => void;
 }
 
-const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
+const AppTextInput = forwardRef<any, IAppTextInputProps>((props, ref) => {
   const theme = useTheme();
   const { errorText, containerStyle, onBlur, onFocus, RightAccessoryView, onPress, viewOnly, ...otherProps } = props;
   const [isFocused, setIsFocused] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
 
   const handleOnBlur = useCallback(
-    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    (event: NativeSyntheticEvent<any>) => {
       setIsBlurred(true);
       setIsFocused(false);
       if (onBlur) {
@@ -38,7 +37,7 @@ const AppTextInput = forwardRef<TextInput, IAppTextInputProps>((props, ref) => {
   );
 
   const handleOnFocus = useCallback(
-    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    (event: NativeSyntheticEvent<any>) => {
       setIsFocused(true);
       setIsBlurred(false);
       if (onFocus) {
@@ -111,4 +110,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(AppTextInput);
+export default memo(AppTextInput) as unknown as React.ForwardRefExoticComponent<
+  IAppTextInputProps & React.RefAttributes<TextInput>
+>;
