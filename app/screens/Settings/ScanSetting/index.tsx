@@ -5,7 +5,6 @@ import { View, TextInput } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Divider, List, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Icon from 'react-native-easy-icon';
 
 //App modules
 import Components from 'app/components';
@@ -17,6 +16,7 @@ import { ISettingItem, ISettingSection } from 'app/models/viewModels/settingItem
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import AppHeader from 'app/components/AppHeader';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import CommonIcon from 'app/components/CommonIcon.tsx';
 
 //Params
 type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'ScanSetting'>;
@@ -28,12 +28,15 @@ const ScanSetting = ({ navigation }: Props) => {
   const modalVisibleScanThreadsRef = useRef<TextInput | null>(null);
 
   //Actions
-  const [ports, setPorts] = useAppScanConfigStore(store => [store.ports, store.setPorts]);
-  const [scanTimeoutInMs, setScanTimeoutInMs] = useAppScanConfigStore(store => [
-    store.scanTimeoutInMs,
-    store.setScanTimeoutInMs,
-  ]);
-  const [scanThreads, setScanThreads] = useAppScanConfigStore(store => [store.scanThreads, store.setScanThreads]);
+  const ports = useAppScanConfigStore(store => store.ports);
+  const setPorts = useAppScanConfigStore(store => store.setPorts);
+
+  const scanTimeoutInMs = useAppScanConfigStore(store => store.scanTimeoutInMs);
+  const setScanTimeoutInMs = useAppScanConfigStore(store => store.setScanTimeoutInMs);
+
+  const scanThreads = useAppScanConfigStore(store => store.scanThreads);
+  const setScanThreads = useAppScanConfigStore(store => store.setScanThreads);
+
   const reset = useAppScanConfigStore(store => store.reset);
   const largeScreenMode = useLargeScreenMode();
 
@@ -51,7 +54,7 @@ const ScanSetting = ({ navigation }: Props) => {
           {
             id: 0,
             iconName: 'network',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('scanSetting.section1.row1.title'),
             description: t('scanSetting.section1.row1.subTitle', { id2001: ports.join(', ') }),
             route: '',
@@ -65,7 +68,7 @@ const ScanSetting = ({ navigation }: Props) => {
           {
             id: 0,
             iconName: 'timer-sand-full',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('scanSetting.section3.row1.title'),
             description: t('scanSetting.section3.row1.subTitle', { id2002: scanTimeoutInMs }),
             route: '',
@@ -73,7 +76,7 @@ const ScanSetting = ({ navigation }: Props) => {
           {
             id: 1,
             iconName: 'speedometer',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('scanSetting.section3.row2.title'),
             description: t('scanSetting.section3.row2.subTitle', { id2003: scanThreads }),
             route: '',
@@ -87,7 +90,7 @@ const ScanSetting = ({ navigation }: Props) => {
           {
             id: 0,
             iconName: 'backup-restore',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('scanSetting.section4.row1.title'),
             description: t('scanSetting.section4.row1.subTitle'),
             route: 'SelectAppearance',
@@ -165,7 +168,7 @@ const ScanSetting = ({ navigation }: Props) => {
                       title={subItem.title}
                       description={subItem.description}
                       left={() => (
-                        <Icon
+                        <CommonIcon
                           style={styles.listItemIcon}
                           type={subItem.iconType}
                           name={subItem.iconName}

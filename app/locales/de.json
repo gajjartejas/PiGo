@@ -192,6 +192,9 @@
       "title": "Kein Pi-Server in der Nähe gefunden!"
     },
     "refresh": "AKTUALISIEREN",
+    "scanning": "Netzwerk wird gescannt...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Gefunden: {{count}}",
     "subTitle": "In der Nähe befindliche Pi-Server",
     "title": "In der Nähe befindliche Pi-Server"
   },

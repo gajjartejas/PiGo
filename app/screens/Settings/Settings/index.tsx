@@ -12,10 +12,10 @@ import Utils from 'app/utils';
 import styles from './styles';
 import { LoggedInTabNavigatorParams } from 'app/navigation/types';
 import useLargeScreenMode from 'app/hooks/useLargeScreenMode';
+import CommonIcon from 'app/components/CommonIcon';
 
 //Modals
 import { ISettingItem, ISettingSection } from 'app/models/viewModels/settingItem';
-import Icon from 'react-native-easy-icon';
 import Components from 'app/components';
 import AppHeader from 'app/components/AppHeader';
 import useAppLangConfigStore from 'app/store/appLangConfig';
@@ -39,7 +39,7 @@ const Settings = ({ navigation }: Props) => {
         items: [
           {
             id: 0,
-            iconName: 'language',
+            iconName: 'translate',
             iconType: 'material',
             title: t('settings.languageTitle'),
             description: t('settings.languageSubTitle', {
@@ -49,7 +49,7 @@ const Settings = ({ navigation }: Props) => {
           },
           {
             id: 1,
-            iconName: 'wb-sunny',
+            iconName: 'theme-light-dark',
             iconType: 'material',
             title: t('settings.appearanceTitle'),
             description: t('settings.appearanceSubTitle')!,
@@ -58,7 +58,7 @@ const Settings = ({ navigation }: Props) => {
           {
             id: 2,
             iconName: 'magnify',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('settings.scanTitle'),
             description: t('settings.scanSubTitle'),
             route: 'ScanSetting',
@@ -66,7 +66,7 @@ const Settings = ({ navigation }: Props) => {
           {
             id: 3,
             iconName: 'raspberry-pi',
-            iconType: 'font-awesome5',
+            iconType: 'material',
             title: t('settings.piAppServersTitle'),
             description: t('settings.piAppServersSubTitle'),
             route: 'ManagePiAppServers',
@@ -74,7 +74,7 @@ const Settings = ({ navigation }: Props) => {
           {
             id: 4,
             iconName: 'server-network',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('settings.recentConnectionsTitle'),
             description: t('settings.recentConnectionsSubTitle'),
             route: 'ManageDevices',
@@ -82,7 +82,7 @@ const Settings = ({ navigation }: Props) => {
           {
             id: 5,
             iconName: 'web',
-            iconType: 'material-community',
+            iconType: 'material',
             title: t('settings.webViewSettingsTitle'),
             description: t('settings.webViewSettingsSubTitle'),
             route: 'WebViewSetting',
@@ -95,7 +95,7 @@ const Settings = ({ navigation }: Props) => {
         items: [
           {
             id: 0,
-            iconName: 'notes',
+            iconName: 'file-document-outline',
             iconType: 'material',
             title: t('settings.changelogTitle'),
             description: t('settings.changelogSubTitle')!,
@@ -103,39 +103,39 @@ const Settings = ({ navigation }: Props) => {
           },
           {
             id: 1,
-            iconName: 'library-shelves',
-            iconType: 'material-community',
+            iconName: 'book-open',
+            iconType: 'material',
             title: t('settings.librariesTitle'),
             description: t('settings.librariesSubTitle')!,
             route: 'License',
           },
           {
             id: 2,
-            iconName: 'frequently-asked-questions',
-            iconType: 'material-community',
+            iconName: 'help-circle-outline',
+            iconType: 'material',
             title: t('settings.faqTitle'),
             description: t('settings.faqSubTitle')!,
             route: 'FAQ',
           },
           {
             id: 3,
-            iconName: 'language-outline',
-            iconType: 'ionicon',
+            iconName: 'earth',
+            iconType: 'material',
             title: t('settings.translateTitle'),
             description: t('settings.translateSubTitle')!,
             route: 'Translate',
           },
           {
             id: 4,
-            iconName: 'people-outline',
-            iconType: 'ionicon',
+            iconName: 'account-multiple-outline',
+            iconType: 'material',
             title: t('settings.translatorsTitle'),
             description: t('settings.translatorsSubTitle')!,
             route: 'Translators',
           },
           {
             id: 5,
-            iconName: 'privacy-tip',
+            iconName: 'shield-check',
             iconType: 'material',
             title: t('settings.privacyTitle'),
             description: t('settings.privacySubTitle')!,
@@ -188,7 +188,7 @@ const Settings = ({ navigation }: Props) => {
         style={{ backgroundColor: colors.background }}
       />
 
-      <Components.AppBaseView scroll edges={[]} style={styles.safeArea}>
+      <Components.AppBaseView edges={[]} scroll={true} style={styles.safeArea}>
         <View style={[styles.listContainer, largeScreenMode && styles.cardTablet]}>
           {apps.map(item => {
             return (
@@ -197,14 +197,15 @@ const Settings = ({ navigation }: Props) => {
                 {item.items.map((subItem, subIndex) => {
                   return (
                     <List.Item
-                      titleStyle={{ color: colors.onSurface }}
-                      descriptionStyle={{ color: `${colors.onSurface}88` }}
                       key={subItem.id.toString()}
+                      style={styles.itemContainer}
+                      titleStyle={{ color: colors.onSurface }}
+                      descriptionStyle={[{ color: `${colors.onSurface}88` }, styles.topMargin]}
                       onPress={() => onPress(subItem, subIndex)}
                       title={subItem.title}
                       description={subItem.description}
                       left={() => (
-                        <Icon
+                        <CommonIcon
                           style={styles.listItemIcon}
                           type={subItem.iconType}
                           name={subItem.iconName}

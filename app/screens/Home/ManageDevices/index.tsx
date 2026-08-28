@@ -2,9 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 
 //ThirdParty
-import { Button, FAB, IconButton, List, Menu } from 'react-native-paper';
+import { Button, FAB, IconButton, List, Menu, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 
 //App modules
 import styles from './styles';
@@ -150,7 +149,8 @@ const ManageDevices = ({ navigation, route }: Props) => {
 
         {devices.length < 1 && (
           <Components.AppEmptyDataView
-            iconType={'font-awesome5'}
+            iconType={'fontawesome6'}
+            iconStyle={'brand'}
             iconName="raspberry-pi"
             style={{}}
             header={t('devicesList.emptyDeviceTitle')}

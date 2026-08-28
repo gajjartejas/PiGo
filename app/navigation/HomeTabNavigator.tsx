@@ -3,8 +3,8 @@ import React from 'react';
 //Third Party
 import { useTheme } from 'react-native-paper';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Icon from 'react-native-easy-icon';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import CommonIcon from 'app/components/CommonIcon.tsx';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //Screens
 import MoreTab from 'app/screens/Home/MoreTab';
@@ -32,7 +32,7 @@ import ViewPiAppServer from 'app/screens/Home/ViewPiAppServer';
 import WebViewSetting from 'app/screens/Settings/WebViewSetting';
 import ChangeLanguage from 'app/screens/Settings/ChangeLanguage';
 
-const Tab = createMaterialBottomTabNavigator<HomeTabsNavigatorParams>();
+const Tab = createBottomTabNavigator<HomeTabsNavigatorParams>();
 
 function HomeTabs() {
   //Constants
@@ -41,10 +41,15 @@ function HomeTabs() {
 
   return (
     <Tab.Navigator
-      screenOptions={{}}
-      inactiveColor={colors.secondaryContainer}
-      activeColor={colors.secondaryContainer}
-      barStyle={{ backgroundColor: colors.background, height: insets.bottom + 60 }}>
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: colors.background,
+          height: insets.bottom + 44,
+          borderTopWidth: 0,
+        },
+      }}>
       <Tab.Screen
         name="ManageDevices"
         component={ManageDevices}
@@ -52,11 +57,11 @@ function HomeTabs() {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <Icon
-              type="material-community"
+            <CommonIcon
+              type="material"
               name="view-dashboard"
-              color={focused ? colors.white : colors.primary}
-              size={21}
+              size={22}
+              color={focused ? colors.primary : colors.onSurfaceVariant}
             />
           ),
         }}
@@ -67,11 +72,11 @@ function HomeTabs() {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <Icon
-              type="material-community"
-              name="dots-horizontal"
-              color={focused ? colors.white : colors.primary}
-              size={21}
+            <CommonIcon
+              type="fontawesome6"
+              name="ellipsis"
+              size={20}
+              color={focused ? colors.primary : colors.onSurfaceVariant}
             />
           ),
         }}
@@ -84,26 +89,26 @@ const LoggedInStack = createNativeStackNavigator<LoggedInTabNavigatorParams>();
 
 const LoggedInTabNavigator = () => {
   return (
-    <LoggedInStack.Navigator>
-      <LoggedInStack.Screen name="Loading" component={Loading} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="MoreApps" component={MoreApps} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="About" component={About} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="SelectAppearance" component={SelectAppearance} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="License" component={License} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="Translators" component={Translators} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="ScanSetting" component={ScanSetting} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="AddDevice" component={AddDevice} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="ManagePiAppServers" component={ManagePiAppServers} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="AddPiAppServer" component={AddPiAppServer} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="ManageDevices" component={ManageDevices} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="PiAppWebView" component={PiAppWebView} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="ViewPiAppServer" component={ViewPiAppServer} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="WebViewSetting" component={WebViewSetting} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="ChangeLanguage" component={ChangeLanguage} options={{ headerShown: false }} />
-      <LoggedInStack.Screen name="PiAppServers" component={PiAppServers} options={{ headerShown: false }} />
+    <LoggedInStack.Navigator screenOptions={{ headerShown: false }}>
+      <LoggedInStack.Screen name="Loading" component={Loading} />
+      <LoggedInStack.Screen name="HomeTabs" component={HomeTabs} />
+      <LoggedInStack.Screen name="MoreApps" component={MoreApps} />
+      <LoggedInStack.Screen name="Settings" component={Settings} />
+      <LoggedInStack.Screen name="About" component={About} />
+      <LoggedInStack.Screen name="SelectAppearance" component={SelectAppearance} />
+      <LoggedInStack.Screen name="License" component={License} />
+      <LoggedInStack.Screen name="Translators" component={Translators} />
+      <LoggedInStack.Screen name="ScanSetting" component={ScanSetting} />
+      <LoggedInStack.Screen name="AddDevice" component={AddDevice} />
+      <LoggedInStack.Screen name="ManagePiAppServers" component={ManagePiAppServers} />
+      <LoggedInStack.Screen name="AddPiAppServer" component={AddPiAppServer} />
+      <LoggedInStack.Screen name="ManageDevices" component={ManageDevices} />
+      <LoggedInStack.Screen name="ScanDevices" component={ScanDevices} />
+      <LoggedInStack.Screen name="PiAppWebView" component={PiAppWebView} />
+      <LoggedInStack.Screen name="ViewPiAppServer" component={ViewPiAppServer} />
+      <LoggedInStack.Screen name="WebViewSetting" component={WebViewSetting} />
+      <LoggedInStack.Screen name="ChangeLanguage" component={ChangeLanguage} />
+      <LoggedInStack.Screen name="PiAppServers" component={PiAppServers} />
     </LoggedInStack.Navigator>
   );
 };

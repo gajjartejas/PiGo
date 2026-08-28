@@ -2,13 +2,6 @@
   "i18n-ally.localesPaths": ["app/locales"],
   "i18n-ally.keystyle": "nested",
   "i18n-ally.extract.autoDetect": true,
-  "grammarly.selectors": [
-    {
-      "language": "json",
-      "scheme": "file",
-      "pattern": "app/locales/en.json"
-    }
-  ],
   "cSpell.words": [],
   "i18n-ally.keysInUse": [
     "piAppsCategories.mediaCenters",

@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
 
 //ThirdParty
-import { Button, IconButton } from 'react-native-paper';
+import { Button, IconButton, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -27,10 +26,10 @@ type Props = NativeStackScreenProps<LoggedInTabNavigatorParams, 'AddDevice'>;
 
 const AddDevice = ({ navigation, route }: Props) => {
   //Refs
-  let connectionNameRef = useRef<TextInput | null>(null);
-  let ipAddress1Ref = useRef<TextInput | null>(null);
-  let ipAddress2Ref = useRef<TextInput | null>(null);
-  let ipAddress3Ref = useRef<TextInput | null>(null);
+  let connectionNameRef = useRef<any>(null);
+  let ipAddress1Ref = useRef<any>(null);
+  let ipAddress2Ref = useRef<any>(null);
+  let ipAddress3Ref = useRef<any>(null);
 
   //Constants
   const { colors } = useTheme();

@@ -192,8 +192,11 @@
       "title": "Nenhum servidor Pi próximo encontrado!"
     },
     "refresh": "ATUALIZAR",
-    "subTitle": "Servidores Pi próximos",
-    "title": "Servidores Pi próximos"
+    "scanning": "Escaneando rede...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Descobertos: {{count}}",
+    "subTitle": "Servidores Pi Próximos",
+    "title": "Servidores Pi Próximos"
   },
   "scanSetting": {
     "section1": {

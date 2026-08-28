@@ -252,6 +252,9 @@
   "scanDevices": {
     "title": "Nearby Pi Servers",
     "subTitle": "Nearby Pi Servers",
+    "scanning": "Scanning network...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "Discovered: {{count}}",
     "emptyData": {
       "title": "No nearby Pi server found!",
       "subtitle": "Please try scanning again",

@@ -191,9 +191,12 @@
       "subtitle": "कृपया पुनः स्कैन करने का प्रयास करें",
       "title": "आस-पास कोई Pi सर्वर नहीं मिला!"
     },
-    "refresh": "रीफ़्रेश करें",
-    "subTitle": "निकटवर्ती पाई सर्वर",
-    "title": "निकटवर्ती पाई सर्वर"
+    "refresh": "ताज़ा करें",
+    "scanning": "नेटवर्क स्कैन किया जा रहा है...",
+    "scannedRatio": "{{scanned}} / {{total}} IPs",
+    "discoveredCount": "खोजे गए: {{count}}",
+    "subTitle": "पास के पाई सर्वर",
+    "title": "पास के पाई सर्वर"
   },
   "scanSetting": {
     "section1": {
